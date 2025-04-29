@@ -5,3 +5,11 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp
+
+HEADERS += \
+    Behaelter.h \
+    Display.h \
+    Fuellstandsmessung.h \
+    Gewicht.h \
+    Ressourcen.h \
+    TankTyp.h
