@@ -23,18 +23,20 @@ INCLUDEPATH += $$PWD/include
 
 # The source files (e.g. *.cpp)
 SOURCES += \
-    src/circlemotionprovider.cpp \
-    src/clock.cpp \
-    src/main.cpp \
-    src/mainwindow.cpp \
-    src/rocket.cpp
+    include/bruehgruppe.cpp \
+    include/inkrementalencoder.cpp \
+    include/klappe.cpp \
+    include/kolbenmotor.cpp \
+    include/ventil.cpp \
+    src/main.cpp
 
 # The header files (e.g. *.h)
 HEADERS += \
-    include/circlemotionprovider.h \
-    include/clock.h \
-    include/mainwindow.h \
-    include/rocket.h
+    include/bruehgruppe.h \
+    include/inkrementalencoder.h \
+    include/klappe.h \
+    include/kolbenmotor.h \
+    include/ventil.h
 
 # The GUI definition files (so-called forms)
 FORMS += \
