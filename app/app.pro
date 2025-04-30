@@ -32,11 +32,27 @@ SOURCES += \
 
 # The header files (e.g. *.h)
 HEADERS += \
+    include/Heizelemente.h \
+    include/Heizregler.h \
+    include/Programmsteuerung.h \
+    include/Schaeumer.h \
+    include/Temperatursensor.h \
+    include/Zuckerdispenser.h \
+    include/ausgabeeinheit.h \
     include/bruehgruppe.h \
+    include/geldschein.h \
+    include/geldscheinbehaelter.h \
+    include/geldscheinsensor.h \
     include/inkrementalencoder.h \
     include/klappe.h \
     include/kolbenmotor.h \
-    include/ventil.h
+    include/muenze.h \
+    include/muenzroehre.h \
+    include/muenzroehrenspeicher.h \
+    include/muenzsensor.h \
+    include/produkt.h \
+    include/ventil.h \
+    include/zahlungseinheit.h
 
 # The GUI definition files (so-called forms)
 FORMS += \

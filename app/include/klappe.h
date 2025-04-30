@@ -1,6 +1,8 @@
 #ifndef KLAPPE_H
 #define KLAPPE_H
 
+#include "bruehgruppe.h"
+
 class Klappe
 {
     public:
@@ -11,6 +13,7 @@ class Klappe
 
     private:
         bool istOffen;
+        Bruehgruppe &bruehG;
 };
 
 #endif // KLAPPE_H

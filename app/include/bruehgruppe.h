@@ -21,10 +21,10 @@ class Bruehgruppe
         int getStatus();
     private:
         int status;
-        Ventil *tropfstopfVentil, *wasserzufuhr, *kaffeeZufuhr;
-        Klappe *entleerKlappe;
-        Kolbenmotor *stampfer;
-        InkrementalEncoder *encoder;
+        Ventil tropfstopfVentil, wasserzufuhr, kaffeeZufuhr;
+        Klappe entleerKlappe;
+        Kolbenmotor stampfer;
+        InkrementalEncoder encoder;
 };
 
 #endif // BRUEHGRUPPE_H

@@ -1,6 +1,7 @@
 #ifndef KOLBENMOTOR_H
 #define KOLBENMOTOR_H
 
+#include "bruehgruppe.h"
 class Kolbenmotor
 {
     public:
@@ -12,6 +13,7 @@ class Kolbenmotor
         int getStatus();
     private:
         int status;
+        Bruehgruppe &bruehG;
 };
 
 #endif // KOLBENMOTOR_H
