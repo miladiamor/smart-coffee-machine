@@ -1,6 +1,4 @@
-#ifndef PRODUKT_H
-#define PRODUKT_H
-
+#pragma once
 #include <string>
 
 class Produkt
@@ -19,4 +17,3 @@ private:
     float preis;
 };
 
-#endif // PRODUKT_H

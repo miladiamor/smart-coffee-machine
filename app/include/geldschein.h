@@ -1,6 +1,4 @@
-#ifndef GELDSCHEIN_H
-#define GELDSCHEIN_H
-
+#pragma once
 class Geldschein
 {
 public:
@@ -12,5 +10,3 @@ public:
 private:
     float wert;
 };
-
-#endif // GELDSCHEIN_H

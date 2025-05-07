@@ -1,5 +1,4 @@
-#ifndef BRUEHGRUPPE_H
-#define BRUEHGRUPPE_H
+#pragma once
 
 #include "ventil.h"
 #include "klappe.h"
@@ -27,4 +26,4 @@ class Bruehgruppe
         InkrementalEncoder encoder;
 };
 
-#endif // BRUEHGRUPPE_H
+

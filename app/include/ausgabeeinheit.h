@@ -1,6 +1,4 @@
-#ifndef AUSGABEEINHEIT_H
-#define AUSGABEEINHEIT_H
-
+#pragma once
 #include "produkt.h"
 
 class Ausgabeeinheit
@@ -10,8 +8,8 @@ public:
     Ausgabeeinheit();
 
     void wechselgeldAusgeben(float betrag);     // Gibt Wechselgeld aus
-    void rueckgeldZurueckgeben(float betrag);      // Gibt Geld bei Abbruch zurück
-    void produktAusgeben(Produkt* produkt);      // Gibt das gewählte Produkt aus
+    void rueckgeldZurueckgeben(float betrag);      // Gibt Geld bei Abbruch zurueck
+    void produktAusgeben(Produkt* produkt);      // Gibt das gehlte Produkt aus
 };
 
-#endif // AUSGABEEINHEIT_H
+

@@ -1,10 +1,10 @@
-#include <QApplication>
-#include <QSettings>
-#include <QCommandLineParser>
-#include <QtDebug>
-#include <QDir>
+#include <iostream>
 
-int main(int argc, char *argv[])
+using namespace std;
+
+int main()
 {
+    cout<<"Hello world!"<<endl;
+
     return 0;
 }

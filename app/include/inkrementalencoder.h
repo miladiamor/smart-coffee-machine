@@ -1,6 +1,4 @@
-#ifndef INKREMENTALENCODER_H
-#define INKREMENTALENCODER_H
-
+ #pragma once
 #include "kolbenmotor.h"
 
 class InkrementalEncoder
@@ -14,4 +12,3 @@ class InkrementalEncoder
         Kolbenmotor *motor;
 };
 
-#endif // INKREMENTALENCODER_H

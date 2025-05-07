@@ -1,7 +1,5 @@
-#ifndef KLAPPE_H
-#define KLAPPE_H
-
-#include "bruehgruppe.h"
+#pragma once
+//#include "bruehgruppe.h"
 
 class Klappe
 {
@@ -13,7 +11,6 @@ class Klappe
 
     private:
         bool istOffen;
-        Bruehgruppe &bruehG;
+        //Bruehgruppe &bruehG;
 };
 
-#endif // KLAPPE_H

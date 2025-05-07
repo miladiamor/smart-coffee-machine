@@ -1,6 +1,6 @@
-#ifndef HEIZREGLER_H
-#define HEIZREGLER_H
-
+#pragma once
+#include "Heizelemente.h"
+#include "Temperatursensor.h"
 class Heizregler {
 private:
     int zieltemperatur_Cel;
@@ -15,4 +15,3 @@ public:
     
 };
 
-#endif // HEIZREGLER_HPP

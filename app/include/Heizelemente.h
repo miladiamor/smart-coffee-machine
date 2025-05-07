@@ -1,6 +1,4 @@
-#ifndef HEIZELEMENTE_H
-#define HEIZELEMENTE_H
-
+#pragma once
 class Heizelemente {
 private:
     int temperatur_Cel;
@@ -14,4 +12,3 @@ public:
     //int getTemperatur() const;        // aktuelle Temperatur abfragen
 };
 
-#endif // Heizelemente_H

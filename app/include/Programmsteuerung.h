@@ -1,6 +1,9 @@
-#ifndef PROGRAMMSTEUERUNG_H
-#define PROGRAMMSTEUERUNG_H
+#pragma once
 
+
+
+#include "Heizregler.h"
+#include "Schaeumer.h"
 class Programmsteuerung {
 
     private:
@@ -18,4 +21,3 @@ class Programmsteuerung {
         void ausfuehren(int programm);
 };
 
-#endif // PROGRAMMSTEUERUNG_H
