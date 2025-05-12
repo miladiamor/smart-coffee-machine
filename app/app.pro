@@ -35,7 +35,6 @@ HEADERS += \
     include/Behaelter.h \
     include/Display.h \
     include/Fuellstandsmessung.h \
-    include/Gewicht.h \
     include/Heizelemente.h \
     include/Heizregler.h \
     include/Programmsteuerung.h \

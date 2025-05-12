@@ -1,15 +1,13 @@
 #pragma once
 #include "TankTyp.h"
-#include "Gewicht.h"
 
 class Behaelter {
 private:
     TankTyp typ;
-    Gewicht gewicht;
+    int gewicht_g;
 
 public:
-    Behaelter(TankTyp typ);
+    Behaelter(TankTyp typ, int gewicht);
     int gewichtPruefen() const;
     TankTyp getTyp() const;
 };
-
