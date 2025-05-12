@@ -1,5 +1,4 @@
-#ifndef TANKTYP_H
-#define TANKTYP_H
+#pragma once
 
 enum class TankTyp {
     wasser,
@@ -9,4 +8,3 @@ enum class TankTyp {
     restkaffee
 };
 
-#endif // TANKTYP_H

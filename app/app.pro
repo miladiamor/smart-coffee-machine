@@ -23,6 +23,10 @@ INCLUDEPATH += $$PWD/include
 
 # The source files (e.g. *.cpp)
 SOURCES += \
+    src/Behaelter.cpp \
+    src/Fuellstandsmessung.cpp \
+    src/Ressourcen.cpp \
+    src/TankTyp.cpp \
     src/bruehgruppe.cpp \
     src/inkrementalencoder.cpp \
     src/klappe.cpp \

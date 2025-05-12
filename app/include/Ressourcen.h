@@ -1,29 +1,28 @@
-#ifndef RESSOURCEN_H
-#define RESSOURCEN_H
+#pragma once
 
-class Ressourcen
-{
+class Ressourcen {
 private:
     int kaffeemenge_ml;
     int milchmenge_ml;
+    short zuckermenge_TL;
     int wassermenge_ml;
-    int zuckermenge_g;
+    int restkaffee;
 
 public:
-    // Constructor
-    Ressourcen();
-
-    // Getters
+    // Getter methods
     int getKaffeemenge_ml() const;
     int getMilchmenge_ml() const;
+    short getZuckermenge_TL() const;
     int getWassermenge_ml() const;
-    int getZuckermenge_g() const;
+    int getRestkaffee() const;
 
-    // Setters
+    // Setter methods
     void setKaffeemenge_ml(int menge);
     void setMilchmenge_ml(int menge);
+    void setZuckermenge_TL(short tl);
     void setWassermenge_ml(int menge);
-    void setZuckermenge_g(int menge);
+    void setRestkaffee(int menge); // ← add this
 };
 
-#endif // RESSOURCEN_H
+
+
