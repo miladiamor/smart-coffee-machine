@@ -2,27 +2,24 @@
 
 class Ressourcen {
 private:
-    int kaffeemenge_ml;
+    int kaffeemenge_g;
     int milchmenge_ml;
-    short zuckermenge_TL;
     int wassermenge_ml;
-    int restkaffee;
+    short zuckermenge_TL;
+    int restkaffee_g;
 
 public:
-    // Getter methods
-    int getKaffeemenge_ml() const;
+    Ressourcen();
+
+    int getKaffeemenge_g() const;
     int getMilchmenge_ml() const;
-    short getZuckermenge_TL() const;
     int getWassermenge_ml() const;
-    int getRestkaffee() const;
+    short getZuckermenge_TL() const;
+    int getRestkaffee_g() const;
 
-    // Setter methods
-    void setKaffeemenge_ml(int menge);
+    void setKaffeemenge_g(int menge);
     void setMilchmenge_ml(int menge);
-    void setZuckermenge_TL(short tl);
     void setWassermenge_ml(int menge);
-    void setRestkaffee(int menge); // ← add this
+    void setZuckermenge_TL(short tl);
+    void setRestkaffee_g(int menge);
 };
-
-
-

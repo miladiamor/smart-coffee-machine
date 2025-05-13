@@ -1,25 +1,27 @@
 #pragma once
-
 #include "Behaelter.h"
 #include "Ressourcen.h"
+#include "Rezept.h"
 
 class Fuellstandsmessung {
 private:
-    Ressourcen* ressourcen;
     Behaelter* wasser;
-    Behaelter* zucker;
     Behaelter* milch;
     Behaelter* kaffee;
+    Behaelter* zucker;
     Behaelter* restkaffee;
 
+    Ressourcen* ressourcen;
+
 public:
-    Fuellstandsmessung(Ressourcen* ress,
-                       Behaelter* wasser,
-                       Behaelter* zucker,
+    Fuellstandsmessung(Behaelter* wasser,
                        Behaelter* milch,
                        Behaelter* kaffee,
-                       Behaelter* restkaffee);
+                       Behaelter* zucker,
+                       Behaelter* restkaffee,
+                       Ressourcen* ressourcen);
 
-    void mengenPruefen();
-    Ressourcen getMengen() const;
+    void updateRessourcen();
+    bool hatGenugZutaten(const Rezept& rezept);     // ✅ must match exactly
+    void verbraucheZutaten(const Rezept& rezept);   // ✅ must match exactly
 };

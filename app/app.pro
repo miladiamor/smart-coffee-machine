@@ -43,6 +43,7 @@ HEADERS += \
     include/Heizregler.h \
     include/Programmsteuerung.h \
     include/Ressourcen.h \
+    include/Rezept.h \
     include/Schaeumer.h \
     include/TankTyp.h \
     include/Temperatursensor.h \

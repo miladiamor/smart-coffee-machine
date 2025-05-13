@@ -1,26 +1,37 @@
 #include "Fuellstandsmessung.h"
-#include "Ressourcen.h"
-Fuellstandsmessung::Fuellstandsmessung(Ressourcen* ress,
-                                       Behaelter* wasser,
-                                       Behaelter* zucker,
+#include "Rezept.h"
+Fuellstandsmessung::Fuellstandsmessung(Behaelter* wasser,
                                        Behaelter* milch,
                                        Behaelter* kaffee,
-                                       Behaelter* restkaffee)
-    : ressourcen(ress),
-    wasser(wasser),
-    zucker(zucker),
+                                       Behaelter* zucker,
+                                       Behaelter* restkaffee,
+                                       Ressourcen* ressourcen)
+    : wasser(wasser),
     milch(milch),
     kaffee(kaffee),
-    restkaffee(restkaffee) {}
+    zucker(zucker),
+    restkaffee(restkaffee),
+    ressourcen(ressourcen) {}
 
-void Fuellstandsmessung::mengenPruefen() {
-    ressourcen->setWassermenge_ml(wasser->gewichtPruefen());
-    ressourcen->setZuckermenge_TL(zucker->gewichtPruefen());
-    ressourcen->setMilchmenge_ml(milch->gewichtPruefen());
-    ressourcen->setKaffeemenge_ml(kaffee->gewichtPruefen());
-     ressourcen->setRestkaffee(restkaffee->gewichtPruefen());
+void Fuellstandsmessung::updateRessourcen() {
+    // Update the Ressourcen object based on current Behaelter status
+    ressourcen->setWassermenge_ml(wasser->gewichtPruefen()); // 1g = 1ml
+    ressourcen->setMilchmenge_ml(static_cast<int>(milch->gewichtPruefen() / 1.03));
+    ressourcen->setKaffeemenge_g(kaffee->gewichtPruefen());
+    ressourcen->setZuckermenge_TL(static_cast<short>(zucker->gewichtPruefen() / 5)); // e.g., 5g = 1 TL
+    ressourcen->setRestkaffee_g(restkaffee->gewichtPruefen());
 }
 
-Ressourcen Fuellstandsmessung::getMengen() const {
-    return *ressourcen;
+bool Fuellstandsmessung::hatGenugZutaten(const Rezept& rezept) {
+    return wasser->hatGenug(rezept.wasser_g) &&
+           milch->hatGenug(rezept.milch_ml) &&
+           kaffee->hatGenug(rezept.kaffee_g) &&
+           zucker->hatGenug(rezept.zucker_TL * 5); // Convert TL to g (assume 1 TL = 5g)
+}
+
+void Fuellstandsmessung::verbraucheZutaten(const Rezept& rezept) {
+    wasser->entnehmen(rezept.wasser_g);
+    milch->entnehmen(rezept.milch_ml);
+    kaffee->entnehmen(rezept.kaffee_g);
+    zucker->entnehmen(rezept.zucker_TL * 5);
 }

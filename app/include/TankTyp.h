@@ -8,3 +8,5 @@ enum class TankTyp {
     restkaffee
 };
 
+
+const char* toString(TankTyp typ);
