@@ -378,4 +378,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Clangd index files
+.clangd/index/
+*.idx
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,c++,qt,qtcreator,windows,linux
