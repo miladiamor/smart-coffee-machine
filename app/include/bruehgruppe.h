@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BRUEHGRUPPE_H
+#define BRUEHGRUPPE_H
 
 #include "ventil.h"
 #include "klappe.h"
@@ -9,21 +10,22 @@ class Bruehgruppe
 {
     public:
         Bruehgruppe();
-        void kaffeePressen(int stampfHoehe_mm);
+        void kaffee_pressen(int stampfHoehe_mm);
         void entleeren();
-        void tropfstopVentilSchliessen();
-        void tropfstopVentilOeffnen();
-        void wasserzufuhrOeffnen();
-        void wasserzufuhrSchliessen();
-        void kaffeepulverHinzufuegen(int menge_g);
+        void tropfstopfventil_schliessen();
+        void tropfstopfventil_oeffnen();
+        void wasserzufuhr_oeffnen();
+        void wasserzufuhr_schliessen();
+        void kaffeepulver_hinzufuegen(int menge_g);
 
-        int getStatus();
+        int get_status();
     private:
         int status;
-        Ventil tropfstopfVentil, wasserzufuhr, kaffeeZufuhr;
-        Klappe entleerKlappe;
-        Kolbenmotor stampfer;
-        InkrementalEncoder encoder;
+        Ventil *tropfstopfventil, *wasserzufuhr, *kaffeezufuhr;
+        Klappe *entleerklappe;
+        Kolbenmotor *stampfer;
+        Inkrementalencoder *inkrementalencoder;
 };
 
+#endif
 

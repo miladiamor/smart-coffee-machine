@@ -1,14 +1,23 @@
- #pragma once
-#include "kolbenmotor.h"
+#ifndef INKREMENTALENCODER_H
+#define INKREMENTALENCODER_H
 
-class InkrementalEncoder
+#include <thread>
+#include <atomic>
+
+class Kolbenmotor;
+
+class Inkrementalencoder
 {
     public:
-        InkrementalEncoder();
-        bool getDrehImpuls();
+        Inkrementalencoder(Kolbenmotor *stampfer);
+        int get_position_in_mm();
+        void update();
 
     private:
-        bool drehImpuls;
-        Kolbenmotor *motor;
+        int position_mm;
+        Kolbenmotor *stampfer;
+        std::thread th;
+        std::atomic<bool> stop;
 };
 
+#endif

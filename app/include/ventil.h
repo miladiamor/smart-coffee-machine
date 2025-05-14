@@ -1,18 +1,16 @@
 #ifndef VENTIL_H
 #define VENTIL_H
 
-//#include "bruehgruppe.h"
 class Ventil
 {
 public:
     Ventil();
     void oeffnen();
     void schliessen();
-    bool getIstOffen();
+    bool get_ist_offen();
 
 private:
-    bool istOffen();
-    //Bruehgruppe &bruehG;
+    bool ist_offen;
 };
 
-#endif // VENTIL_H
+#endif

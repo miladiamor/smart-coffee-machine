@@ -1,5 +1,7 @@
-#pragma once
-//#include "bruehgruppe.h"
+#ifndef KLAPPE_H
+#define KLAPPE_H
+
+class Bruehgruppe;
 
 class Klappe
 {
@@ -7,10 +9,10 @@ class Klappe
         Klappe();
         void oeffnen();
         void schliessen();
-        int  getOffen();
+        int  get_ist_offen();
 
     private:
-        bool istOffen;
-        //Bruehgruppe &bruehG;
+        bool ist_offen;
 };
 
+#endif
