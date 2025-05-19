@@ -22,6 +22,6 @@ public:
                        Ressourcen* ressourcen);
 
     void updateRessourcen();
-    bool hatGenugZutaten(const Rezept& rezept);     // ✅ must match exactly
-    void verbraucheZutaten(const Rezept& rezept);   // ✅ must match exactly
+    bool hatGenugZutaten(const Rezept& rezept);
+    void verbraucheZutaten(const Rezept& rezept);
 };
