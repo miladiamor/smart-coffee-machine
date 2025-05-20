@@ -8,7 +8,7 @@ class Kolbenmotor;
 class Inkrementalencoder : public QObject
 {
     Q_OBJECT
-public:
+    public:
         Inkrementalencoder(Kolbenmotor *stampfer);
         int get_position_in_mm();
 

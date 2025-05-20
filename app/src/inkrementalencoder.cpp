@@ -1,5 +1,3 @@
-#include <thread>
-#include <iostream>
 #include "inkrementalencoder.h"
 #include "kolbenmotor.h"
 
