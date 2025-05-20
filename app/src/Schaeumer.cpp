@@ -1,10 +1,13 @@
-#include "Schaeumer.h"
+#include "schaeumer.h"
 #include <QDebug>
 
-Schaeumer::Schaeumer(){
-    qDebug() << "Schaeumer ready";
+Schaeumer::Schaeumer() {
 }
 
-void Schaeumer::start(){
-    qDebug() <<
+void Schaeumer::aufschaeumenStarten() {
+    qDebug() << "Milchschaumvorgang gestartet.";
+}
+
+void Schaeumer::aufschaeumenStoppen() {
+    qDebug() << "Milchschaumvorgang gestoppt.";
 }

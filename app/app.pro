@@ -32,7 +32,13 @@ SOURCES += \
     src/klappe.cpp \
     src/kolbenmotor.cpp \
     src/ventil.cpp \
-    src/main.cpp
+    src/main.cpp \
+    src/Heizregler.cpp \
+    src/Heizelemente.cpp \
+    src/Schaeumer.cpp \
+    src/Zuckerdispenser.cpp \
+    src/Temperatursensor.cpp \
+    src/Programmsteuerung.cpp
 
 # The header files (e.g. *.h)
 HEADERS += \

@@ -1,7 +1,7 @@
 #pragma once
 class Heizregler; // Forward declaration
 class Heizelemente {
-    friend class Heizregler;
+
 private:
     int temperatur_Cel;
     int zieltemperatur_Cel;
