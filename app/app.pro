@@ -25,6 +25,7 @@ INCLUDEPATH += $$PWD/include
 SOURCES += \
     src/Behaelter.cpp \
     src/Fuellstandsmessung.cpp \
+    src/Programmsteuerung.cpp \
     src/Ressourcen.cpp \
     src/TankTyp.cpp \
     src/bruehgruppe.cpp \

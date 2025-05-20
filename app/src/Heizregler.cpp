@@ -1,35 +1,37 @@
 #include "Heizregler.h"
 #include <QDebug>
-#include "Temperatursensor.h"
 
-Heizregler::Heizregler(){
-
+Heizregler::Heizregler() {
     zieltemperatur_Cel = 0;
-    sensor = nullptr;
-    heizen = nullptr;
-
+    heizen = new Heizelemente();
+    sensor = new Temperatursensor();
 }
 
-void Heizregler::temperaturRegeln(int Zieltemperatur_Cel){
-
+void Heizregler::temperaturRegeln(int Zieltemperatur_Cel) {
     zieltemperatur_Cel = Zieltemperatur_Cel;
+    int aktuelleTemperatur = sensor->getTemperatur_Cel();
 
-    if(!sensor || !heizen) return; // Überprüfung, ob sensor und Heizelemente vorhanden sind
+    qDebug() << "Zieltemperatur:" << zieltemperatur_Cel;
+    qDebug() << "Aktuelle Temperatur:" << aktuelleTemperatur;
 
-    int aktuellTemp = sensor->getTemperatur_Cel();
-
-    if(aktuellTemp < zieltemperatur_Cel){
-        heizen->einschalten();
+    if (aktuelleTemperatur < zieltemperatur_Cel) {
+        einschalten();
+    } else {
+        ausschalten();
     }
-    else{
-        heizen->ausschalten();
-    }
+}
+
+void Heizregler::regelnStoppen() {
+    ausschalten();
+    qDebug() << "Regelung gestoppt.";
+}
+
+void Heizregler::einschalten() {
+    qDebug() << "Heizregler schaltet Heizung ein.";
 
 }
 
-void Heizregler::regelnStoppen(){
+void Heizregler::ausschalten() {
+    qDebug() << "Heizregler schaltet Heizung aus.";
 
-    if(heizen){
-        heizen->ausschalten();
-    }
 }
