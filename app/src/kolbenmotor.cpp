@@ -1,21 +1,21 @@
 #include "kolbenmotor.h"
 
-Kolbenmotor::Kolbenmotor() : status(0) {
+Kolbenmotor::Kolbenmotor() : status(motorStatus::Aus) {
 
 }
 
 void Kolbenmotor::runterfahren() {
-    status = 1;
+    status = motorStatus::runterfahren;
 }
 
 void Kolbenmotor::hochfahren() {
-    status = 2;
+    status = motorStatus::hochfahren;
 }
 
 void Kolbenmotor::stoppen() {
-    status = 0;
+    status = motorStatus::Aus;
 }
 
-int Kolbenmotor::getStatus() {
+Kolbenmotor::motorStatus Kolbenmotor::getStatus() {
     return status;
 }

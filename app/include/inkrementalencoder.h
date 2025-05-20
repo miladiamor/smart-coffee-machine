@@ -1,23 +1,23 @@
 #ifndef INKREMENTALENCODER_H
 #define INKREMENTALENCODER_H
 
-#include <thread>
-#include <atomic>
+#include <QObject>
 
 class Kolbenmotor;
 
-class Inkrementalencoder
+class Inkrementalencoder : public QObject
 {
+    Q_OBJECT
     public:
         Inkrementalencoder(Kolbenmotor *stampfer);
         int get_position_in_mm();
-        void update();
+
+    public slots:
+        void update(int neu_position_mm);
 
     private:
         int position_mm;
         Kolbenmotor *stampfer;
-        std::thread th;
-        std::atomic<bool> stop;
 };
 
 #endif

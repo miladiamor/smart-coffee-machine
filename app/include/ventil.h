@@ -1,8 +1,11 @@
 #ifndef VENTIL_H
 #define VENTIL_H
 
-class Ventil
+#include <QObject>
+
+class Ventil : public QObject
 {
+    Q_OBJECT
 public:
     Ventil();
     void oeffnen();

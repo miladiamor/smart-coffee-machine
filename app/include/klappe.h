@@ -1,10 +1,12 @@
 #ifndef KLAPPE_H
 #define KLAPPE_H
 
+#include <QObject>
 class Bruehgruppe;
 
-class Klappe
+class Klappe : public QObject
 {
+    Q_OBJECT
     public:
         Klappe();
         void oeffnen();
