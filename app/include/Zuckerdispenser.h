@@ -1,14 +1,13 @@
 #ifndef ZUCKERDISPENSER_H
 #define ZUCKERDISPENSER_H
 
-class Zuckerdipenser {
+class Zuckerdispenser {
 private:
-    int zuckerMenge_g;         // Menge in Gramm
-
-    void zuckerAuswerfen();    
+    int zuckerMenge_g;
 
 public:
-    Zuckerdipenser();          // Konstruktor
+    Zuckerdispenser();
+    void zuckerAuswerfen();
 }; 
 
-#endif // ZUCKERDISPENSER_H
+#endif

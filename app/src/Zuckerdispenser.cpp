@@ -1,12 +1,12 @@
 #include "Zuckerdispenser.h"
 #include <QDebug>
 
-Zuckerdipenser::Zuckerdipenser(){
-    zuckerMenge_g = 10;  // Default menge
+Zuckerdispenser::Zuckerdispenser(){
+    zuckerMenge_g = 10;
 
 }
 
-void Zuckerdipenser::zuckerAuswerfen(){
+void Zuckerdispenser::zuckerAuswerfen(){
     if(zuckerMenge_g < 0){
         zuckerMenge_g -= 1;
         qDebug() << "1g Zucker ausgeworfen. Verbleibend:" << zuckerMenge_g << "g";
@@ -15,3 +15,4 @@ void Zuckerdipenser::zuckerAuswerfen(){
         qDebug() <<"Kein Zucker mehr vorhanden!";
     }
 }
+
