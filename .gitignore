@@ -158,8 +158,8 @@ compile_commands.json
 # Qt Creator backups
 
 # Flags for Clang Code Model
-#*.cxxflags
-#*.cflags
+*.cxxflags
+*.cflags
 
 
 ### Windows ###
@@ -348,8 +348,8 @@ compile_commands.json
 # Qt Creator backups
 
 # Flags for Clang Code Model
-#*.cxxflags
-#*.cflags
+*.cxxflags
+*.cflags
 
 
 ### Windows ###
@@ -379,7 +379,13 @@ $RECYCLE.BIN/
 *.lnk
 
 # Clangd index files
-#.clangd/index/
-#*.idx
+.clangd/index/
+*.idx
+
+# Eigene Build-Ordner ausschließen
+build/
+Build/
+/build/
+/Build/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,c++,qt,qtcreator,windows,linux
