@@ -6,7 +6,7 @@ private:
     int zuckerMenge_g;
 
 public:
-    Zuckerdispenser(); //kons
+    Zuckerdispenser(); //konsdsfsdfdf
     void zuckerAuswerfen();
 }; 
 
