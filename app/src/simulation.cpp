@@ -7,6 +7,7 @@ Simulation::Simulation(Kolbenmotor *kolbenmotor, Bruehgruppe *bruehgruppe, Inkre
 
 // Motorgeschwindigkeit definieren
 #define MOTORGESCHWINDIGKEIT_MM_PRO_S 20
+#define HEIZRATE 0.2f
 void Simulation::update(int delta_t_ms){
     // Motorsimulation
     const float bewegung_pro_frame = MOTORGESCHWINDIGKEIT_MM_PRO_S * delta_t_ms * std::pow(10, -3);
@@ -27,4 +28,31 @@ void Simulation::update(int delta_t_ms){
 
     // Sensoren setzen
     inkrementalencoder->setPosition(motorPosition_mm);
+
+    // Temperatur
+
+    int aktuelleTemp = temperatursensor.getTemperatur_Cel();
+    int zielTemp = 90;
+
+    if (aktuelleTemp < zielTemp) {
+
+        aktuelleTemp += static_cast<int>(HEIZRATE * delta_t_ms * 0.001f);
+        temperatursensor.setTemperatur_Cel(aktuelleTemp);
+
+    }
+
+    heizregler.temperaturRegeln(zielTemp);
+}
+void Simulation:: starteHeizung() {
+    heizregler.temperaturRegeln(90);
+    }
+
+void Simulation::setzeZucker(int level) {
+    for (int i = 0; i < level; ++i) {
+        zuckerdispenser.zuckerAuswerfen();
+    }
+}
+
+void Simulation::starteSchaeumer() {
+    schaeumer.aufschaeumenStarten();
 }

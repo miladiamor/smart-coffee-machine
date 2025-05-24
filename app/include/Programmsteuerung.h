@@ -26,7 +26,7 @@ private:
     int status;
     Kaffeeprogramm* programm;
 
-    Heizregler* temp_regler;
+    Heizregler *temperaturregler_wasser, *temperaturregler_milch;
     Zuckerdispenser* zucker;
     Schaeumer* milchschaeumer;
     Bruehgruppe* bruehgruppe;

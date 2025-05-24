@@ -4,15 +4,18 @@
 #include "Schaeumer.h"
 #include "Zuckerdispenser.h"
 #include "Fuellstandsmessung.h"
+#include "Pumpesteuerung.h"
 
 
 
 #include <QDebug>
+#include <memory>
 
 Programmsteuerung::Programmsteuerung(){
     status = 0;
     programm = nullptr;
-    temp_regler = nullptr;
+    temperaturregler_wasser = nullptr;
+    temperaturregler_milch = nullptr;
     zucker = nullptr;
     milchschaeumer = nullptr;
     bruehgruppe = nullptr;
@@ -28,6 +31,11 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
         return;
     }
 
+    if (!temperaturregler_wasser || temperaturregler_milch || steuerung || !bruehgruppe || milchschaeumer || !zucker || messung) {
+        qDebug() <<"Ein oder mehrere Komponenten sind nicht intialisiert";
+        return;
+    }
+
     status =  1;
     qDebug() << "Kaffeeprogramm gesetzt";
 
@@ -37,7 +45,8 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     }
 
     steuerung->pumpen(100);
-    temp_regler->temperaturRegeln(92);
+    temperaturregler_milch->temperaturRegeln(65);
+    temperaturregler_wasser->temperaturRegeln(92);
     bruehgruppe->kaffee_pressen(5);
     bruehgruppe->kaffeepulver_hinzufuegen(10);
     bruehgruppe->wasserzufuhr_oeffnen();
@@ -45,13 +54,16 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     zucker->zuckerAuswerfen();
     bruehgruppe->wasserzufuhr_schliessen();
     milchschaeumer->aufschaeumenStoppen();
-    temp_regler->regelnStoppen();
+    temperaturregler_milch->regelnStoppen();
+    temperaturregler_wasser->regelnStoppen();
 
     status = 0;
     qDebug() << "Kaffeeprogramm abgeschlossen";
 }
 
 bool Programmsteuerung::ressourcenCheck(){
-    ressourcen res = messung->getRessourcen();
-    return res.wasser > 100 && res.kaffee > 10;
+    std::shared_ptr<Ressourcen> res = messung ->getRessourcen();
+    return res->getWassermenge_ml() > 100 && res->getKaffeemenge_g() > 10;
+    //ressourcen res = messung->getRessourcen();
+    //return res.wasser > 100 && res.kaffee > 10;
 }
