@@ -15,15 +15,11 @@ class Bruehgruppe : public QObject
         Bruehgruppe();
         void kaffee_pressen(int stampfHoehe_mm);
         void entleeren();
-        void tropfstopfventil_schliessen();
-        void tropfstopfventil_oeffnen();
         void wasserzufuhr_oeffnen();
         void wasserzufuhr_schliessen();
         void kaffeepulver_hinzufuegen(int menge_g);
-
-        int get_status();
+        bool getEntleerklappeOffen();
     private:
-        int status;
         QTimer sleeper;
         Ventil *tropfstopfventil, *wasserzufuhr, *kaffeezufuhr;
         Klappe *entleerklappe;

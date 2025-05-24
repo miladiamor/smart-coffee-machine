@@ -1,5 +1,6 @@
 #include "bruehgruppe.h"
 #include <QTimer>
+#include <QThread>
 
 Bruehgruppe::Bruehgruppe() :
     tropfstopfventil(new Ventil), wasserzufuhr(new Ventil), kaffeezufuhr(new Ventil),
@@ -14,22 +15,19 @@ void Bruehgruppe::kaffee_pressen(int stampfHoehe_mm){
 }
 
 void Bruehgruppe::entleeren(){
-}
-
-void Bruehgruppe::tropfstopfventil_schliessen(){
-
-}
-
-void Bruehgruppe::tropfstopfventil_oeffnen(){
-
+    entleerklappe->oeffnen();
+    stampfer->runterfahren();
+    QTimer::singleShot(500, entleerklappe, &Klappe::schliessen);
+    stampfer->hochfahren();
 }
 
 void Bruehgruppe::wasserzufuhr_oeffnen(){
-
+    wasserzufuhr->oeffnen();
+    stampfer->runterfahren();
 }
 
 void Bruehgruppe::wasserzufuhr_schliessen(){
-
+    wasserzufuhr->schliessen();
 }
 
 void Bruehgruppe::kaffeepulver_hinzufuegen(int menge_g){
@@ -38,6 +36,6 @@ void Bruehgruppe::kaffeepulver_hinzufuegen(int menge_g){
     QTimer::singleShot(waitTime, kaffeezufuhr, &Ventil::schliessen);
 }
 
-int get_status(){
-
+bool Bruehgruppe::getEntleerklappeOffen(){
+    return entleerklappe->get_ist_offen();
 }

@@ -5,22 +5,21 @@
 #include <QTimer>
 #include "kolbenmotor.h"
 #include "inkrementalencoder.h"
+#include "bruehgruppe.h"
 
 class Simulation : public QObject
 {
     Q_OBJECT
 public:
-    Simulation(Kolbenmotor *kolbenmotor);
-
-signals:
-    void inkrementalencoderUpdate(int position_mm);
+    Simulation(Kolbenmotor *kolbenmotor, Bruehgruppe *bruehgruppe);
 
 public slots:
-    void update();
+    void update(int delta_t_ms);
 
 private:
     Kolbenmotor *kolbenmotor;
-    int motorPosition_mm;
+    Bruehgruppe *bruehgruppe;
+    float motorPosition_mm, kaffeerestbehaelter_fuellstand_g;
 };
 
 #endif // SIMULATION_H

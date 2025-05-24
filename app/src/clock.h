@@ -15,12 +15,13 @@ public:
     void stop();
 
 signals:
-    void update();
+    void update(int delta_t_ms);
 
 public slots:
     void tick();
 
 private:
+    int framerate;
     QTimer timer;
     QTime lastStartTime;
 };
