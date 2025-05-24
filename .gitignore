@@ -382,4 +382,10 @@ $RECYCLE.BIN/
 .clangd/index/
 *.idx
 
+# Eigene Build-Ordner ausschließen
+build/
+Build/
+/build/
+/Build/
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,c++,qt,qtcreator,windows,linux

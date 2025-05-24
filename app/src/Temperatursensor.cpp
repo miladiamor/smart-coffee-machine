@@ -1,9 +1,9 @@
 #include "Temperatursensor.h"
 
 Temperatursensor::Temperatursensor(){
-    temperatur_Cel = 22; // Default Temp
+    temperatur_Cel = 22;
 }
 
-int Temperatursensor::getTemperatur_Cel(){  // Methode implementierung
+int Temperatursensor::getTemperatur_Cel(){
     return temperatur_Cel;
 }

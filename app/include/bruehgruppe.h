@@ -1,13 +1,16 @@
 #ifndef BRUEHGRUPPE_H
 #define BRUEHGRUPPE_H
 
+#include <QObject>
+#include <QTimer>
 #include "ventil.h"
 #include "klappe.h"
 #include "kolbenmotor.h"
 #include "inkrementalencoder.h"
 
-class Bruehgruppe
+class Bruehgruppe : public QObject
 {
+    Q_OBJECT
     public:
         Bruehgruppe();
         void kaffee_pressen(int stampfHoehe_mm);
@@ -21,6 +24,7 @@ class Bruehgruppe
         int get_status();
     private:
         int status;
+        QTimer sleeper;
         Ventil *tropfstopfventil, *wasserzufuhr, *kaffeezufuhr;
         Klappe *entleerklappe;
         Kolbenmotor *stampfer;
