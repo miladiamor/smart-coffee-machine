@@ -2,11 +2,11 @@
 #include <string>
 
 struct Rezept {
-    std::string name;     // Optional: name like "Espresso"
-    int wasser_g;         // Water in grams (same as ml)
-    int milch_ml;         // Milk in milliliters ✅
-    int kaffee_g;         // Coffee in grams
-    int zucker_TL;        // Sugar in teaspoons
+    std::string name;
+    int wasser_g;
+    int milch_ml;
+    int kaffee_g;
+    int zucker_TL;
 
     // Constructor for quick creation
     Rezept(const std::string& name, int wasser, int milch, int kaffee, int zucker)

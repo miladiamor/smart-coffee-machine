@@ -23,7 +23,7 @@ INCLUDEPATH += $$PWD/include
 
 # The source files (e.g. *.cpp)
 SOURCES += \
-    src/Behaelter.cpp \
+    src/Tankwaage.cpp \
     src/Fuellstandsmessung.cpp \
     src/Ressourcen.cpp \
     src/TankTyp.cpp \
@@ -36,7 +36,7 @@ SOURCES += \
 
 # The header files (e.g. *.h)
 HEADERS += \
-    include/Behaelter.h \
+    include/Tankwaage.h \
     include/Display.h \
     include/Fuellstandsmessung.h \
     include/Heizelemente.h \
