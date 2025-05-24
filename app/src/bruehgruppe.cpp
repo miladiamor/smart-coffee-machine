@@ -10,7 +10,7 @@ Bruehgruppe::Bruehgruppe() :
 
 void Bruehgruppe::kaffee_pressen(int stampfHoehe_mm){
     stampfer->runterfahren();
-    while(inkrementalencoder->get_position_in_mm() > stampfHoehe_mm) {}
+    while(inkrementalencoder->getPosition() > stampfHoehe_mm) {}
     stampfer->stoppen();
 }
 

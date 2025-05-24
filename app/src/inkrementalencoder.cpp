@@ -6,8 +6,12 @@ Inkrementalencoder::Inkrementalencoder(Kolbenmotor *stampfer) :
     stampfer(stampfer)
     {}
 
-int Inkrementalencoder::get_position_in_mm() {
+float Inkrementalencoder::getPosition() {
     return position_mm;
+}
+
+void Inkrementalencoder::setPosition(float position_mm) {
+    this->position_mm = position_mm;
 }
 
 void Inkrementalencoder::update(int neu_position_mm){
