@@ -23,11 +23,11 @@ INCLUDEPATH += $$PWD/include
 
 # The source files (e.g. *.cpp)
 SOURCES += \
+    src/TankSimulation.cpp \
     src/Tankwaage.cpp \
     src/Fuellstandsmessung.cpp \
     src/Programmsteuerung.cpp \
     src/Ressourcen.cpp \
-    src/TankTyp.cpp \
     src/bruehgruppe.cpp \
     src/clock.cpp \
     src/inkrementalencoder.cpp \
@@ -40,11 +40,11 @@ SOURCES += \
     src/Heizelemente.cpp \
     src/Schaeumer.cpp \
     src/Zuckerdispenser.cpp \
-    src/Temperatursensor.cpp \
     src/Programmsteuerung.cpp
 
 # The header files (e.g. *.h)
 HEADERS += \
+    include/TankSimulation.h \
     include/Tankwaage.h \
     include/Display.h \
     include/Fuellstandsmessung.h \
@@ -72,8 +72,8 @@ HEADERS += \
     include/produkt.h \
     include/ventil.h \
     include/zahlungseinheit.h \
-    src/clock.h \
-    src/simulation.h
+    include/clock.h \
+    include/simulation.h
 
 
 # The GUI definition files (so-called forms)

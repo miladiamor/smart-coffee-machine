@@ -11,4 +11,6 @@ public:
 
     int gewichtPruefen() const;
     TankTyp getTyp() const;
+
+    void reduziereGewicht(int g);
 };

@@ -38,7 +38,6 @@ void Simulation::update(int delta_t_ms){
 
         aktuelleTemp += static_cast<int>(HEIZRATE * delta_t_ms * 0.001f);
         temperatursensor.setTemperatur_Cel(aktuelleTemp);
-
     }
 
     heizregler.temperaturRegeln(zielTemp);

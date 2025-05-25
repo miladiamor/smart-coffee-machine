@@ -10,3 +10,8 @@ int Tankwaage::gewichtPruefen() const {
 TankTyp Tankwaage::getTyp() const {
     return typ;
 }
+
+void Tankwaage::reduziereGewicht(int g) {
+    gewicht_g -= g;
+    if (gewicht_g < 0) gewicht_g = 0;
+}
