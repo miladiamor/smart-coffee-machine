@@ -1,5 +1,5 @@
-#ifndef SIMULATION_H
-#define SIMULATION_H
+#pragma once
+
 
 #include <QObject>
 #include <QTimer>
@@ -40,5 +40,3 @@ private:
     Zuckerdispenser zuckerdispenser;
     Schaeumer schaeumer;
 };
-
-#endif // SIMULATION_H
