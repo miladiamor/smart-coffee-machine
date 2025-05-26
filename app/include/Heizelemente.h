@@ -3,15 +3,12 @@ class Heizregler; // Forward declaration
 class Heizelemente {
 
 private:
-    int temperatur_Cel;
-    int zieltemperatur_Cel;
-
-    void einschalten();
-    void ausschalten();
+    bool eingeschaltet;
 
 public:
     Heizelemente();  // Konstruktor
-
+    void einschalten();
+    void ausschalten();
     //void heizen(int zieltemperatur);  // Zieltemperatur setzen
     //void heizenStoppen();             // Heizung stoppen
     //int getTemperatur() const;        // aktuelle Temperatur abfragen

@@ -24,6 +24,7 @@ INCLUDEPATH += $$PWD/include
 # The source files (e.g. *.cpp)
 SOURCES += \
     src/TankSimulation.cpp \
+    src/Temperatursensor.cpp \
     src/Tankwaage.cpp \
     src/Fuellstandsmessung.cpp \
     src/Programmsteuerung.cpp \

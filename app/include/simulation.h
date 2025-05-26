@@ -11,32 +11,36 @@
 #include "Schaeumer.h"
 #include "Temperatursensor.h"
 #include "Zuckerdispenser.h"
+#include "Tankwaage.h"
 
 class Simulation : public QObject
 {
     Q_OBJECT
 public:
-    Simulation(Kolbenmotor *kolbenmotor, Bruehgruppe *bruehgruppe, Inkrementalencoder *inkrementalencoder);
+    Simulation();
+
+    void setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter);
+    void setKolbenmotor(Kolbenmotor *kolbenmotor);
+    void setBruehgruppe(Bruehgruppe *bruehgruppe);
+    void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);
 
 public slots:
     void update(int delta_t_ms);
-    void starteHeizung();
-    void setzeZucker(int level);
-    void starteSchaeumer();
 
 private:
     //Aktoren
     Kolbenmotor *kolbenmotor;
     Bruehgruppe *bruehgruppe;
+    Heizelemente heizelemente;
+    Heizregler heizregler;
+    Zuckerdispenser zuckerdispenser;
+    Schaeumer schaeumer;
 
     //Sensoren
     Inkrementalencoder *inkrementalencoder;
-    float motorPosition_mm, kaffeerestbehaelter_fuellstand_g;
-
-    //Components
-    Heizelemente heizelemente;
-    Heizregler heizregler;
+    Tankwaage *kaffeerestbehaelter;
     Temperatursensor temperatursensor;
-    Zuckerdispenser zuckerdispenser;
-    Schaeumer schaeumer;
+
+    //physische Werte
+    float motorPosition_mm, kaffeerestbehaelter_fuellstand_g, wassertemperatur_cel;
 };

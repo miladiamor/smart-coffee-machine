@@ -1,57 +1,53 @@
 #include "simulation.h"
 #include <cmath>
 
-Simulation::Simulation(Kolbenmotor *kolbenmotor, Bruehgruppe *bruehgruppe, Inkrementalencoder *inkrementalencoder) : kolbenmotor(kolbenmotor), bruehgruppe(bruehgruppe), inkrementalencoder(inkrementalencoder), motorPosition_mm(0), kaffeerestbehaelter_fuellstand_g(0) {
+Simulation::Simulation() : motorPosition_mm(0), kaffeerestbehaelter_fuellstand_g(0) {}
 
+void Simulation::setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter) {
+    this->kaffeerestbehaelter = kaffeerestbehaelter;
+}
+
+void Simulation::setKolbenmotor(Kolbenmotor *kolbenmotor){
+    this->kolbenmotor = kolbenmotor;
+}
+
+void Simulation::setBruehgruppe(Bruehgruppe *bruehgruppe){
+    this->bruehgruppe = bruehgruppe;
+}
+
+void Simulation::setInkrementalencoder(Inkrementalencoder *inkrementalencoder){
+    this->inkrementalencoder = inkrementalencoder;
 }
 
 // Motorgeschwindigkeit definieren
 #define MOTORGESCHWINDIGKEIT_MM_PRO_S 20
-#define HEIZRATE 0.2f
 void Simulation::update(int delta_t_ms){
-    // Motorsimulation
+    // Motorsimulation & Kaffeerestbehälter
+    const float kaffeerest_g_pro_mm = 0.315;
     const float bewegung_pro_frame = MOTORGESCHWINDIGKEIT_MM_PRO_S * delta_t_ms * std::pow(10, -3);
     if (kolbenmotor->getStatus() != Kolbenmotor::motorStatus::Aus) {
         if (kolbenmotor->getStatus() == Kolbenmotor::motorStatus::runterfahren && motorPosition_mm < 20) {
             motorPosition_mm += bewegung_pro_frame;
+            // Füllstand der Restbehälters
+            // füllt sich wenn die Entleerklappe offen ist
+            if (bruehgruppe->getEntleerklappeOffen()){
+                kaffeerestbehaelter_fuellstand_g += kaffeerest_g_pro_mm * bewegung_pro_frame;
+            }
         } else if (kolbenmotor->getStatus() == Kolbenmotor::motorStatus::hochfahren && motorPosition_mm > 0) {
             motorPosition_mm -= bewegung_pro_frame;
         }
     }
 
-    // Füllstand der Restbehälters
-    // füllt sich wenn die Entleerklappe offen ist
-    const float kaffeerest_pro_mm = 0.315;
-    if (bruehgruppe->getEntleerklappeOffen() && kolbenmotor->getStatus() == Kolbenmotor::motorStatus::runterfahren){
-        kaffeerestbehaelter_fuellstand_g += kaffeerest_pro_mm * bewegung_pro_frame;
+    // Temperatur
+    const float heizrate_cel = 0.2;
+    if (heizregler.getEingeschaltet() == true) {
+        wassertemperatur_cel += heizrate_cel * delta_t_ms * 0.001;
     }
 
     // Sensoren setzen
     inkrementalencoder->setPosition(motorPosition_mm);
+    kaffeerestbehaelter->setGewicht(kaffeerestbehaelter_fuellstand_g);
+    temperatursensor.setTemperatur_Cel(wassertemperatur_cel);
 
-    // Temperatur
-
-    int aktuelleTemp = temperatursensor.getTemperatur_Cel();
-    int zielTemp = 90;
-
-    if (aktuelleTemp < zielTemp) {
-
-        aktuelleTemp += static_cast<int>(HEIZRATE * delta_t_ms * 0.001f);
-        temperatursensor.setTemperatur_Cel(aktuelleTemp);
-    }
-
-    heizregler.temperaturRegeln(zielTemp);
-}
-void Simulation:: starteHeizung() {
-    heizregler.temperaturRegeln(90);
-    }
-
-void Simulation::setzeZucker(int level) {
-    for (int i = 0; i < level; ++i) {
-        zuckerdispenser.zuckerAuswerfen();
-    }
 }
 
-void Simulation::starteSchaeumer() {
-    schaeumer.aufschaeumenStarten();
-}

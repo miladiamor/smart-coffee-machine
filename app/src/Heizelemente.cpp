@@ -2,14 +2,15 @@
 #include <QDebug>
 
 Heizelemente::Heizelemente() {
-    temperatur_Cel = 20;
-    zieltemperatur_Cel = 0;
+    this->eingeschaltet = false;
 }
 
 void Heizelemente::einschalten() {
+    this->eingeschaltet = true;
     qDebug() << "Heizelement eingeschaltet.";
 }
 
 void Heizelemente::ausschalten() {
+    this->eingeschaltet = false;
     qDebug() << "Heizelement ausgeschaltet.";
 }

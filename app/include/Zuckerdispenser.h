@@ -2,9 +2,9 @@
 #define ZUCKERDISPENSER_H
 
 class Zuckerdispenser {
-private:
-    int zuckerMenge_g;
 
+private:
+    bool eingeschaltet;
 public:
     Zuckerdispenser(); //konsdsfsdfdf
     void zuckerAuswerfen();

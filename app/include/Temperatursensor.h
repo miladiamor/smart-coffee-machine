@@ -8,7 +8,7 @@ private:
 public:
     Temperatursensor();                  // Konstruktor
     int getTemperatur_Cel();
-    void setTemperatur_Cel(int t) { temperatur_Cel = t; }
+    void setTemperatur_Cel(int t_cel);
 };
 
 #endif // TEMPERATURSENSOR_H

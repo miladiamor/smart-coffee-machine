@@ -8,6 +8,15 @@ Bruehgruppe::Bruehgruppe() :
     stampfer(new Kolbenmotor),
     inkrementalencoder(new Inkrementalencoder(stampfer)) {}
 
+Bruehgruppe::~Bruehgruppe(){
+    delete tropfstopfventil;
+    delete wasserzufuhr;
+    delete kaffeezufuhr;
+    delete entleerklappe;
+    delete stampfer;
+    delete inkrementalencoder;
+}
+
 void Bruehgruppe::kaffee_pressen(int stampfHoehe_mm){
     stampfer->runterfahren();
     while(inkrementalencoder->getPosition() > stampfHoehe_mm) {}

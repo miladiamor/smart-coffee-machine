@@ -2,8 +2,6 @@
 #include <QDebug>
 
 Zuckerdispenser::Zuckerdispenser(){
-    zuckerMenge_g = 10;
-
 }
 
 void Zuckerdispenser::zuckerAuswerfen(){

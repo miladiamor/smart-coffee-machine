@@ -3,14 +3,11 @@
 
 class Tankwaage {
 private:
-    TankTyp typ;
-    int gewicht_g;
+    float gewicht_g;
 
 public:
-    Tankwaage(TankTyp typ, int gewicht);
+    Tankwaage(float gewicht_g);
 
-    int gewichtPruefen() const;
-    TankTyp getTyp() const;
-
-    void reduziereGewicht(int g);
+    float gewichtPruefen() const;
+    void setGewicht_g(float gewicht_g)
 };

@@ -13,6 +13,7 @@ class Bruehgruppe : public QObject
     Q_OBJECT
     public:
         Bruehgruppe();
+        ~Bruehgruppe();
         void kaffee_pressen(int stampfHoehe_mm);
         void entleeren();
         void wasserzufuhr_oeffnen();
