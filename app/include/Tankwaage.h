@@ -1,5 +1,4 @@
 #pragma once
-#include "TankTyp.h"
 
 class Tankwaage {
 private:
@@ -9,5 +8,7 @@ public:
     Tankwaage(float gewicht_g);
 
     float gewichtPruefen() const;
-    void setGewicht_g(float gewicht_g)
+    void setGewicht(float gewicht_g);
+
+
 };
