@@ -71,6 +71,7 @@ void Simulation::update(int delta_t_ms){
     temperatursensor.setTemperatur_Cel(wassertemperatur_cel);
 
     //Durchflusssensor & Pumpe
+    const float pumpmenge_wasser_pro_s_in_g = 11.35;
     for (int i = 0; i < 50; i++){
         wasserzaehler->setDurchflussImpuls(true);
         wasserzaehler->incrementImpuls();
@@ -90,12 +91,13 @@ void Simulation::update(int delta_t_ms){
     const float MILCH_MAXTEMP_CEL = 65.0;
     const float MILCH_HEIZRATE_CEL_PRO_S = 0.5;
     const float MILCH_KUEHLRATE_CEL_PRO_S = 0.3;
-    if (schaeumer && schaeumer->getEingeschaltet()) {
+    if (schaeumer && schaeumer->getEingeschaltet() && milchtemperatur_cel < MILCH_MAXTEMP_CEL) {
         milchtemperatur_cel += MILCH_HEIZRATE_CEL_PRO_S * delta_t_ms * 0.001;
-
+/*
         if (milchtemperatur_cel > MILCH_MAXTEMP_CEL) {
             milchtemperatur_cel = MILCH_MAXTEMP_CEL;
         }
+*/
     } else if (milchtemperatur_cel > MILCH_STARTTEMP_CEL) {
         milchtemperatur_cel -= MILCH_KUEHLRATE_CEL_PRO_S * delta_t_ms * 0.001;
 

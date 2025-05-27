@@ -39,14 +39,26 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     status =  1;
     qDebug() << "Kaffeeprogramm gesetzt";
 
-    if (!ressourcenCheck()){
-        qDebug() << "Nicht genuegend Ressourcen";
-        return;
-    }
+    // Durchlauferhitzer wasser und milch auf die richtige Temperatur bringen
+    temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze());
+    temperaturregler_wasser->temperaturRegeln(92);
+    // Kaffee in brühgruppe schieben
+
+    // Milch pumpen
+
+    // Wasserzufuhrventil in Brühgruppe öffnen
+
+    //Wasser pumpen
+
+    //tropfstopfventil schließen
+
+    // Brühgruppe entleeren
+
+    // einmal mit Wasser spülen (reinigen)
+
+    // Ventille schließen
 
     steuerung->pumpen(100);
-    temperaturregler_milch->temperaturRegeln(65);
-    temperaturregler_wasser->temperaturRegeln(92);
     bruehgruppe->kaffee_pressen(5);
     bruehgruppe->kaffeepulver_hinzufuegen(10);
     bruehgruppe->wasserzufuhr_oeffnen();

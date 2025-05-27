@@ -1,20 +1,24 @@
 #ifndef PUMPESTEUERUNG_H
 #define PUMPESTEUERUNG_H
 
+#include <QObject>
+#include <QTimer>
+
 class Pumpe;
 class Durchflusssensor;
 
-class Pumpesteuerung
+class Pumpesteuerung : public QObject
 {
-
+    Q_OBJECT
     private:
+        QTimer sleeper;
         float menge_mil;
         Pumpe *wasserpumpe, *milchpumpe;
         Durchflusssensor *wasserzaehler, *milchzaehler;
 
 
     public:
-        Pumpesteuerung();
+        Pumpesteuerung(Pumpe *wasserpumpe, Pumpe *milchpumpe, Durchflusssensor *wasserzaehler, Durchflusssensor *milchzaehler);
         void pumpen(float wassermenge);
 
 

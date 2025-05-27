@@ -14,61 +14,121 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="startStopButton">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>300</y>
-      <width>113</width>
-      <height>32</height>
+      <x>20</x>
+      <y>10</y>
+      <width>236</width>
+      <height>310</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Start</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="titleLabel">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>50</y>
-      <width>331</width>
-      <height>191</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>120</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Demo</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="rocketLabel">
-    <property name="geometry">
-     <rect>
-      <x>450</x>
-      <y>180</y>
-      <width>300</width>
-      <height>300</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="data/data.qrc">:/rocket.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <selectedoff>../icons/.jpg</selectedoff>
+            </iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>100</width>
+             <height>100</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pushButton_3">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <selectedoff>../icons/coffee_crema.jpg</selectedoff>
+            </iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>100</width>
+             <height>100</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="toolTipDuration">
+            <number>-1</number>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <selectedoff>../icons/milk_coffee.jpg</selectedoff>
+            </iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>100</width>
+             <height>100</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <selectedoff>../icons/Latte_Machiato.jpg</selectedoff>
+            </iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>100</width>
+             <height>100</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Milch</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_2">
+         <property name="text">
+          <string>Zucker</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="text">
+        <string>Kaufen</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -77,14 +137,123 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuKaffeeauswahl">
+    <property name="title">
+     <string>Kaffeeauswahl</string>
+    </property>
+   </widget>
+   <addaction name="menuKaffeeauswahl"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="data/data.qrc"/>
- </resources>
- <connections/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>cappucino()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>134</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>234</x>
+     <y>513</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>pressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>milchkaffee()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>78</x>
+     <y>206</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>113</x>
+     <y>518</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>pressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>kaffeeCrema()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>499</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>pressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>latteMachiato()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>237</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>535</x>
+     <y>497</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>zucker(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>63</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>378</x>
+     <y>292</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>milch(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>299</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>384</x>
+     <y>337</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>cappucino()</slot>
+  <slot>milchkaffee()</slot>
+  <slot>kaffeeCrema()</slot>
+  <slot>latteMachiato()</slot>
+  <slot>zucker(bool)</slot>
+  <slot>milch(bool)</slot>
+ </slots>
 </ui>

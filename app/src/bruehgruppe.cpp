@@ -1,6 +1,5 @@
 #include "bruehgruppe.h"
 #include <QTimer>
-#include <QThread>
 
 Bruehgruppe::Bruehgruppe() :
     tropfstopfventil(new Ventil), wasserzufuhr(new Ventil), kaffeezufuhr(new Ventil),
