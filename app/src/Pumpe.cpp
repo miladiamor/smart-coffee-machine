@@ -12,3 +12,7 @@ void Pumpe::pumpeStarten(){
 void Pumpe::pumpeStoppen(){
     this->starten = false;
 }
+
+bool Pumpe::istAktiv() const {
+    return status != 0;
+}

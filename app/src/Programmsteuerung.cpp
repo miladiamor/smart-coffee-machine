@@ -43,6 +43,8 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze());
     temperaturregler_wasser->temperaturRegeln(92);
     // Kaffee in brühgruppe schieben
+    bruehgruppe->kaffeepulver_hinzufuegen(10);
+    bruehgruppe->kaffee_pressen(5);
 
     // Milch pumpen
 
@@ -73,9 +75,10 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     qDebug() << "Kaffeeprogramm abgeschlossen";
 }
 
-bool Programmsteuerung::ressourcenCheck(){
+/*bool Programmsteuerung::ressourcenCheck(){
     std::shared_ptr<Ressourcen> res = messung ->getRessourcen();
     return res->getWassermenge_ml() > 100 && res->getKaffeemenge_g() > 10;
     //ressourcen res = messung->getRessourcen();
     //return res.wasser > 100 && res.kaffee > 10;
 }
+*/

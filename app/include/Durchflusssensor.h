@@ -17,10 +17,7 @@ class Durchflusssensor : public QObject
         bool getDurchflussImpuls() const;
         void setDurchflussImpuls(bool impuls);
 
-        int getImpulsCount() const;
-        void incrementImpuls();
-
-        void getWassermenge_g();
+        float getWassermenge_g() const;
         void addWassermenge_g(float wassermenge_g);
         void setNull();
 };

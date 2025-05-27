@@ -39,6 +39,9 @@ void Simulation::setSchaeumer(Schaeumer *schaeumer) {
     this->Schaeumer = schaeumer;
 }
 
+static bool wasserResetDone = false;
+static bool milchResetDone = false;
+
 // Motorgeschwindigkeit definieren
 #define MOTORGESCHWINDIGKEIT_MM_PRO_S 20
 
@@ -72,19 +75,43 @@ void Simulation::update(int delta_t_ms){
 
     //Durchflusssensor & Pumpe
     const float pumpmenge_wasser_pro_s_in_g = 11.35;
-    for (int i = 0; i < 50; i++){
-        wasserzaehler->setDurchflussImpuls(true);
-        wasserzaehler->incrementImpuls();
-    }
-    wasserzaehler -> setDurchflussImpuls(false);
-    wasserpumpe->pumpeStoppen();
+    const float pumpmenge_milch_pro_s_in_g = 9.2;
 
-    for (int i = 0; i< 50; i++) {
-        milchzaehler->setDurchflussImpuls(true);
-        milchzaehler->incrementImpuls();
+    float wassermenge_pro_frame = pumpmenge_wasser_pro_s_in_g * (delta_t_ms / 1000.0);
+    float milchmenge_pro_frame = pumpmenge_milch_pro_s_in_g * (delta_t_ms / 1000.0);
+
+    // Wasserfluss
+
+    if (!wasserResetDone && wasserpumpe->istAktiv() == true) {
+        wasserzaehler->setNull();
+        wasserResetDone = true;
     }
-    milchzaehler -> setDurchflussImpuls(false);
-    milchpumpe -> pumpeStoppen();
+
+    wasserzaehler->addWassermenge_g(wassermenge_pro_frame);
+    wasserzaehler->setDurchflussImpuls(true);
+    wasserzaehler->setDurchflussImpuls(false);
+
+    // Pumpe stoppen bei 150 g wasser
+    if (wasserzaehler->getWassermenge_g() >= 150.0) {
+        wasserpumpe->pumpeStoppen();
+    }
+
+    // Milchfluss
+
+    if (!milchResetDone && milchpumpe->istAktiv() == true) {
+        milchzaehler->setNull();
+        milchResetDone = true;
+    }
+
+    milchzaehler->addWassermenge_g(milchmenge_pro_frame);
+    milchzaehler->setDurchflussImpuls(true);
+    milchzaehler->setDurchflussImpuls(false);
+
+    // Pumpe stoppen bei 150g milch
+    if (milchzaehler->getWassermenge_g() >= 75.0) {
+        milchpumpe->pumpeStoppen();
+    }
+
 
     // Schaeumer
     const float MILCH_STARTTEMP_CEL = 25.0;
@@ -93,11 +120,7 @@ void Simulation::update(int delta_t_ms){
     const float MILCH_KUEHLRATE_CEL_PRO_S = 0.3;
     if (schaeumer && schaeumer->getEingeschaltet() && milchtemperatur_cel < MILCH_MAXTEMP_CEL) {
         milchtemperatur_cel += MILCH_HEIZRATE_CEL_PRO_S * delta_t_ms * 0.001;
-/*
-        if (milchtemperatur_cel > MILCH_MAXTEMP_CEL) {
-            milchtemperatur_cel = MILCH_MAXTEMP_CEL;
-        }
-*/
+
     } else if (milchtemperatur_cel > MILCH_STARTTEMP_CEL) {
         milchtemperatur_cel -= MILCH_KUEHLRATE_CEL_PRO_S * delta_t_ms * 0.001;
 

@@ -1,13 +1,20 @@
 #ifndef ZUCKERDISPENSER_H
 #define ZUCKERDISPENSER_H
 
-class Zuckerdispenser {
+#include <QObject>
+#include <QTimer>
 
-private:
-    bool eingeschaltet;
-public:
-    Zuckerdispenser();
-    void zuckerAuswerfen();
+class Zuckerdispenser : public QObject {
+
+    Q_OBJECT
+    private:
+        bool eingeschaltet;
+        QTimer timer;
+
+    public:
+        Zuckerdispenser();
+        void zuckerAuswerfen();
+        bool istAktiv() const;
 }; 
 
 #endif
