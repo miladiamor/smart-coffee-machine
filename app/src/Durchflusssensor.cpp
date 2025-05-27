@@ -10,10 +10,14 @@ void Durchflusssensor::setDurchflussImpuls(bool Impuls){
     durchflussImpuls = Impuls;
 }
 
-int Durchflusssensor::getImpulsCount() const {
-    return impulsCount;
+float Durchflusssensor::getWassermenge_g() const {
+    return wassermenge_g;
 }
 
-void Durchflusssensor::incrementImpuls(){
-    impulsCount++;
+void Durchflusssensor::addWassermenge_g(float menge_g) {
+    wassermenge_g += menge_g;
+}
+
+void Durchflusssensor::setNull() {
+    wassermenge_g = 0.0;
 }

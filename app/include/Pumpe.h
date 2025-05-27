@@ -11,6 +11,7 @@ class Pumpe{
         Pumpe();
         void pumpeStarten();
         void pumpeStoppen();
+        bool istAktiv() const;
 };
 
 #endif // PUMPE_H

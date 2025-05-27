@@ -1,16 +1,17 @@
 #include "Zuckerdispenser.h"
 #include <QDebug>
+#include <QTimer>
 
 Zuckerdispenser::Zuckerdispenser(){
+    eingeschaltet = false;
+    timer.setSingleShot(true);
+    connect(&timer, &QTimer::timeout, this, &Zuckerdispenser::ausschalten);
 }
 
 void Zuckerdispenser::zuckerAuswerfen(){
-    if(zuckerMenge_g < 0){
-        zuckerMenge_g -= 1;
-        qDebug() << "1g Zucker ausgeworfen:" << zuckerMenge_g << "g";
-    }
-    else{
-        qDebug() <<"Kein Zucker mehr vorhanden!";
-    }
+    eingeschaltet = true;
+    timer.start
 }
-
+bool Zuckerdispenser::istAktiv() const{
+    return eingeschaltet;
+}
