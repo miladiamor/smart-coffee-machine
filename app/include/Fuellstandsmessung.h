@@ -21,4 +21,6 @@ public:
 
     bool updateRessourcen();
     Ressourcen* getRessourcen() const;
-};//hey
+
+    bool hatGenug(Tankwaage* tank, int mengeEinheit, float faktor = 1.0f) const;
+};

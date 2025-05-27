@@ -19,10 +19,16 @@ bool Fuellstandsmessung::updateRessourcen() {
     ressourcen->setKaffeemenge_g(kaffee->gewichtPruefen());
     ressourcen->setZuckermenge_TL(static_cast<short>(zucker->gewichtPruefen() / ZUCKER_GRAMM_PRO_TL));
 
-
     return true;
 }
 
 Ressourcen* Fuellstandsmessung::getRessourcen() const {
     return ressourcen;
+}
+
+bool Fuellstandsmessung::hatGenug(Tankwaage* tank, int mengeEinheit, float faktor) const {
+    if (!tank) return false;
+
+    float benoetigt_g = mengeEinheit * faktor;
+    return tank->gewichtPruefen() >= benoetigt_g;
 }

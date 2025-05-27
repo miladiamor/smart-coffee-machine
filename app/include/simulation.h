@@ -18,12 +18,15 @@ class Simulation : public QObject
     Q_OBJECT
 public:
     Simulation();
-
+    void setMilch(Tankwaage *milch);
+    void setWasser(Tankwaage *wasser);
+    void setKaffee(Tankwaage *kaffee);
+    void setZucker(Tankwaage *zucker);
     void setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter);
     void setKolbenmotor(Kolbenmotor *kolbenmotor);
     void setBruehgruppe(Bruehgruppe *bruehgruppe);
     void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);
-
+    bool entnehmeZutat(Tankwaage* tank, int menge, float faktor);
 public slots:
     void update(int delta_t_ms);
 
@@ -35,7 +38,10 @@ private:
     Heizregler heizregler;
     Zuckerdispenser zuckerdispenser;
     Schaeumer schaeumer;
-
+    Tankwaage *wasser;
+    Tankwaage *milch;
+    Tankwaage *kaffee;
+    Tankwaage *zucker;
     //Sensoren
     Inkrementalencoder *inkrementalencoder;
     Tankwaage *kaffeerestbehaelter;

@@ -3,6 +3,22 @@
 
 Simulation::Simulation() : motorPosition_mm(0), kaffeerestbehaelter_fuellstand_g(0) {}
 
+void Simulation::setMilch(Tankwaage *milch) {
+    this->milch = milch;
+}
+
+void Simulation::setWasser(Tankwaage *wasser) {
+    this->wasser = wasser;
+}
+
+void Simulation::setKaffee(Tankwaage *kaffee) {
+    this->kaffee = kaffee;
+}
+
+void Simulation::setZucker(Tankwaage *zucker) {
+    this->zucker = zucker;
+}
+
 void Simulation::setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter) {
     this->kaffeerestbehaelter = kaffeerestbehaelter;
 }
@@ -47,7 +63,19 @@ void Simulation::update(int delta_t_ms){
     // Sensoren setzen
     inkrementalencoder->setPosition(motorPosition_mm);
     kaffeerestbehaelter->setGewicht(kaffeerestbehaelter_fuellstand_g);
+    milch->setGewicht(milch->gewichtPruefen());
+    wasser->setGewicht(wasser->gewichtPruefen());
+    kaffee->setGewicht(kaffee->gewichtPruefen());
+    zucker->setGewicht(zucker->gewichtPruefen());
     temperatursensor.setTemperatur_Cel(wassertemperatur_cel);
-
 }
 
+
+bool Simulation::entnehmeZutat(Tankwaage* tank, int menge, float faktor) {
+    float benoetigt = menge * faktor;
+    if (tank->hatGenug(benoetigt)) {
+        tank->setGewicht(tank->gewichtPruefen() - benoetigt);
+        return true;
+    }
+    return false;
+}
