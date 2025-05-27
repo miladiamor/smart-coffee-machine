@@ -12,6 +12,11 @@
 #include "Temperatursensor.h"
 #include "Zuckerdispenser.h"
 #include "Tankwaage.h"
+#include "Durchflusssensor.h"
+#include "Pumpe.h"
+#include "Schaeumer.h"
+
+
 
 class Simulation : public QObject
 {
@@ -23,6 +28,12 @@ public:
     void setKolbenmotor(Kolbenmotor *kolbenmotor);
     void setBruehgruppe(Bruehgruppe *bruehgruppe);
     void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);
+    void setWasserzaehler(Durchflusssensor *sensor);
+    void setMilchZaehler(Durchflusssensor *sensor);
+    void setWasserPumpe(Pumpe *pumpe);
+    void setMilchPumpe (Pumpe *pumpe);
+    void setSchaeumer (Schaeumer *schaeumer);
+
 
 public slots:
     void update(int delta_t_ms);
@@ -34,13 +45,21 @@ private:
     Heizelemente heizelemente;
     Heizregler heizregler;
     Zuckerdispenser zuckerdispenser;
-    Schaeumer schaeumer;
+    Schaeumer *schaeumer;
+    Pumpe *wasserpumpe;
+    Pumpe *milchpumpe;
+
+
 
     //Sensoren
     Inkrementalencoder *inkrementalencoder;
     Tankwaage *kaffeerestbehaelter;
     Temperatursensor temperatursensor;
+    Durchflusssensor *wasserzaehler;
+    Durchflusssensor *milchzaehler;
+
 
     //physische Werte
-    float motorPosition_mm, kaffeerestbehaelter_fuellstand_g, wassertemperatur_cel;
+    float motorPosition_mm, kaffeerestbehaelter_fuellstand_g, wassertemperatur_cel, milchtemperatur_cel;
+
 };

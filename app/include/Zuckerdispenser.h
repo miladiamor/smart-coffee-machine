@@ -6,7 +6,7 @@ class Zuckerdispenser {
 private:
     bool eingeschaltet;
 public:
-    Zuckerdispenser(); //konsdsfsdfdf
+    Zuckerdispenser();
     void zuckerAuswerfen();
 }; 
 
