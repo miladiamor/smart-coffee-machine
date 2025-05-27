@@ -44,6 +44,10 @@ void Bruehgruppe::kaffeepulver_hinzufuegen(int menge_g){
     QTimer::singleShot(waitTime, kaffeezufuhr, &Ventil::schliessen);
 }
 
-bool Bruehgruppe::getEntleerklappeOffen(){
-    return entleerklappe->get_ist_offen();
+void Bruehgruppe::tropfstopfventilOeffnen(){
+    tropfstopfventil->oeffnen();
+}
+
+void Bruehgruppe::tropfstopfventilSchließen(){
+    tropfstopfventil->schliessen();
 }
