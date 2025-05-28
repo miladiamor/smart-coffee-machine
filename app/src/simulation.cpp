@@ -144,5 +144,11 @@ void Simulation::update(int delta_t_ms){
         }
     }
 
+    // Zuckerdispenser
+    if (!zuckerdispenser.istAktiv()){
+        zuckerdispenser.zuckerAuswerfen();
+    }
+    zuckerdispenser.update(delta_t_ms);
+
 }
 

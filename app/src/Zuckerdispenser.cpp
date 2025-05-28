@@ -4,14 +4,14 @@
 
 Zuckerdispenser::Zuckerdispenser(){
     eingeschaltet = false;
-    timer.setSingleShot(true);
-    connect(&timer, &QTimer::timeout, this, &Zuckerdispenser::ausschalten);
 }
 
 void Zuckerdispenser::zuckerAuswerfen(){
     eingeschaltet = true;
-    timer.start
+    QTimer::singleShot(500, eingeschaltet, &Zuckerdispenser::ausschalten);
+    //eingeschaltet = false;
 }
 bool Zuckerdispenser::istAktiv() const{
     return eingeschaltet;
 }
+

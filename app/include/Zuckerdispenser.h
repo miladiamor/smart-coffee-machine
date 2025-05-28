@@ -9,12 +9,13 @@ class Zuckerdispenser : public QObject {
     Q_OBJECT
     private:
         bool eingeschaltet;
-        QTimer timer;
+        QTimer sleeper;
 
     public:
         Zuckerdispenser();
         void zuckerAuswerfen();
         bool istAktiv() const;
+        void ausschalten();
 }; 
 
 #endif
