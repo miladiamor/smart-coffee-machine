@@ -9,7 +9,7 @@
 
 
 #include <QDebug>
-#include <memory>
+
 
 Programmsteuerung::Programmsteuerung(){
     status = 0;
@@ -23,65 +23,61 @@ Programmsteuerung::Programmsteuerung(){
     messung = nullptr;
 }
 
-void Programmsteuerung::ausfuehren(int dummyProgrammID) {
-    Q_UNUSED(dummyProgrammID);
-
-    if(!programm){
-        qDebug() << "Kein Kaffeeprogramm gesetzt";
-        return;
-    }
-
-    if (!temperaturregler_wasser || temperaturregler_milch || steuerung || !bruehgruppe || milchschaeumer || !zucker || messung) {
-        qDebug() <<"Ein oder mehrere Komponenten sind nicht intialisiert";
-        return;
-    }
+void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm) {
 
     status =  1;
     qDebug() << "Kaffeeprogramm gesetzt";
 
     // Durchlauferhitzer wasser und milch auf die richtige Temperatur bringen
     temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze_cel());
+
     temperaturregler_wasser->temperaturRegeln(programm->getWassermenge_ml);
 
+    // Delay reinpacken
 
     // Kaffee vorbereiten
     bruehgruppe->kaffeepulver_hinzufuegen(programm->getKaffeemenge_g);
-    bruehgruppe->kaffee_pressen(5);
+    bruehgruppe->kaffee_pressen(programm->getstampfHoehe_mm);
+
+    // Delay reinpacken
+
     // Milch pumpen
      milchschaeumer->aufschaeumenStarten();
+
     //  Milch fertig
      milchschaeumer->aufschaeumenStoppen();
+
     // Wasserzufuhrventil in Brühgruppe öffnen
-    bruehgruppe->wasserzufuhr_oeffnen();
+     bruehgruppe->wasserzufuhr_oeffnen();
+
     //Wasser pumpen
-    steuerung->pumpen(100);
+     steuerung->pumpen(50);
+
     // zucker ausgeben
-    zucker->zuckerAuswerfen();
+     zucker->zuckerAuswerfen();
+
     // Wasserzufuhr schließen
-    bruehgruppe->wasserzufuhr_schliessen();
+     bruehgruppe->wasserzufuhr_schliessen();
+
     //tropfstopfventil offnen
-    bruehgruppe->tropfstopfventilOeffnen();
+     bruehgruppe->tropfstopfventilOeffnen();
+
     //tropfstopfventil schließen
-    bruehgruppe->tropfstopfventilSchließen();
+     bruehgruppe->tropfstopfventilSchließen();
+
     // Brühgruppe entleeren
-    bruehgruppe->entleeren();
+     bruehgruppe->entleeren();
+
     // einmal mit Wasser spülen (reinigen)
-    bruehgruppe->wasserzufuhr_oeffnen();
-    steuerung->pumpen(50);
-    bruehgruppe->wasserzufuhr_schliessen();
-    bruehgruppe->entleeren();
-    // Ventille schließen
-    Ventil->schliessen();
+     bruehgruppe->wasserzufuhr_oeffnen();
+     steuerung->pumpen(50);
+     bruehgruppe->wasserzufuhr_schliessen();
+     bruehgruppe->entleeren();
+
 
 
     status = 0;
     qDebug() << "Kaffeeprogramm abgeschlossen";
 }
 
-/*bool Programmsteuerung::ressourcenCheck(){
-    std::shared_ptr<Ressourcen> res = messung ->getRessourcen();
-    return res->getWassermenge_ml() > 100 && res->getKaffeemenge_g() > 10;
-    //ressourcen res = messung->getRessourcen();
-    //return res.wasser > 100 && res.kaffee > 10;
-}
-*/
+
