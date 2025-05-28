@@ -1,7 +1,10 @@
 #include "simulation.h"
 #include <cmath>
 
-Simulation::Simulation() : motorPosition_mm(0), kaffeerestbehaelter_fuellstand_g(0) {}
+Simulation::Simulation() :
+    motorPosition_mm(0),
+    kaffeerestbehaelter_fuellstand_g(0),
+    bruehkammerInhalt_g(0) {}
 
 void Simulation::setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter) {
     this->kaffeerestbehaelter = kaffeerestbehaelter;

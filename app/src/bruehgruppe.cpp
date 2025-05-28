@@ -51,3 +51,7 @@ void Bruehgruppe::tropfstopfventilOeffnen(){
 void Bruehgruppe::tropfstopfventilSchließen(){
     tropfstopfventil->schliessen();
 }
+
+bool Bruehgruppe::getEntleerklappeOffen(){
+    return entleerklappe->get_ist_offen();
+}

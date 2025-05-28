@@ -15,7 +15,6 @@ private:
     Programmsteuerung * steuerung;
     bool mitZucker;
 
-
 public:
     Koordinator();
     void setFuellstandsmessung(Fuellstandsmessung *fsm);
@@ -24,5 +23,5 @@ public:
     void setSteuerung(Programmsteuerung *steuerung);
     bool bezahlen();
 
-    Kaffeeprogramm* getAusgewaehltesProgramm() const;
+    Kaffeeprogramm* getProgramm();
 };

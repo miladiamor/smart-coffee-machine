@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+class Koordinator;
 #include <QMainWindow>
 #include <QProgressBar>
 
@@ -28,6 +29,7 @@ public:
 private:
     Ui::MainWindow *ui;
     QProgressBar* cup;
+    Koordinator *koordinator;
 };
 
 #endif // MAINWINDOW_H

@@ -21,6 +21,8 @@ class Bruehgruppe : public QObject
         void tropfstopfventilOeffnen();
         void tropfstopfventilSchließen();
         void kaffeepulver_hinzufuegen(int menge_g);
+
+        bool getEntleerklappeOffen();
     private:
         QTimer sleeper;
         Ventil *tropfstopfventil, *wasserzufuhr, *kaffeezufuhr;

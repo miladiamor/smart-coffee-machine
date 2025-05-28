@@ -11,5 +11,5 @@ void Pumpesteuerung::pumpen(float wassermenge){
     menge_mil = wassermenge;
     wasserpumpe->pumpeStarten();
     QTimer::singleShot(500, wasserpumpe, &Pumpe::pumpeStoppen);
-    wasserpumpe->pumpeStoppen();
+    //wasserpumpe->pumpeStoppen();
 }
