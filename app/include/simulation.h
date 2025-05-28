@@ -15,6 +15,7 @@
 #include "Durchflusssensor.h"
 #include "Pumpe.h"
 #include "Schaeumer.h"
+#include "QThread"
 
 
 

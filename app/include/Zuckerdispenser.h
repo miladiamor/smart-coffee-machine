@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QThread>
 
 class Zuckerdispenser : public QObject {
 
