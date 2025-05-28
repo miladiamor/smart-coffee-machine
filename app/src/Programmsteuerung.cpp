@@ -61,8 +61,10 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     zucker->zuckerAuswerfen();
     // Wasserzufuhr schließen
     bruehgruppe->wasserzufuhr_schliessen();
+    //tropfstopfventil offnen
+    bruehgruppe->tropfstopfventilOeffnen();
     //tropfstopfventil schließen
-
+    bruehgruppe->tropfstopfventilSchließen();
     // Brühgruppe entleeren
     bruehgruppe->entleeren();
     // einmal mit Wasser spülen (reinigen)
@@ -71,7 +73,7 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     bruehgruppe->wasserzufuhr_schliessen();
     bruehgruppe->entleeren();
     // Ventille schließen
-
+    Ventil->schliessen();
     // Heizregler
 
    /* steuerung->pumpen(100);
