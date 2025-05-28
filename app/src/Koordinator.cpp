@@ -1,7 +1,7 @@
 #include "Koordinator.h"
 
 Koordinator::Koordinator(Display* display, Fuellstandsmessung* fsm)
-    : display(display), fsm(fsm), ausgewaehltesProgramm(nullptr), mitMilch(false), mitZucker(false) {}
+    : display(display), fsm(fsm), ausgewaehltesProgramm(nullptr), mitMilch(false), mitZucker(false), zahlung(nullptr) {}
 
 void Koordinator::auswahlAnzeigen() {
     display->displayFrame();
@@ -22,11 +22,28 @@ void Koordinator::nachZuckerFragen() {
     mitZucker = input.getX() > 0;  // simulate YES if clicked right side
 }
 
-bool Koordinator::bezahlen() {
+    bool Koordinator::bezahlen() {
     display->showWarning("Bitte bezahlen Sie jetzt...");
-    return true;  // Simulate payment done
-}
+
+    if (!zahlung || !ausgewaehltesProgramm) {
+        display->showWarning("Zahlungssystem nicht verbunden!");
+        return false;
+    }
+
+    Produkt* produkt = ausgewaehltesProgramm->getProdukt();   // TODO: Bitte in Kaffeeprogramm die Methode getProdukt() implementieren,
+                                                             // damit der Koordinator das aktuelle Produkt für die Zahlung abrufen kann.
+    bool erfolg = zahlung->versucheZahlung(produkt);
+
+    if (!erfolg) {
+        display->showWarning("Zahlung fehlgeschlagen!");
+    }
+        return true;  // Simulate payment done
+    }
 
 Kaffeeprogramm* Koordinator::getAusgewaehltesProgramm() const {
     return ausgewaehltesProgramm;
+}
+
+void Koordinator::setZahlungseinheit(Zahlungseinheit* z) {
+    zahlung = z;
 }
