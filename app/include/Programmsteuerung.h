@@ -3,12 +3,13 @@
 #define PROGRAMMSTEUERUNG_H
 
 #include <QObject>
+#include <QThread>
 
 class Schaeumer;
 class Zuckerdispenser;
 class Bruehgruppe;
 class Heizregler;
-class Pumpsteuerung;
+class Pumpesteuerung;
 class Fuellstandsmessung;
 class Kaffeeprogramm;
 
@@ -23,7 +24,7 @@ private:
     Zuckerdispenser* zucker;
     Schaeumer* milchschaeumer;
     Bruehgruppe* bruehgruppe;
-    Pumpsteuerung* steuerung;
+    Pumpesteuerung* steuerung;
     Fuellstandsmessung* messung;
 
 public:

@@ -5,7 +5,7 @@
 #include "Zuckerdispenser.h"
 #include "Fuellstandsmessung.h"
 #include "Pumpesteuerung.h"
-
+#include "clock.h"
 
 
 #include <QDebug>
@@ -29,48 +29,53 @@ void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm) {
     qDebug() << "Kaffeeprogramm gesetzt";
 
     // Durchlauferhitzer wasser und milch auf die richtige Temperatur bringen
-    temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze_cel());
-
-    temperaturregler_wasser->temperaturRegeln(programm->getWassermenge_ml);
-
-    // Delay reinpacken
+     temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze_cel());
+     temperaturregler_wasser->temperaturRegeln(programm->getWassermenge_ml);
+     QThread::msleep(1000);
 
     // Kaffee vorbereiten
-    bruehgruppe->kaffeepulver_hinzufuegen(programm->getKaffeemenge_g);
-    bruehgruppe->kaffee_pressen(programm->getstampfHoehe_mm);
-
-    // Delay reinpacken
+     bruehgruppe->kaffeepulver_hinzufuegen(programm->getKaffeemenge_g);
+     QThread::msleep(300);
+     bruehgruppe->kaffee_pressen(programm->getstampfHoehe_mm);
+     QThread::msleep(500);
 
     // Milch pumpen
      milchschaeumer->aufschaeumenStarten();
+     QThread::msleep(1500);
 
     //  Milch fertig
      milchschaeumer->aufschaeumenStoppen();
 
     // Wasserzufuhrventil in Brühgruppe öffnen
      bruehgruppe->wasserzufuhr_oeffnen();
+     QThread::msleep(200);
 
     //Wasser pumpen
      steuerung->pumpen(50);
+     QThread::msleep(1000);
 
     // zucker ausgeben
      zucker->zuckerAuswerfen();
+     QThread::msleep(500);
 
     // Wasserzufuhr schließen
      bruehgruppe->wasserzufuhr_schliessen();
 
     //tropfstopfventil offnen
      bruehgruppe->tropfstopfventilOeffnen();
+     QThread::msleep(300);
 
     //tropfstopfventil schließen
      bruehgruppe->tropfstopfventilSchließen();
 
     // Brühgruppe entleeren
      bruehgruppe->entleeren();
+     QThread::msleep(500);
 
     // einmal mit Wasser spülen (reinigen)
      bruehgruppe->wasserzufuhr_oeffnen();
      steuerung->pumpen(50);
+     QThread::msleep(1000);
      bruehgruppe->wasserzufuhr_schliessen();
      bruehgruppe->entleeren();
 
