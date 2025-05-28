@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Fuellstandsmessung.h"
-#include "kaffeeprogramm.h"
+#include "Kaffeeprogramm.h"
 #include "mainwindow.h"
-#include "zahlungseinheit.h"
+#include "Zahlungseinheit.h"
 #include "Programmsteuerung.h"
 
 class Koordinator {
@@ -15,12 +15,14 @@ private:
     Programmsteuerung * steuerung;
     bool mitZucker;
 
+
 public:
     Koordinator();
     void setFuellstandsmessung(Fuellstandsmessung *fsm);
     void setAnzeige(MainWindow *anzeige);
     void setZahlung(Zahlungseinheit *zahlung);
     void setSteuerung(Programmsteuerung *steuerung);
+    bool bezahlen();
 
     Kaffeeprogramm* getAusgewaehltesProgramm() const;
 };

@@ -1,24 +1,23 @@
 #ifndef MUENZROEHRE_H
 #define MUENZROEHRE_H
 
-#include "muenze.h" // Für die Münzen
+class Muenzroehre {
+private:
+    float wert;
+    int kapazitaet;
+    int aktuelleAnzahl;
 
-class Muenzroehre
-{
 public:
-
     Muenzroehre(float wert, int kapazitaet);
 
+    bool istVoll() const;
+    void leeren();
 
-    bool istVoll() const;                  // Prüfen, ob die Röhre voll ist
-    bool fuegeHinzu(Muenze* m);               // Eine Münze hinzufügen
-    float gesamtWert() const;               // Gesamtwert aller Münzen
-    void leeren();                          // Alle Münzen entfernen
+    int getAktuelleAnzahl() const;
+    int getKapazitaet() const;
+    float getWert() const;
 
-private:
-    float wert;            // Münzwert dieser Röhre (z.B 0.50 )
-    int kapazitaet;         // Maximale Anzahl an Münzen
-    int aktuelleAnzahl;    // Derzeitige Münzanzahl
+    void erhoeheAnzahl();
 };
 
 #endif // MUENZROEHRE_H

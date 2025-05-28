@@ -1,25 +1,29 @@
 #ifndef MUENZROEHRENSPEICHER_H
 #define MUENZROEHRENSPEICHER_H
 
-#include "muenzroehre.h"
+#include "Muenzroehre.h"
+#include "Muenzschieber.h"
+#include "MuenzAuswerfer.h"
 
-class Muenzroehrenspeicher
-{
-public:
-    // Konstruktor
-    Muenzroehrenspeicher();
-
-    // Methoden
-    bool fuegeMuenzeEin(float wert);   // Münze in passende Röhre einfügen
-    float gesamtWert() const;         // Gesamtwert aller Münzröhren
-    void leeren();                    // Alle Röhren leeren
-
+class Muenzroehrenspeicher {
 private:
-    Muenzroehre* roehre2Euro;            // Röhre für 2 Euro Münzen
-    Muenzroehre* roehre1Euro;            // Röhre für 1 Euro Münzen
-    Muenzroehre* roehre50Cent;           // Röhre für 50 Cent Münzen
-    Muenzroehre* roehre20Cent;           // Röhre für 20 Cent Münzen
-    Muenzroehre* roehre10Cent;           // Röhre für 10 Cent Münzen
+    Muenzroehre* roehre2Euro;
+    Muenzroehre* roehre1Euro;
+    Muenzroehre* roehre50Cent;
+    Muenzroehre* roehre20Cent;
+    Muenzroehre* roehre10Cent;
+
+    Muenzschieber* schieber;
+    MuenzAuswerfer* auswerfer;
+
+public:
+    Muenzroehrenspeicher(Muenzroehre* r2, Muenzroehre* r1, Muenzroehre* r50,
+                         Muenzroehre* r20, Muenzroehre* r10,
+                         Muenzschieber* schieber, MuenzAuswerfer* auswerfer);
+
+    bool fuegeMuenzeEin(float wert);
+    float gesamtWert() const;
+    void leeren();
 };
 
 #endif // MUENZROEHRENSPEICHER_H
