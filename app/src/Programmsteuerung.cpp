@@ -46,21 +46,35 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     bruehgruppe->kaffeepulver_hinzufuegen(10);
     bruehgruppe->kaffee_pressen(5);
 
+    // Kaffee vorbereiten
+    bruehgruppe->kaffeepulver_hinzufuegen(10);
+    bruehgruppe->kaffee_pressen(5);
     // Milch pumpen
-
+     milchschaeumer->aufschaeumenStarten();
+    //  Milch fertig
+     milchschaeumer->aufschaeumenStoppen();
     // Wasserzufuhrventil in Brühgruppe öffnen
-
+    bruehgruppe->wasserzufuhr_oeffnen();
     //Wasser pumpen
-
+    steuerung->pumpen(100);
+    // zucker ausgeben
+    zucker->zuckerAuswerfen();
+    // Wasserzufuhr schließen
+    bruehgruppe->wasserzufuhr_schliessen();
     //tropfstopfventil schließen
 
     // Brühgruppe entleeren
-
+    bruehgruppe->entleeren();
     // einmal mit Wasser spülen (reinigen)
-
+    bruehgruppe->wasserzufuhr_oeffnen();
+    steuerung->pumpen(50);
+    bruehgruppe->wasserzufuhr_schliessen();
+    bruehgruppe->entleeren();
     // Ventille schließen
 
-    steuerung->pumpen(100);
+    // Heizregler
+
+   /* steuerung->pumpen(100);
     bruehgruppe->kaffee_pressen(5);
     bruehgruppe->kaffeepulver_hinzufuegen(10);
     bruehgruppe->wasserzufuhr_oeffnen();
@@ -70,7 +84,7 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     milchschaeumer->aufschaeumenStoppen();
     temperaturregler_milch->regelnStoppen();
     temperaturregler_wasser->regelnStoppen();
-
+*/
     status = 0;
     qDebug() << "Kaffeeprogramm abgeschlossen";
 }
