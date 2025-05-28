@@ -40,14 +40,12 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     qDebug() << "Kaffeeprogramm gesetzt";
 
     // Durchlauferhitzer wasser und milch auf die richtige Temperatur bringen
-    temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze());
-    temperaturregler_wasser->temperaturRegeln(92);
-    // Kaffee in brühgruppe schieben
-    bruehgruppe->kaffeepulver_hinzufuegen(10);
-    bruehgruppe->kaffee_pressen(5);
+    temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze_cel());
+    temperaturregler_wasser->temperaturRegeln(programm->getWassermenge_ml);
+
 
     // Kaffee vorbereiten
-    bruehgruppe->kaffeepulver_hinzufuegen(10);
+    bruehgruppe->kaffeepulver_hinzufuegen(programm->getKaffeemenge_g);
     bruehgruppe->kaffee_pressen(5);
     // Milch pumpen
      milchschaeumer->aufschaeumenStarten();
@@ -74,19 +72,8 @@ void Programmsteuerung::ausfuehren(int dummyProgrammID) {
     bruehgruppe->entleeren();
     // Ventille schließen
     Ventil->schliessen();
-    // Heizregler
 
-   /* steuerung->pumpen(100);
-    bruehgruppe->kaffee_pressen(5);
-    bruehgruppe->kaffeepulver_hinzufuegen(10);
-    bruehgruppe->wasserzufuhr_oeffnen();
-    milchschaeumer->aufschaeumenStarten();
-    zucker->zuckerAuswerfen();
-    bruehgruppe->wasserzufuhr_schliessen();
-    milchschaeumer->aufschaeumenStoppen();
-    temperaturregler_milch->regelnStoppen();
-    temperaturregler_wasser->regelnStoppen();
-*/
+
     status = 0;
     qDebug() << "Kaffeeprogramm abgeschlossen";
 }
