@@ -2,19 +2,26 @@
 
 #include "Fuellstandsmessung.h"
 #include "Kaffeeprogramm.h"
+#include "mainwindow.h"
+#include "Zahlungseinheit.h"
+#include "Programmsteuerung.h"
 
 class Koordinator {
 private:
-    Fuellstandsmessung* fsm;
-    Kaffeeprogramm* ausgewaehltesProgramm;
-    bool mitMilch;
+    Fuellstandsmessung *fuellstandmessung;
+    Kaffeeprogramm programm;
+    MainWindow  *anzeige;
+    Zahlungseinheit *zahlung;
+    Programmsteuerung * steuerung;
     bool mitZucker;
 
 public:
-    Koordinator(Fuellstandsmessung* fsm);
-    void auswahlAnzeigen();
-    void nachMilchFragen();
-    void nachZuckerFragen();
+    Koordinator();
+    void setFuellstandsmessung(Fuellstandsmessung *fsm);
+    void setAnzeige(MainWindow *anzeige);
+    void setZahlung(Zahlungseinheit *zahlung);
+    void setSteuerung(Programmsteuerung *steuerung);
     bool bezahlen();
-    Kaffeeprogramm* getAusgewaehltesProgramm() const;
+
+    Kaffeeprogramm* getProgramm();
 };

@@ -59,7 +59,12 @@ private:
     Durchflusssensor *milchzaehler;
 
 
-    //physische Werte
-    float motorPosition_mm, kaffeerestbehaelter_fuellstand_g, wassertemperatur_cel, milchtemperatur_cel;
-
+    // Temperaturen
+    float wassertemperatur_cel, milchtemperatur_cel;
+    // Motor
+    float motorPosition_mm;
+    // Tankfüllstände
+    float kaffeerestbehaelter_fuellstand_g, kaffeebehaelter_g;
+    // Brühgruppefüllstand
+    float bruehkammerInhalt_g, kaffeehoehe_mm;
 };

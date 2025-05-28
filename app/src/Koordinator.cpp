@@ -1,32 +1,39 @@
 #include "Koordinator.h"
 
-Koordinator::Koordinator(Display* display, Fuellstandsmessung* fsm)
-    : display(display), fsm(fsm), ausgewaehltesProgramm(nullptr), mitMilch(false), mitZucker(false) {}
-
-void Koordinator::auswahlAnzeigen() {
-    display->displayFrame();
-    Position input = display->getTouchEvent();
-    int drinkIndex = input.getX();  // simple logic for choosing a drink
-    ausgewaehltesProgramm = new Kaffeeprogramm();  // Simulate a chosen drink
+Koordinator::Koordinator()
+    : fuellstandmessung(nullptr),
+    anzeige(nullptr),
+    zahlung(nullptr),
+    steuerung(nullptr),
+    mitZucker(false)
+{
 }
 
-void Koordinator::nachMilchFragen() {
-    display->showWarning("Moechten Sie Milch?");
-    Position input = display->getTouchEvent();
-    mitMilch = input.getX() > 0;  // simulate YES if clicked right side
+void Koordinator::setFuellstandsmessung(Fuellstandsmessung *fsm) {
+    fuellstandmessung = fsm;
 }
 
-void Koordinator::nachZuckerFragen() {
-    display->showWarning("Moechten Sie Zucker?");
-    Position input = display->getTouchEvent();
-    mitZucker = input.getX() > 0;  // simulate YES if clicked right side
+void Koordinator::setAnzeige(MainWindow *anzeigeWindow) {
+    anzeige = anzeigeWindow;
+}
+
+void Koordinator::setZahlung(Zahlungseinheit *zahlungseinheit) {
+    zahlung = zahlungseinheit;
+}
+
+void Koordinator::setSteuerung(Programmsteuerung *progSteuerung) {
+    steuerung = progSteuerung;
 }
 
 bool Koordinator::bezahlen() {
-    display->showWarning("Bitte bezahlen Sie jetzt...");
-    return true;  // Simulate payment done
+    if (!zahlung) return false;
+
+    Produkt* produkt = programm.getProdukt();
+    if (!produkt) return false;
+
+    return zahlung->versucheZahlung(produkt);
 }
 
-Kaffeeprogramm* Koordinator::getAusgewaehltesProgramm() const {
-    return ausgewaehltesProgramm;
+Kaffeeprogramm* Koordinator::getProgramm() {
+    return &programm;
 }

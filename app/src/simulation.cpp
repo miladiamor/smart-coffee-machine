@@ -1,7 +1,12 @@
 #include "simulation.h"
 #include <cmath>
 
-Simulation::Simulation() : motorPosition_mm(0), kaffeerestbehaelter_fuellstand_g(0) {}
+Simulation::Simulation() :
+    motorPosition_mm(0),
+    kaffeerestbehaelter_fuellstand_g(0),
+    kaffeebehaelter_g(0),
+    bruehkammerInhalt_g(0),
+    kaffeehoehe_mm(0){}
 
 void Simulation::setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter) {
     this->kaffeerestbehaelter = kaffeerestbehaelter;
@@ -36,7 +41,7 @@ void Simulation::setMilchZaehler(Durchflusssensor *sensor){
 }
 
 void Simulation::setSchaeumer(Schaeumer *schaeumer) {
-    this->Schaeumer = schaeumer;
+    this->schaeumer = schaeumer;
 }
 
 static bool wasserResetDone = false;
@@ -46,6 +51,16 @@ static bool milchResetDone = false;
 #define MOTORGESCHWINDIGKEIT_MM_PRO_S 20
 
 void Simulation::update(int delta_t_ms){
+    // Kaffeezufuhr && Kaffeepulverbehältersimulation
+    const float kaffee_g_pro_s = 5.7;
+    const float hoeheKaffeepulver_mm_pro_g = 0.33;
+    const float kaffee_g_pro_frame = kaffee_g_pro_s * delta_t_ms * 0.001;
+    if (inkrementalencoder->getPosition() == 0 && bruehgruppe->getKaffeezufuhrOffen()) {
+        bruehkammerInhalt_g += kaffee_g_pro_frame;
+        kaffeehoehe_mm += kaffee_g_pro_frame * hoeheKaffeepulver_mm_pro_g;
+        kaffeebehaelter_g -= kaffee_g_pro_frame;
+    }
+
     // Motorsimulation & Kaffeerestbehälter
     const float kaffeerest_g_pro_mm = 0.315;
     const float bewegung_pro_frame = MOTORGESCHWINDIGKEIT_MM_PRO_S * delta_t_ms * std::pow(10, -3);
