@@ -4,7 +4,7 @@
 class Koordinator;
 #include <QMainWindow>
 #include <QProgressBar>
-
+#include "Koordinator.h"
 namespace Ui {
 class MainWindow;
 }

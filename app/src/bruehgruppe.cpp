@@ -55,3 +55,11 @@ void Bruehgruppe::tropfstopfventilSchließen(){
 bool Bruehgruppe::getEntleerklappeOffen(){
     return entleerklappe->get_ist_offen();
 }
+
+bool Bruehgruppe::getWasserzufuhrOffen(){
+    return wasserzufuhr->get_ist_offen();
+}
+
+bool Bruehgruppe::getKaffeezufuhrOffen(){
+    return kaffeezufuhr->get_ist_offen();
+}

@@ -64,7 +64,7 @@ private:
     // Motor
     float motorPosition_mm;
     // Tankfüllstände
-    float kaffeerestbehaelter_fuellstand_g;
+    float kaffeerestbehaelter_fuellstand_g, kaffeebehaelter_g;
     // Brühgruppefüllstand
-    float bruehkammerInhalt_g;
+    float bruehkammerInhalt_g, kaffeehoehe_mm;
 };
