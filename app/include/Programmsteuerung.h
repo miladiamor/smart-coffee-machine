@@ -3,7 +3,6 @@
 #define PROGRAMMSTEUERUNG_H
 
 #include <QObject>
-#include <QThread>
 
 class Schaeumer;
 class Zuckerdispenser;

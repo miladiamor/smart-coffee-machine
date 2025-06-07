@@ -11,7 +11,7 @@ class Pumpesteuerung : public QObject
 {
     Q_OBJECT
     private:
-        QTimer sleeper;
+        QTimer *pumpen;
         float menge_mil;
         Pumpe *wasserpumpe, *milchpumpe;
         Durchflusssensor *wasserzaehler, *milchzaehler;
@@ -19,8 +19,9 @@ class Pumpesteuerung : public QObject
 
     public:
         Pumpesteuerung(Pumpe *wasserpumpe, Pumpe *milchpumpe, Durchflusssensor *wasserzaehler, Durchflusssensor *milchzaehler);
-        void pumpen(float wassermenge);
-
+       // void pumpen(float wassermenge);
+    public slots:
+        void mypumpe(float wassermenge);
 
 
 };
