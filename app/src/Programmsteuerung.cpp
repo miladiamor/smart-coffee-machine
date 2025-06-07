@@ -31,51 +31,51 @@ void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm) {
     // Durchlauferhitzer wasser und milch auf die richtige Temperatur bringen
      temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze_cel());
      temperaturregler_wasser->temperaturRegeln(programm->getWassermenge_ml);
-     QThread::msleep(1000);
+     QTimer::singleShot(5000, this, SLOT(nextStep()));
 
     // Kaffee vorbereiten
      bruehgruppe->kaffeepulver_hinzufuegen(programm->getKaffeemenge_g);
-     QThread::msleep(300);
+     QTimer::singleShot(3000, this, SLOT(nextStep()));
      bruehgruppe->kaffee_pressen(programm->getstampfHoehe_mm);
-     QThread::msleep(500);
+     QTimer::singleShot(7000, this, SLOT(nextStep()));
 
     // Milch pumpen
      milchschaeumer->aufschaeumenStarten();
-     QThread::msleep(1500);
+     QTimer::singleShot(15000, this, SLOT(nextStep()));
 
     //  Milch fertig
      milchschaeumer->aufschaeumenStoppen();
 
     // Wasserzufuhrventil in Brühgruppe öffnen
      bruehgruppe->wasserzufuhr_oeffnen();
-     QThread::msleep(200);
+     QTimer::singleShot(2000, this, SLOT(nextStep()));
 
     //Wasser pumpen
-     steuerung->pumpen(50);
-     QThread::msleep(1000);
+     steuerung->mypumpe(50);
+     QTimer::singleShot(1000, this, SLOT(nextStep()));
 
     // zucker ausgeben
      zucker->zuckerAuswerfen();
-     QThread::msleep(500);
+     QTimer::singleShot(5000, this, SLOT(nextStep()));
 
     // Wasserzufuhr schließen
      bruehgruppe->wasserzufuhr_schliessen();
 
     //tropfstopfventil offnen
      bruehgruppe->tropfstopfventilOeffnen();
-     QThread::msleep(300);
+     QTimer::singleShot(3000, this, SLOT(nextStep()));
 
     //tropfstopfventil schließen
      bruehgruppe->tropfstopfventilSchließen();
 
     // Brühgruppe entleeren
      bruehgruppe->entleeren();
-     QThread::msleep(500);
+     QTimer::singleShot(5000, this, SLOT(nextStep()));
 
     // einmal mit Wasser spülen (reinigen)
      bruehgruppe->wasserzufuhr_oeffnen();
-     steuerung->pumpen(50);
-     QThread::msleep(1000);
+     steuerung->mypumpe(50);
+     QTimer::singleShot(1000, this, SLOT(nextStep()));
      bruehgruppe->wasserzufuhr_schliessen();
      bruehgruppe->entleeren();
 

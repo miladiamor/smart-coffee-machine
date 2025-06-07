@@ -3,6 +3,7 @@
 #define PROGRAMMSTEUERUNG_H
 
 #include <QObject>
+#include <QTimer>
 
 class Schaeumer;
 class Zuckerdispenser;
@@ -11,6 +12,7 @@ class Heizregler;
 class Pumpesteuerung;
 class Fuellstandsmessung;
 class Kaffeeprogramm;
+class Clock;
 
 class Programmsteuerung : public QObject {
     Q_OBJECT
@@ -25,11 +27,15 @@ private:
     Bruehgruppe* bruehgruppe;
     Pumpesteuerung* steuerung;
     Fuellstandsmessung* messung;
+    QTimer *Timer;
 
 public:
     Programmsteuerung();
     void setMilchschaeumer(Schaeumer *milchschaeumer);
     void ausfuehren(Kaffeeprogramm *programm);
+
+public slots:
+           void nextStep();
 };
 
 #endif
