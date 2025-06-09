@@ -1,24 +1,43 @@
 #pragma once
 
 #include "Produkt.h"
+#include "Ressourcen.h"
+
 class Kaffeeprogramm {
 public:
     Kaffeeprogramm();
+    Kaffeeprogramm(Ressourcen benoetigteRessourcen);
 
+    // Getters
     int getKaffeemenge_g() const;
     int getMilchmenge_ml() const;
     int getWassermenge_ml() const;
+    int getWasserKochhitze_Cel() const;
+    int getMilchKochhitze_Cel() const;
     bool getMitZucker() const;
+    bool getMilchZuerst() const;
     Produkt* getProdukt() const;
+    Ressourcen getBenoetigteRessourcen() const;
 
-    void setKaffeemenge_g(int g);
-    void setMilchmenge_ml(int ml);
-    void setWassermenge_ml(int ml);
-    void setMitZucker(bool mit);
+    // Setters
+    void setKaffeemenge_g(int kaffeemenge_g);
+    void setMilchmenge_ml(int milchmenge_ml);
+    void setWassermenge_ml(int wassermenge_ml);
+    void setWasserKochhitze_Cel(int wasserKochhitze_Cel);
+    void setMilchKochhitze_Cel(int milchKochhitze_Cel);
+    void setMitZucker(bool mitZucker);
+    void setMilchZuerst(bool milchZuerst);
     void setProdukt(Produkt* produkt);
+    void setBenoetigteRessourcen(Ressourcen r);
 
 private:
-    int kaffeemenge_g, milchmenge_ml, wassermenge_g;
+    Ressourcen benoetigteRessourcen;
+    int wassermenge_g;
+    int milchmenge_ml;
+    int kaffeemenge_g;
+    int wasserKochhitze_Cel;
+    int milchKochhitze_Cel;
     bool mitZucker;
+    bool milchZuerst;
     Produkt* produkt;
 };
