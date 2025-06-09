@@ -1,27 +1,42 @@
 #pragma once
 
-#include "Fuellstandsmessung.h"
 #include "Kaffeeprogramm.h"
-#include "mainwindow.h"
 #include "Zahlungseinheit.h"
 #include "Programmsteuerung.h"
 
+enum class KoordinatorStates {
+    WARTEN,
+    MILCH,
+    ZUCKER,
+    BEZAHLEN,
+    AUSFUEHREN
+};
+
 class Koordinator {
 private:
-    Fuellstandsmessung *fuellstandmessung;
     Kaffeeprogramm programm;
-    MainWindow  *anzeige;
-    Zahlungseinheit *zahlung;
-    Programmsteuerung * steuerung;
+    Zahlungseinheit* zahlung;
+    Programmsteuerung* steuerung;
+    KoordinatorStates state;
+
     bool mitZucker;
+    bool milchFrageNotwendig;
+    bool mitMilch;
 
 public:
     Koordinator();
-    void setFuellstandsmessung(Fuellstandsmessung *fsm);
-    void setAnzeige(MainWindow *anzeige);
-    void setZahlung(Zahlungseinheit *zahlung);
-    void setSteuerung(Programmsteuerung *steuerung);
-    bool bezahlen();
 
-    Kaffeeprogramm* getProgramm();
+    // Drink selection
+    void cappuccino();
+    void milchkaffee();
+    void kaffeeCrema();
+    void latteMacchiato();
+
+    // User preferences
+    void milchWaehlen(bool mitMilch);
+    void zuckerWaehlen(bool mitZucker);
+    void kaufen();
+
+    void setZahlungseinheit(Zahlungseinheit* z);
+    void setSteuerung(Programmsteuerung* steuerung);
 };
