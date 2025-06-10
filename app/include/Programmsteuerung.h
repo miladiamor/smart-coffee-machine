@@ -5,6 +5,13 @@
 #include <QObject>
 #include <QTimer>
 
+enum class SteuerungStates {
+    WARTEN,
+    FUELLEN,
+    ERHITZEN,
+    KOCHEN
+};
+
 class Schaeumer;
 class Zuckerdispenser;
 class Bruehgruppe;
