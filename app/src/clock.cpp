@@ -1,7 +1,6 @@
 #include "clock.h"
 
-Clock::Clock(int framerate) : QObject(nullptr), framerate(framerate) {
-    timer.setInterval(1000 / framerate);
+Clock::Clock(int ticks) : QObject(nullptr), ticks(ticks) {
     QObject::connect(&timer, &QTimer::timeout, this, &Clock::tick);
 }
 
@@ -14,6 +13,5 @@ void Clock::stop(){
 }
 
 void Clock::tick(){
-    int delta_t_ms = 1000 / framerate;
-    emit update(delta_t_ms);
+    emit update();
 }

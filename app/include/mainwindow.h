@@ -23,6 +23,10 @@ private slots:
 
     void on_btnMilkCoffee_clicked();
 
+    void on_btnCoffeeCrema_clicked();
+
+    void on_btnLatteMachiato_clicked();
+
 private:
     Ui::MainWindow *ui;
     QProgressBar* cup;

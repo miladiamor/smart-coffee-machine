@@ -10,7 +10,7 @@ class Inkrementalencoder : public QObject
     Q_OBJECT
     public:
         Inkrementalencoder(Kolbenmotor *stampfer);
-        float getPosition();
+        float getPosition_mm();
         void setPosition(float position_mm);
 
     public slots:

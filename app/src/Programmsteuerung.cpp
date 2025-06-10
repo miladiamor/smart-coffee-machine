@@ -32,6 +32,13 @@ void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm) {
     // Durchlauferhitzer wasser und milch auf die richtige Temperatur bringen
      temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze_Cel());
     temperaturregler_wasser->temperaturRegeln(programm->getWasserKochhitze_Cel());
+
+    bruehgruppe->kaffeeFuellen();
+    /*
+    Hier Wasser und Milch pumpen bitte. Die Brühgruppe kümmert sich jetzt um die Ventile das Füellen und das Entleeren!
+    */
+    bruehgruppe->entleeren();
+    /*
      QTimer::singleShot(5000, this, SLOT(nextStep()));
 
     // Kaffee vorbereiten
@@ -79,7 +86,7 @@ void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm) {
      QTimer::singleShot(1000, this, SLOT(nextStep()));
      bruehgruppe->wasserzufuhr_schliessen();
      bruehgruppe->entleeren();
-
+    */
 
 
     status = 0;

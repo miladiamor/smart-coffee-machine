@@ -37,7 +37,7 @@ public:
 
 
 public slots:
-    void update(int delta_t_ms);
+    void update();
 
 private:
     //Aktoren

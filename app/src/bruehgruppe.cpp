@@ -1,65 +1,123 @@
 #include "bruehgruppe.h"
+#include "kolbenmotor.h"
 #include <QTimer>
 
 Bruehgruppe::Bruehgruppe() :
+    tickCount(0),
+    currentState(WARTEN), nextState(WARTEN),
     tropfstopfventil(new Ventil), wasserzufuhr(new Ventil), kaffeezufuhr(new Ventil),
     entleerklappe(new Klappe),
     stampfer(new Kolbenmotor),
     inkrementalencoder(new Inkrementalencoder(stampfer)) {}
 
 Bruehgruppe::~Bruehgruppe(){
-    delete tropfstopfventil;
+    /*delete tropfstopfventil;
     delete wasserzufuhr;
     delete kaffeezufuhr;
     delete entleerklappe;
     delete stampfer;
     delete inkrementalencoder;
+    */
 }
 
-void Bruehgruppe::kaffee_pressen(int stampfHoehe_mm){
-    stampfer->runterfahren();
-    while(inkrementalencoder->getPosition() > stampfHoehe_mm) {}
-    stampfer->stoppen();
+void Bruehgruppe::tick() {
+    const int tickmenge = 10*kaffeeprogramm->getKaffeemenge_g();
+    switch (currentState) {
+    case WARTEN:
+        break;
+    case KAFFEEZUFUHR:
+        tickCount++;
+        if (tickCount == tickmenge) {
+            trigger(STAMPFEN);
+            tickCount = 0;
+        }
+        break;
+    case STAMPFEN:
+        if (stampfer->getStatus() == Kolbenmotor::motorStatus::runterfahren && inkrementalencoder->getPosition_mm() == kaffeeprogramm->getstampfHoehe_mm()) {
+            trigger(KOCHBEREIT);
+        }
+        break;
+    case KOCHBEREIT:
+        break;
+    case ENTLEEREN:
+        if (inkrementalencoder->getPosition_mm() == 0) {
+            trigger(ZURUECKSETZEN);
+        }
+    case ZURUECKSETZEN:
+        if (inkrementalencoder->getPosition_mm() == 25) {
+            trigger(WARTEN);
+        }
+        break;
+    tickCount++;
+    }
 }
 
-void Bruehgruppe::entleeren(){
-    entleerklappe->oeffnen();
-    stampfer->runterfahren();
-    QTimer::singleShot(500, entleerklappe, &Klappe::schliessen);
-    stampfer->hochfahren();
+void Bruehgruppe::trigger(state nextState) {
+    switch(currentState){
+    case WARTEN:
+        if (nextState == KAFFEEZUFUHR) {
+            kaffeezufuhr->oeffnen();
+            tickCount = 0;
+            currentState = KAFFEEZUFUHR;
+        }
+        break;
+    case KAFFEEZUFUHR:
+        if (nextState == STAMPFEN) {
+            kaffeezufuhr->schliessen();
+            currentState = STAMPFEN;
+            stampfer->runterfahren();
+        }
+        /*
+        if (nextState == WARTEN && !kaffeezufuhr->get_ist_offen()) {
+            currentState = WARTEN;
+        }
+        */
+        break;
+    case STAMPFEN:
+        if (stampfer->getStatus() == Kolbenmotor::motorStatus::runterfahren && inkrementalencoder->getPosition_mm() == kaffeeprogramm->getstampfHoehe_mm()) {
+            stampfer->stoppen();
+            wasserzufuhr->oeffnen();
+            tropfstopfventil->oeffnen();
+            currentState = KOCHBEREIT;
+        }
+        /*
+        if (nextState == KOCHEN && wasserzufuhr->get_ist_offen() && tropfstopfventil->get_ist_offen()) {
+            currentState = KOCHEN;
+        }
+*/
+        break;
+    case KOCHBEREIT:
+        if (nextState == ENTLEEREN) {
+            wasserzufuhr->schliessen();
+            tropfstopfventil->schliessen();
+            entleerklappe->oeffnen();
+            stampfer->runterfahren();
+            currentState = ENTLEEREN;
+        }
+        break;
+    case ENTLEEREN:
+        if (nextState == ZURUECKSETZEN) {
+            stampfer->hochfahren();
+            entleerklappe->schliessen();
+            currentState = ZURUECKSETZEN;
+        }
+        break;
+    case ZURUECKSETZEN:
+        if (nextState == WARTEN) {
+            stampfer->stoppen();
+            currentState = WARTEN;
+        }
+    }
 }
 
-void Bruehgruppe::wasserzufuhr_oeffnen(){
-    wasserzufuhr->oeffnen();
-    stampfer->runterfahren();
+state Bruehgruppe::getState() {
+    return currentState;
 }
 
-void Bruehgruppe::wasserzufuhr_schliessen(){
-    wasserzufuhr->schliessen();
+void Bruehgruppe::entleeren() {
+    trigger(ENTLEEREN);
 }
 
-void Bruehgruppe::kaffeepulver_hinzufuegen(int menge_g){
-    kaffeezufuhr->oeffnen();
-    int waitTime = 50*menge_g;
-    QTimer::singleShot(waitTime, kaffeezufuhr, &Ventil::schliessen);
-}
-
-void Bruehgruppe::tropfstopfventilOeffnen(){
-    tropfstopfventil->oeffnen();
-}
-
-void Bruehgruppe::tropfstopfventilSchließen(){
-    tropfstopfventil->schliessen();
-}
-
-bool Bruehgruppe::getEntleerklappeOffen(){
-    return entleerklappe->get_ist_offen();
-}
-
-bool Bruehgruppe::getWasserzufuhrOffen(){
-    return wasserzufuhr->get_ist_offen();
-}
-
-bool Bruehgruppe::getKaffeezufuhrOffen(){
-    return kaffeezufuhr->get_ist_offen();
+void Bruehgruppe::kaffeeFuellen() {
+    trigger(KAFFEEZUFUHR);
 }
