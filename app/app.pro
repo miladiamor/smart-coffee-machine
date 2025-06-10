@@ -23,6 +23,7 @@ INCLUDEPATH += $$PWD/include
 
 # The source files (e.g. *.cpp)
 SOURCES += \
+    display.cpp \
     src/kaffeeprogramm.cpp \
     src/mainwindow.cpp \
     src/Durchflusssensor.cpp \
@@ -50,6 +51,7 @@ SOURCES += \
 
 # The header files (e.g. *.h)
 HEADERS += \
+    display.h \
     include/Durchflusssensor.h \
     include/Pumpe.h \
     include/Pumpesteuerung.h \
@@ -82,7 +84,7 @@ HEADERS += \
     include/clock.h \
     include/simulation.h \
     include/kaffeeprogramm.h \
-    include/mainwindow.h
+    include/mainwindow.h \
 
 
 # The GUI definition files (so-called forms)

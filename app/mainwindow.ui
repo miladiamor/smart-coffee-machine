@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>600</height>
+    <width>1553</width>
+    <height>966</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,10 +26,10 @@
    <widget class="QFrame" name="frame_3">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>60</y>
-      <width>411</width>
-      <height>421</height>
+      <x>190</x>
+      <y>160</y>
+      <width>621</width>
+      <height>641</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -44,8 +44,8 @@
     <widget class="QFrame" name="frame">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>240</y>
+       <x>40</x>
+       <y>420</y>
        <width>241</width>
        <height>151</height>
       </rect>
@@ -103,8 +103,8 @@ background-color: white;
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>300</x>
-       <y>240</y>
+       <x>450</x>
+       <y>490</y>
        <width>82</width>
        <height>82</height>
       </rect>
@@ -129,15 +129,15 @@ background-color: white;
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>232</width>
-       <height>220</height>
+       <x>40</x>
+       <y>20</y>
+       <width>401</width>
+       <height>401</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btnCappucino">
         <property name="text">
          <string/>
         </property>
@@ -155,7 +155,7 @@ background-color: white;
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QPushButton" name="pushButton_4">
+       <widget class="QPushButton" name="btnMilkCoffee">
         <property name="toolTipDuration">
          <number>-1</number>
         </property>
@@ -176,7 +176,7 @@ background-color: white;
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="btnCoffeeCrema">
         <property name="text">
          <string/>
         </property>
@@ -194,7 +194,7 @@ background-color: white;
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="btnLatteMachiato">
         <property name="text">
          <string/>
         </property>
@@ -213,6 +213,22 @@ background-color: white;
       </item>
      </layout>
     </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>490</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: white;</string>
+     </property>
+     <property name="text">
+      <string>Ausgabe</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -220,8 +236,8 @@ background-color: white;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>720</width>
-     <height>21</height>
+     <width>1553</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuKaffeeauswahl">
@@ -236,7 +252,7 @@ background-color: white;
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton</sender>
+   <sender>btnCappucino</sender>
    <signal>pressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>cappucino()</slot>
@@ -252,7 +268,7 @@ background-color: white;
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
+   <sender>btnMilkCoffee</sender>
    <signal>pressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>milchkaffee()</slot>
@@ -268,7 +284,7 @@ background-color: white;
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_3</sender>
+   <sender>btnCoffeeCrema</sender>
    <signal>pressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>kaffeeCrema()</slot>
@@ -284,7 +300,7 @@ background-color: white;
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>btnLatteMachiato</sender>
    <signal>pressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>latteMachiato()</slot>

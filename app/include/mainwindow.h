@@ -4,7 +4,8 @@
 class Koordinator;
 #include <QMainWindow>
 #include <QProgressBar>
-#include "Koordinator.h"
+#include "display.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -13,23 +14,19 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public slots:
-    void cappucino();
-    void milchkaffee();
-    void kaffeeCrema();
-    void latteMachiato();
-
-    void zucker(bool mitZucker);
-    void kaufen();
-
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_btnCappucino_clicked();
+
+    void on_btnMilkCoffee_clicked();
+
 private:
     Ui::MainWindow *ui;
     QProgressBar* cup;
-    Koordinator *koordinator;
+    Display display;
 };
 
 #endif // MAINWINDOW_H
