@@ -16,6 +16,7 @@ public:
     int getMilchKochhitze_Cel() const;
     bool getMitZucker() const;
     bool getMilchZuerst() const;
+    bool getstampfHoehe_mm() const;
     Produkt* getProdukt() const;
     Ressourcen getBenoetigteRessourcen() const;
 
@@ -27,6 +28,7 @@ public:
     void setMilchKochhitze_Cel(int milchKochhitze_Cel);
     void setMitZucker(bool mitZucker);
     void setMilchZuerst(bool milchZuerst);
+    void setstampfHoehe_mm(bool stampfHoehe_mm);
     void setProdukt(Produkt* produkt);
     void setBenoetigteRessourcen(Ressourcen r);
 
@@ -39,5 +41,6 @@ private:
     int milchKochhitze_Cel;
     bool mitZucker;
     bool milchZuerst;
+    bool stampfHoehe_mm;
     Produkt* produkt;
 };

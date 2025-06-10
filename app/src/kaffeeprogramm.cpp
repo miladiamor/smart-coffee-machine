@@ -1,4 +1,5 @@
 #include "Kaffeeprogramm.h"
+class Bruehgruppe;
 
 Kaffeeprogramm::Kaffeeprogramm()
     : wassermenge_g(0),
@@ -8,6 +9,7 @@ Kaffeeprogramm::Kaffeeprogramm()
     milchKochhitze_Cel(0),
     mitZucker(false),
     milchZuerst(false),
+    stampfHoehe_mm(0),
     produkt(nullptr)
 {}
 
@@ -52,6 +54,11 @@ bool Kaffeeprogramm::getMilchZuerst() const {
     return milchZuerst;
 }
 
+bool Kaffeeprogramm::getstampfHoehe_mm() const
+{
+    return stampfHoehe_mm;
+}
+
 Produkt* Kaffeeprogramm::getProdukt() const {
     return produkt;
 }
@@ -87,6 +94,11 @@ void Kaffeeprogramm::setMitZucker(bool mit) {
 
 void Kaffeeprogramm::setMilchZuerst(bool zuerst) {
     milchZuerst = zuerst;
+}
+
+void Kaffeeprogramm::setstampfHoehe_mm(bool mm)
+{
+    stampfHoehe_mm = mm;
 }
 
 void Kaffeeprogramm::setProdukt(Produkt* p) {

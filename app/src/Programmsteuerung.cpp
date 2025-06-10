@@ -3,9 +3,10 @@
 #include "bruehgruppe.h"
 #include "Schaeumer.h"
 #include "Zuckerdispenser.h"
-#include "Fuellstandsmessung.h"
+//#include "Fuellstandsmessung.h"
 #include "Pumpesteuerung.h"
-#include "clock.h"
+//#include "clock.h"
+#include "kaffeeprogramm.h"
 
 
 #include <QDebug>
@@ -29,14 +30,14 @@ void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm) {
     qDebug() << "Kaffeeprogramm gesetzt";
 
     // Durchlauferhitzer wasser und milch auf die richtige Temperatur bringen
-     temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze_cel());
-     temperaturregler_wasser->temperaturRegeln(programm->getWassermenge_ml);
+     temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze_Cel());
+    temperaturregler_wasser->temperaturRegeln(programm->getWasserKochhitze_Cel());
      QTimer::singleShot(5000, this, SLOT(nextStep()));
 
     // Kaffee vorbereiten
-     bruehgruppe->kaffeepulver_hinzufuegen(programm->getKaffeemenge_g);
+     bruehgruppe->kaffeepulver_hinzufuegen(programm->getKaffeemenge_g());
      QTimer::singleShot(3000, this, SLOT(nextStep()));
-     bruehgruppe->kaffee_pressen(programm->getstampfHoehe_mm);
+     bruehgruppe->kaffee_pressen(programm->getstampfHoehe_mm());
      QTimer::singleShot(7000, this, SLOT(nextStep()));
 
     // Milch pumpen
