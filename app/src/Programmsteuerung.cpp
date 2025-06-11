@@ -35,9 +35,23 @@ void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm) {
     QTimer::singleShot(5000, this, SLOT(nextStep()));
 
     bruehgruppe->kaffeeFuellen();
+    QTimer::singleShot(6000, this, SLOT(nextStep()));
     /*
     Hier Wasser und Milch pumpen bitte. Die Brühgruppe kümmert sich jetzt um die Ventile das Füellen und das Entleeren!
     */
+
+    // Wasser pumpen
+    steuerung->mypumpe1(programm->getWassermenge_ml());
+    QTimer::singleShot(1000, this, SLOT(nextStep()));
+
+    //Milch pumpen
+    steuerung->mypumpe2((programm->getMilchmenge_ml()));
+    QTimer::singleShot(2000, this, SLOT(nextStep()));
+    milchschaeumer->aufschaeumenStarten();
+    QTimer::singleShot(1000, this, SLOT(nextStep()));
+    milchschaeumer->aufschaeumenStoppen();
+    QTimer::singleShot(500, this, SLOT(nextStep()));
+
     bruehgruppe->entleeren();
 
     /*

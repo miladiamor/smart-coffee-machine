@@ -19,8 +19,15 @@ Pumpesteuerung::Pumpesteuerung(Pumpe *wasserpumpe, Pumpe *milchpumpe, Durchfluss
     //wasserpumpe->pumpeStoppen();
 //}
 
-void Pumpesteuerung::mypumpe(float wassermenge)
+void Pumpesteuerung::mypumpe1(float wassermenge)
 {
     menge_mil = wassermenge;
     wasserpumpe->pumpeStarten();
 }
+
+void Pumpesteuerung::mypumpe2(float milchmenge)
+{
+    menge_mil = milchmenge;
+    milchpumpe->pumpeStarten();
+}
+

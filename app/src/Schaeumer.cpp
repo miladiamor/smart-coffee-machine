@@ -1,4 +1,5 @@
 #include "schaeumer.h"
+#include "Pumpesteuerung.h"
 #include <QDebug>
 
 Schaeumer::Schaeumer() : eingeschaltet(false) {
@@ -17,3 +18,12 @@ void Schaeumer::aufschaeumenStoppen() {
     this->eingeschaltet = false;
     qDebug() << "Milchschaumvorgang gestoppt.";
 }
+
+
+/*
+void Pumpesteuerung::mypumpe(float wassermenge)
+{
+    menge_mil = wassermenge;
+    wasserpumpe->pumpeStarten();
+}
+*/

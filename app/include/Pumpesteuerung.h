@@ -21,7 +21,8 @@ class Pumpesteuerung : public QObject
         Pumpesteuerung(Pumpe *wasserpumpe, Pumpe *milchpumpe, Durchflusssensor *wasserzaehler, Durchflusssensor *milchzaehler);
         //void pumpen(float wassermenge);
     public slots:
-        void mypumpe(float wassermenge);
+        void mypumpe1(float wassermenge);
+        void mypumpe2(float milchmenge);
 
 
 };
