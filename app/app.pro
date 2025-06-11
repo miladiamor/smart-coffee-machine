@@ -47,7 +47,8 @@ SOURCES += \
     src/Heizelemente.cpp \
     src/Schaeumer.cpp \
     src/Zuckerdispenser.cpp \
-    src/Programmsteuerung.cpp
+    src/Programmsteuerung.cpp \
+    srs/Muenzenschieber.cpp
 
 # The header files (e.g. *.h)
 HEADERS += \
@@ -85,6 +86,7 @@ HEADERS += \
     include/simulation.h \
     include/kaffeeprogramm.h \
     include/mainwindow.h \
+    include/Muenzenschieber.h
 
 
 # The GUI definition files (so-called forms)
