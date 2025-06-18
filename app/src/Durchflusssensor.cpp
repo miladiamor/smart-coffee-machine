@@ -10,6 +10,11 @@ void Durchflusssensor::setDurchflussImpuls(bool Impuls){
     durchflussImpuls = Impuls;
 }
 
+void Durchflusssensor::reset()
+{
+    durchflussImpuls = 0;
+}
+
 float Durchflusssensor::getWassermenge_g() const {
     return wassermenge_g;
 }

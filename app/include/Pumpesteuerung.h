@@ -7,24 +7,59 @@
 class Pumpe;
 class Durchflusssensor;
 
+enum class Pumpesteuerungstates{
+    IDLE,
+    PUMPING_WATER,
+    PUMPING_MILK,
+    PUMPING_COMPLETE,
+    ERROR
+};
+
 class Pumpesteuerung : public QObject
 {
     Q_OBJECT
     private:
-        QTimer *pumpen;
-        float menge_mil;
+        Pumpesteuerungstates currentState;
+        QTimer *updateTimer;
         Pumpe *wasserpumpe, *milchpumpe;
         Durchflusssensor *wasserzaehler, *milchzaehler;
+        int targetamount_ml;
+        void setState(Pumpesteuerungstates newState);
+
+    private slots:
+        void updateState();
 
 
     public:
         Pumpesteuerung(Pumpe *wasserpumpe, Pumpe *milchpumpe, Durchflusssensor *wasserzaehler, Durchflusssensor *milchzaehler);
         //void pumpen(float wassermenge);
+        Pumpesteuerungstates getState() const;
+
     public slots:
-        void mypumpe1(float wassermenge);
-        void mypumpe2(float milchmenge);
+        void startPumpingWater(int menge_mil);
+        void startPumpingMilk(int menge_mil);
+
+    signals:
+        void pumpingFinished();
+        void fehler(const QString &message);
 
 
+/*
+    private:
+
+        void setWasserpumpe(Pumpe* pump);
+        void setMilchpumpe(Pumpe* pump);
+        void setWasserzaehler(Durchflusssensor* sensor);
+        void setMilchzaehler(Durchflusssensor* sensor);
+        void mypumpe1(int wassermenge);
+        void mypumpe2(int milchmenge);
+        void tick();
+
+
+    private:
+        void trigger(Pumpesteuerungstates nextstate);
+
+*/
 };
 
 #endif // PUMPESTEUERUNG_H

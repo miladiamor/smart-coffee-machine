@@ -2,7 +2,7 @@
 #define MUENZROEHRENSPEICHER_H
 
 #include "Muenzroehre.h"
-#include "Muenzschieber.h"
+#include "Muenzenschieber.h"
 #include "MuenzAuswerfer.h"
 
 class Muenzroehrenspeicher {
@@ -13,13 +13,13 @@ private:
     Muenzroehre* roehre20Cent;
     Muenzroehre* roehre10Cent;
 
-    Muenzschieber* schieber;
+    Muenzenschieber* schieber;
     MuenzAuswerfer* auswerfer;
 
 public:
     Muenzroehrenspeicher(Muenzroehre* r2, Muenzroehre* r1, Muenzroehre* r50,
                          Muenzroehre* r20, Muenzroehre* r10,
-                         Muenzschieber* schieber, MuenzAuswerfer* auswerfer);
+                         Muenzenschieber* schieber, MuenzAuswerfer* auswerfer);
 
     bool fuegeMuenzeEin(float wert);
     float gesamtWert() const;

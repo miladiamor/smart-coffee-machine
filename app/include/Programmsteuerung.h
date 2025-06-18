@@ -9,7 +9,10 @@ enum class SteuerungStates {
     WARTEN,
     FUELLEN,
     ERHITZEN,
-    KOCHEN
+    KOCHEN,
+    ENTLEEREN,
+    PROGRAMM_ABGESCHLOSSEN,
+    FEHLER
 };
 
 class Schaeumer;
@@ -26,6 +29,7 @@ class Programmsteuerung : public QObject {
 
 private:
     int status;
+    int tickCounter;
     Kaffeeprogramm* programm;
 
     Heizregler *temperaturregler_wasser, *temperaturregler_milch;
@@ -35,11 +39,13 @@ private:
     Pumpesteuerung* steuerung;
     Fuellstandsmessung* messung;
     QTimer *Timer;
+    void trigger(SteuerungStates *nextState);
 
 public:
     Programmsteuerung();
     void setMilchschaeumer(Schaeumer *milchschaeumer);
     void ausfuehren(Kaffeeprogramm *programm);
+    void tick();
 
 public slots:
            void nextStep();
