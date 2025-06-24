@@ -47,7 +47,7 @@ SOURCES += \
     src/Schaeumer.cpp \
     src/Zuckerdispenser.cpp \
     src/Programmsteuerung.cpp \
-    srs/Muenzenschieber.cpp
+    src/Muenzenschieber.cpp
 
 # The header files (e.g. *.h)
 HEADERS += \
