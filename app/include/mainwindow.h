@@ -4,6 +4,10 @@
 class Koordinator;
 #include <QMainWindow>
 #include <QProgressBar>
+#include <QImage>
+#include <QTouchEvent>
+#include <QPointF>
+class MainWindow;
 #include "display.h"
 
 namespace Ui {
@@ -18,19 +22,28 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void displayScreen(const QImage &img);
+
+signals:
+    void sentTouch(QPointF &lastTouch);
+
 private slots:
-    void on_btnCappucino_clicked();
+    /*void on_btnCappucino_clicked();
 
     void on_btnMilkCoffee_clicked();
 
     void on_btnCoffeeCrema_clicked();
 
     void on_btnLatteMachiato_clicked();
+*/
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     Ui::MainWindow *ui;
     QProgressBar* cup;
-    Display display;
+    Display *display;
 };
 
 #endif // MAINWINDOW_H

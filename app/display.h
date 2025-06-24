@@ -2,11 +2,9 @@
 #define DISPLAY_H
 
 #include <QObject>
-
-struct Position {
-    int x;
-    int y;
-};
+#include <QPointF>
+class Display;
+#include "mainwindow.h"
 
 class Display : public QObject
 {
@@ -15,15 +13,17 @@ public:
     explicit Display(QObject *parent = nullptr);
     ~Display();
 
-    bool getNewTouchEvent();
-    Position getTouchEvent();
+    QPointF getLastTouch();
+    void displayScreen(const QImage &img);
 
-    void update(int x, int y);
+    void setMainWindow(MainWindow *mw);
+
+public slots:
+    void acceptTouch(QPointF &lastTouch);
 
 private:
-    bool newTouchEvent;
-    Position touchEvent;
-
+    QPointF lastTouch;
+    MainWindow *mw;
 };
 
 #endif // DISPLAY_H
