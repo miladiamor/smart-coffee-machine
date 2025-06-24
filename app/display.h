@@ -13,7 +13,7 @@ public:
     explicit Display(QObject *parent = nullptr);
     ~Display();
 
-    QPointF getTouch();
+    QPointF getLastTouch();
     void displayScreen(const QImage &img);
 
     void setMainWindow(MainWindow *mw);

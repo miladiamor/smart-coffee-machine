@@ -9,7 +9,7 @@ Display::~Display(){
 
 }
 
-QPointF Display::getTouch() {
+QPointF Display::getLastTouch() {
     return this->lastTouch;
 }
 void Display::displayScreen(const QImage &img) {
