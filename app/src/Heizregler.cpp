@@ -10,11 +10,13 @@ bool Heizregler::getEingeschaltet(){
     return this->eingeschaltet;
 }
 
+bool Heizregregler::temperaturErreicht() {
+
+}
+
 void Heizregler::temperaturRegeln(int zieltemperatur_Cel) {
     this->zieltemperatur_Cel = zieltemperatur_Cel;
-    heizen->einschalten();
-    while((eingeschaltet == true) && (sensor->getTemperatur_Cel() < zieltemperatur_Cel)) {}
-    heizen->ausschalten();
+
 
 }
 

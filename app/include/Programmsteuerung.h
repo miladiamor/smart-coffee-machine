@@ -30,7 +30,7 @@ private:
         FEHLER
     };
 private:
-    int status;
+    bool busy = false;
     int tickCounter;
     Kaffeeprogramm *programm;
     Kaffeeprogramm* currentProgramm;
