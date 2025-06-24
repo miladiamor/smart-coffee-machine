@@ -13,10 +13,7 @@ Pumpesteuerung::Pumpesteuerung(Pumpe *wasserpumpe, Pumpe *milchpumpe, Durchfluss
     wasserzaehler(wasserzaehler),
     milchzaehler(milchzaehler),
     targetamount_ml(0)
-{
-    updateTimer = new QTimer(this);
-    connect(updateTimer, &QTimer::timeout, this, &Pumpesteuerung::updateState);
-}
+{}
 Pumpesteuerungstates Pumpesteuerung::getState() const{
 
     return currentState;
@@ -33,7 +30,6 @@ void Pumpesteuerung::startPumpingWater(int menge_ml) {
     wasserzaehler->reset();
     wasserpumpe->pumpeStarten();
     setState(Pumpesteuerungstates::PUMPING_WATER);
-    updateTimer->start(100);
 }
 
 void Pumpesteuerung::startPumpingMilk(int menge_ml) {
@@ -46,15 +42,13 @@ void Pumpesteuerung::startPumpingMilk(int menge_ml) {
     milchzaehler->reset();
     milchpumpe->pumpeStarten();
     setState(Pumpesteuerungstates::PUMPING_MILK);
-    updateTimer->start(100);
 }
 
-void Pumpesteuerung::updateState(){
+void Pumpesteuerung::tick(){
     switch (currentState) {
     case Pumpesteuerungstates::PUMPING_WATER:
         if((wasserzaehler->getDurchflussImpuls() >= targetamount_ml)) {
                 wasserpumpe->pumpeStoppen();
-                updateTimer->stop();
                 setState(Pumpesteuerungstates::PUMPING_COMPLETE);
                 emit pumpingFinished();
                 setState(Pumpesteuerungstates::IDLE);
@@ -64,7 +58,6 @@ void Pumpesteuerung::updateState(){
     case Pumpesteuerungstates::PUMPING_MILK:
         if((milchzaehler->getDurchflussImpuls() >= targetamount_ml)) {
                 milchpumpe->pumpeStoppen();
-                updateTimer->stop();
                 setState(Pumpesteuerungstates::PUMPING_COMPLETE);
                 emit pumpingFinished();
                 setState(Pumpesteuerungstates::IDLE);
@@ -73,7 +66,6 @@ void Pumpesteuerung::updateState(){
     case Pumpesteuerungstates::IDLE:
     case Pumpesteuerungstates::PUMPING_COMPLETE:
     case Pumpesteuerungstates::ERROR:
-        updateTimer->stop();
         break;
     }
 }
