@@ -9,18 +9,17 @@ Display::~Display(){
 
 }
 
-bool Display::getNewTouchEvent(){
-    bool ret = newTouchEvent;
-    newTouchEvent = false;
-    return ret;
+QPointF Display::getTouchEvent() {
+    return this->lastTouch;
+}
+void Display::displayScreen(const QImage &img) {
+    mw->displayScreen(img);
 }
 
-Position Display::getTouchEvent(){
-    return touchEvent;
+void Display::acceptTouch(QPointF &lastTouch){
+    this->lastTouch = lastTouch;
 }
 
-void Display::update(int x, int y) {
-    touchEvent.x = x;
-    touchEvent.y = y;
-    newTouchEvent = true;
+void Display::setMainWindow(MainWindow *mw){
+    this->mw = mw;
 }
