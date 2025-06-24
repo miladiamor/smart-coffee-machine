@@ -1,0 +1,31 @@
+#ifndef MOTORSTEUERUNG_H
+#define MOTORSTEUERUNG_H
+
+#include <QObject>
+#include "inkrementalencoder.h"
+#include "kolbenmotor.h"
+class Motorsteuerung;
+#include "bruehgruppe.h"
+
+class Motorsteuerung : public QObject
+{
+    Q_OBJECT
+public:
+    explicit Motorsteuerung(QObject *parent = nullptr);
+    void stampferAusfahren(float stampfhoehe_mm);
+
+    void setBruehgruppe(Bruehgruppe *bruehgruppe);
+    void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);
+    void setStampfer(Kolbenmotor *stampfer);
+public slots:
+    void tick();
+
+private:
+    bool eingeschaltet = false;
+    int stampfhoehe_mm;
+    Bruehgruppe *bruehgruppe;
+    Inkrementalencoder *inkrementalencoder;
+    Kolbenmotor *stampfer;
+};
+
+#endif // MOTORSTEUERUNG_H

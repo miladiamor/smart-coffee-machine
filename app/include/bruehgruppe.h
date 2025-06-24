@@ -5,37 +5,30 @@
 #include <QTimer>
 #include "ventil.h"
 #include "klappe.h"
-#include "kolbenmotor.h"
-#include "inkrementalencoder.h"
+class Bruehgruppe;
+#include "motorsteuerung.h"
 #include "kaffeeprogramm.h"
-enum state {WARTEN, ENTLEEREN, STAMPFEN, KOCHBEREIT, KAFFEEZUFUHR, ZURUECKSETZEN};
 
+enum BruehState {WARTEN, ENTLEEREN, STAMPFEN, KOCHEN, KAFFEEZUFUHR, ZURUECKSETZEN};
+enum BruehEvent {STARTEZUFUHR, ZUFUHRABGESCHLOSSEN, MOTORABGESCHLOSSEN, KOCHENAUFGEHOERT};
 class Bruehgruppe : public QObject
 {
 Q_OBJECT
 public:
-    Bruehgruppe();
+    explicit Bruehgruppe(QObject *parent = nullptr);
     ~Bruehgruppe();
-    void entleeren();
-    void kaffeeFuellen();
-    void trigger(state nextState);
 
-    bool getEntleerklappeOffen();
-    bool getWasserzufuhrOffen();
-    bool getKaffeezufuhrOffen();
-    state getState();
-public slots:
-    void tick();
+    void trigger(BruehEvent event);
+    BruehState getState();
 
+    void setTropfstopfventil(Ventil *tropfstopfventil);
+    void setWasserzufuhr(Ventil *wasserzufuhr);
+    void setKaffeezufuhr(Ventil *kaffeeezufuhr);
 private:
-    int tickCount;
-    state currentState;
-    state nextState;
-    QTimer sleeper;
+    BruehState state;
     Ventil *tropfstopfventil, *wasserzufuhr, *kaffeezufuhr;
     Klappe *entleerklappe;
-    Kolbenmotor *stampfer;
-    Inkrementalencoder *inkrementalencoder;
+    Motorsteuerung *motorsteuerung;
     Kaffeeprogramm *kaffeeprogramm;
 };
 

@@ -14,6 +14,6 @@ void Inkrementalencoder::setPosition(float position_mm) {
     this->position_mm = position_mm;
 }
 
-void Inkrementalencoder::update(int neu_position_mm){
+void Inkrementalencoder::update(float neu_position_mm){
     position_mm = neu_position_mm;
 }

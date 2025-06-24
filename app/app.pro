@@ -24,6 +24,7 @@ INCLUDEPATH += $$PWD/include
 # The source files (e.g. *.cpp)
 SOURCES += \
     display.cpp \
+    include/motorsteuerung.cpp \
     src/kaffeeprogramm.cpp \
     src/mainwindow.cpp \
     src/Durchflusssensor.cpp \
@@ -75,6 +76,7 @@ HEADERS += \
     include/inkrementalencoder.h \
     include/klappe.h \
     include/kolbenmotor.h \
+    include/motorsteuerung.h \
     include/muenze.h \
     include/muenzroehre.h \
     include/muenzroehrenspeicher.h \

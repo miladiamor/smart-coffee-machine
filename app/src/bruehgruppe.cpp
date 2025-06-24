@@ -2,13 +2,8 @@
 #include "kolbenmotor.h"
 #include <QTimer>
 
-Bruehgruppe::Bruehgruppe() :
-    tickCount(0),
-    currentState(WARTEN), nextState(WARTEN),
-    tropfstopfventil(new Ventil), wasserzufuhr(new Ventil), kaffeezufuhr(new Ventil),
-    entleerklappe(new Klappe),
-    stampfer(new Kolbenmotor),
-    inkrementalencoder(new Inkrementalencoder(stampfer)) {}
+Bruehgruppe::(QObject *parent)
+    : QObject{parent}
 
 Bruehgruppe::~Bruehgruppe(){
     /*delete tropfstopfventil;
@@ -18,38 +13,6 @@ Bruehgruppe::~Bruehgruppe(){
     delete stampfer;
     delete inkrementalencoder;
     */
-}
-
-void Bruehgruppe::tick() {
-    const int tickmenge = 10*kaffeeprogramm->getKaffeemenge_g();
-    switch (currentState) {
-    case WARTEN:
-        break;
-    case KAFFEEZUFUHR:
-        tickCount++;
-        if (tickCount == tickmenge) {
-            trigger(STAMPFEN);
-            tickCount = 0;
-        }
-        break;
-    case STAMPFEN:
-        if (stampfer->getStatus() == Kolbenmotor::motorStatus::runterfahren && inkrementalencoder->getPosition_mm() == kaffeeprogramm->getstampfHoehe_mm()) {
-            trigger(KOCHBEREIT);
-        }
-        break;
-    case KOCHBEREIT:
-        break;
-    case ENTLEEREN:
-        if (inkrementalencoder->getPosition_mm() == 0) {
-            trigger(ZURUECKSETZEN);
-        }
-    case ZURUECKSETZEN:
-        if (inkrementalencoder->getPosition_mm() == 25) {
-            trigger(WARTEN);
-        }
-        break;
-    tickCount++;
-    }
 }
 
 void Bruehgruppe::trigger(state nextState) {
@@ -67,11 +30,6 @@ void Bruehgruppe::trigger(state nextState) {
             currentState = STAMPFEN;
             stampfer->runterfahren();
         }
-        /*
-        if (nextState == WARTEN && !kaffeezufuhr->get_ist_offen()) {
-            currentState = WARTEN;
-        }
-        */
         break;
     case STAMPFEN:
         if (stampfer->getStatus() == Kolbenmotor::motorStatus::runterfahren && inkrementalencoder->getPosition_mm() == kaffeeprogramm->getstampfHoehe_mm()) {
@@ -80,11 +38,6 @@ void Bruehgruppe::trigger(state nextState) {
             tropfstopfventil->oeffnen();
             currentState = KOCHBEREIT;
         }
-        /*
-        if (nextState == KOCHEN && wasserzufuhr->get_ist_offen() && tropfstopfventil->get_ist_offen()) {
-            currentState = KOCHEN;
-        }
-*/
         break;
     case KOCHBEREIT:
         if (nextState == ENTLEEREN) {
@@ -110,14 +63,6 @@ void Bruehgruppe::trigger(state nextState) {
     }
 }
 
-state Bruehgruppe::getState() {
-    return currentState;
-}
-
-void Bruehgruppe::entleeren() {
-    trigger(ENTLEEREN);
-}
-
-void Bruehgruppe::kaffeeFuellen() {
-    trigger(KAFFEEZUFUHR);
+BruehState Bruehgruppe::getState() {
+    return state;
 }

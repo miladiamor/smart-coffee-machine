@@ -14,7 +14,7 @@ class Inkrementalencoder : public QObject
         void setPosition(float position_mm);
 
     public slots:
-        void update(int neuPosition_mm);
+        void update(float neuPosition_mm);
 
     private:
         float position_mm;
