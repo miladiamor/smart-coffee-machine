@@ -27,9 +27,7 @@ SOURCES += \
     include/motorsteuerung.cpp \
     src/kaffeeprogramm.cpp \
     src/mainwindow.cpp \
-    src/Durchflusssensor.cpp \
     src/Pumpe.cpp \
-    src/Pumpesteuerung.cpp \
     src/Koordinator.cpp \
     src/Temperatursensor.cpp \
     src/Tankwaage.cpp \
@@ -54,9 +52,7 @@ SOURCES += \
 # The header files (e.g. *.h)
 HEADERS += \
     display.h \
-    include/Durchflusssensor.h \
     include/Pumpe.h \
-    include/Pumpesteuerung.h \
     include/Koordinator.h \
     include/Tankwaage.h \
     include/Fuellstandsmessung.h \

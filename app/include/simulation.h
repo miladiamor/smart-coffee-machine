@@ -12,7 +12,6 @@
 #include "Temperatursensor.h"
 #include "Zuckerdispenser.h"
 #include "Tankwaage.h"
-#include "Durchflusssensor.h"
 #include "Pumpe.h"
 #include "Schaeumer.h"
 #include "QThread"
@@ -29,8 +28,6 @@ public:
     void setKolbenmotor(Kolbenmotor *kolbenmotor);
     void setBruehgruppe(Bruehgruppe *bruehgruppe);
     void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);
-    void setWasserzaehler(Durchflusssensor *sensor);
-    void setMilchZaehler(Durchflusssensor *sensor);
     void setWasserPumpe(Pumpe *pumpe);
     void setMilchPumpe (Pumpe *pumpe);
     void setSchaeumer (Schaeumer *schaeumer);
@@ -56,8 +53,7 @@ private:
     Inkrementalencoder *inkrementalencoder;
     Tankwaage *kaffeerestbehaelter;
     Temperatursensor temperatursensor;
-    Durchflusssensor *wasserzaehler;
-    Durchflusssensor *milchzaehler;
+
 
 
     // Temperaturen

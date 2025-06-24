@@ -1,7 +1,7 @@
 #include "Heizregler.h"
 #include <QDebug>
 
-Heizregler::Heizregler() :
+Heizregler::Heizregler(QObject* parent) : QObject(parent),
     eingeschaltet(false),
     zieltemperatur_Cel(0),
     aktuelleTemperatur_Cel(20),

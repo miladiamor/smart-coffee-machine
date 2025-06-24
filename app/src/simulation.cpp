@@ -32,14 +32,6 @@ void Simulation::setMilchPumpe(Pumpe *pumpe){
     this->milchpumpe = pumpe;
 }
 
-void Simulation::setWasserzaehler(Durchflusssensor *sensor){
-    this->wasserzaehler = sensor;
-}
-
-void Simulation::setMilchZaehler(Durchflusssensor *sensor){
-    this->milchzaehler = sensor;
-}
-
 void Simulation::setSchaeumer(Schaeumer *schaeumer) {
     this->schaeumer = schaeumer;
 }
@@ -96,7 +88,7 @@ void Simulation::update(){
     float milchmenge_pro_frame = pumpmenge_milch_pro_s_in_g;
 
     // Wasserfluss
-
+/*
     if (!wasserResetDone && wasserpumpe->istAktiv() == true) {
         wasserzaehler->setNull();
         wasserResetDone = true;
@@ -126,7 +118,7 @@ void Simulation::update(){
     if (milchzaehler->getWassermenge_g() >= 75.0) {
         milchpumpe->pumpeStoppen();
     }
-
+*/
 
     // Schaeumer
     const float MILCH_STARTTEMP_CEL = 25.0;

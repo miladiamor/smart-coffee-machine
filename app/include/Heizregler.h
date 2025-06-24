@@ -1,16 +1,22 @@
 #pragma once
 #include "Heizelemente.h"
 #include "Temperatursensor.h"
-class Heizregler {
+
+#include <QObject>
+
+class Heizregler : public QObject {
 
 public:
-    Heizregler();
+    Heizregler(QObject* parent = nullptr);
     ~Heizregler();
 
     bool getEingeschaltet();
     void temperaturRegeln(int zieltemperatur_Cel);
     bool istTemperaturErreicht() const;
     void updateTemperatur();
+
+public slots:
+    void tick();
 
 private:
     bool eingeschaltet;
