@@ -43,6 +43,7 @@ static bool milchResetDone = false;
 #define MOTORGESCHWINDIGKEIT_MM_PRO_S 20
 
 void Simulation::update(){
+    /*
     // Kaffeezufuhr && Kaffeepulverbehältersimulation
     const float kaffee_g_pro_s = 5.7;
     const float hoeheKaffeepulver_mm_pro_g = 0.33;
@@ -79,7 +80,7 @@ void Simulation::update(){
     inkrementalencoder->setPosition(motorPosition_mm);
     kaffeerestbehaelter->setGewicht(kaffeerestbehaelter_fuellstand_g);
     temperatursensor.setTemperatur_Cel(wassertemperatur_cel);
-
+    */
     //Durchflusssensor & Pumpe
     const float pumpmenge_wasser_pro_s_in_g = 11.35;
     const float pumpmenge_milch_pro_s_in_g = 9.2;

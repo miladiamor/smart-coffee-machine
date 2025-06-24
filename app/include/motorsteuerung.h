@@ -24,7 +24,8 @@ public slots:
 
 private:
     bool eingeschaltet = false;
-    int stampfhoehe_mm;
+    float position_mm;
+    float stampfhoehe_mm;
     Bruehgruppe *bruehgruppe;
     Inkrementalencoder *inkrementalencoder;
     Kolbenmotor *stampfer;
