@@ -54,7 +54,7 @@ bool Kaffeeprogramm::getMilchZuerst() const {
     return milchZuerst;
 }
 
-bool Kaffeeprogramm::getstampfHoehe_mm() const
+float Kaffeeprogramm::getstampfHoehe_mm() const
 {
     return stampfHoehe_mm;
 }
@@ -96,7 +96,7 @@ void Kaffeeprogramm::setMilchZuerst(bool zuerst) {
     milchZuerst = zuerst;
 }
 
-void Kaffeeprogramm::setstampfHoehe_mm(bool mm)
+void Kaffeeprogramm::setstampfHoehe_mm(float mm)
 {
     stampfHoehe_mm = mm;
 }

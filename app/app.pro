@@ -24,6 +24,8 @@ INCLUDEPATH += $$PWD/include
 # The source files (e.g. *.cpp)
 SOURCES += \
     src/display.cpp \
+    display.cpp \
+    src/motorsteuerung.cpp \
     src/kaffeeprogramm.cpp \
     src/mainwindow.cpp \
     src/Pumpe.cpp \
@@ -46,9 +48,8 @@ SOURCES += \
     src/Schaeumer.cpp \
     src/Zuckerdispenser.cpp \
     src/Programmsteuerung.cpp \
-    src/Muenzenschieber.cpp
+    src/Muenzenschieber.cpp\
     src/motorsteuerung.cpp \
-
 # The header files (e.g. *.h)
 HEADERS += \
     include/display.h \
@@ -84,9 +85,7 @@ HEADERS += \
     include/simulation.h \
     include/kaffeeprogramm.h \
     include/mainwindow.h \
-    include/Muenzenschieber.h
-
-
+    include/Muenzenschieber.h\
 # The GUI definition files (so-called forms)
 FORMS += \
     mainwindow.ui

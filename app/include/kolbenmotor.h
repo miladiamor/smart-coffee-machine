@@ -11,7 +11,7 @@ class Kolbenmotor : public QObject
         enum class motorStatus {
             Aus, hochfahren, runterfahren
         };
-        Kolbenmotor();
+        Kolbenmotor(QObject *parent = nullptr);
         void runterfahren();
         void hochfahren();
         void stoppen();

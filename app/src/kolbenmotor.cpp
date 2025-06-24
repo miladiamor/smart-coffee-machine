@@ -1,8 +1,8 @@
 #include "kolbenmotor.h"
 
-Kolbenmotor::Kolbenmotor() : status(motorStatus::Aus) {
-
-}
+Kolbenmotor::Kolbenmotor(QObject *parent)
+    : QObject{parent},
+    status(motorStatus::Aus) {}
 
 void Kolbenmotor::runterfahren() {
     status = motorStatus::runterfahren;

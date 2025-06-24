@@ -15,16 +15,17 @@ class Bruehgruppe : public QObject
 {
 Q_OBJECT
 public:
-    explicit Bruehgruppe(QObject *parent = nullptr);
+    Bruehgruppe(QObject *parent = nullptr);
     ~Bruehgruppe();
 
     void trigger(BruehEvent event);
     BruehState getState();
     void setKaffeeprogramm(Kaffeeprogramm *kaffeeprogramm);
-
+    void setMotorsteuerung(Motorsteuerung *motorsteuerung);
     void setTropfstopfventil(Ventil *tropfstopfventil);
     void setWasserzufuhr(Ventil *wasserzufuhr);
     void setKaffeezufuhr(Ventil *kaffeeezufuhr);
+    void setEntleerklappe(Klappe *entleerklappe);
 
 private:
     BruehState state;

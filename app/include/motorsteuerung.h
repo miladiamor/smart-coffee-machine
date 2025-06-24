@@ -13,8 +13,8 @@ class Motorsteuerung : public QObject
 {
     Q_OBJECT
 public:
-    explicit Motorsteuerung(QObject *parent = nullptr);
-    void stampferAusfahren(float stampfhoehe_mm);
+    Motorsteuerung(QObject *parent = nullptr);
+    virtual void stampferAusfahren(float stampfhoehe_mm);
 
     void setBruehgruppe(Bruehgruppe *bruehgruppe);
     void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);
@@ -24,7 +24,8 @@ public slots:
 
 private:
     bool eingeschaltet = false;
-    int stampfhoehe_mm;
+    float position_mm;
+    float stampfhoehe_mm;
     Bruehgruppe *bruehgruppe;
     Inkrementalencoder *inkrementalencoder;
     Kolbenmotor *stampfer;
