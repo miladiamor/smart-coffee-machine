@@ -24,7 +24,7 @@ INCLUDEPATH += $$PWD/include
 # The source files (e.g. *.cpp)
 SOURCES += \
     display.cpp \
-    include/motorsteuerung.cpp \
+    src/motorsteuerung.cpp \
     src/kaffeeprogramm.cpp \
     src/mainwindow.cpp \
     src/Durchflusssensor.cpp \

@@ -60,8 +60,16 @@ void Bruehgruppe::trigger(BruehEvent event) {
     }
 }
 
+void Bruehgruppe::setEntleerklappe(Klappe *entleerklappe){
+    this->entleerklappe = entleerklappe;
+}
+
 void Bruehgruppe::setKaffeeprogramm(Kaffeeprogramm *kaffeeprogramm){
     this->kaffeeprogramm = kaffeeprogramm;
+}
+
+void Bruehgruppe::setMotorsteuerung(Motorsteuerung *motorsteuerung){
+    this->motorsteuerung = motorsteuerung;
 }
 
 void Bruehgruppe::setTropfstopfventil(Ventil *tropfstopfventil){
