@@ -20,15 +20,10 @@ class Pumpesteuerung : public QObject
     Q_OBJECT
     private:
         Pumpesteuerungstates currentState;
-        QTimer *updateTimer;
         Pumpe *wasserpumpe, *milchpumpe;
         Durchflusssensor *wasserzaehler, *milchzaehler;
         int targetamount_ml;
         void setState(Pumpesteuerungstates newState);
-
-    private slots:
-        void updateState();
-
 
     public:
         Pumpesteuerung(Pumpe *wasserpumpe, Pumpe *milchpumpe, Durchflusssensor *wasserzaehler, Durchflusssensor *milchzaehler);
@@ -38,6 +33,7 @@ class Pumpesteuerung : public QObject
     public slots:
         void startPumpingWater(int menge_mil);
         void startPumpingMilk(int menge_mil);
+        void tick();
 
     signals:
         void pumpingFinished();
