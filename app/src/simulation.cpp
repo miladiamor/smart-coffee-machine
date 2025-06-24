@@ -55,7 +55,7 @@ void Simulation::update(){
     const float kaffee_g_pro_s = 5.7;
     const float hoeheKaffeepulver_mm_pro_g = 0.33;
     const float kaffee_g_pro_frame = kaffee_g_pro_s * 0.001;
-    if (inkrementalencoder->getPosition() == 0 && bruehgruppe->getKaffeezufuhrOffen()) {
+    if (inkrementalencoder->getPosition_mm() == MAX_MOTOR_HEIGHT_MM && bruehgruppe->getState() == KAFFEEZUFUHR) {
         bruehkammerInhalt_g += kaffee_g_pro_frame;
         kaffeehoehe_mm += kaffee_g_pro_frame * hoeheKaffeepulver_mm_pro_g;
         kaffeebehaelter_g -= kaffee_g_pro_frame;

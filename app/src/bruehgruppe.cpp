@@ -2,8 +2,8 @@
 #include "kolbenmotor.h"
 #include <QTimer>
 
-Bruehgruppe::(QObject *parent)
-    : QObject{parent}
+Bruehgruppe::Bruehgruppe(QObject *parent)
+    : QObject{parent} {}
 
 Bruehgruppe::~Bruehgruppe(){
     /*delete tropfstopfventil;
@@ -15,52 +15,65 @@ Bruehgruppe::~Bruehgruppe(){
     */
 }
 
-void Bruehgruppe::trigger(state nextState) {
-    switch(currentState){
+void Bruehgruppe::trigger(BruehEvent event) {
+    switch(state){
     case WARTEN:
-        if (nextState == KAFFEEZUFUHR) {
+        if (event == ZUFUHRSTART) {
             kaffeezufuhr->oeffnen();
-            tickCount = 0;
-            currentState = KAFFEEZUFUHR;
+            state = KAFFEEZUFUHR;
         }
         break;
     case KAFFEEZUFUHR:
-        if (nextState == STAMPFEN) {
+        if (event == ZUFUHRABGESCHLOSSEN) {
             kaffeezufuhr->schliessen();
-            currentState = STAMPFEN;
-            stampfer->runterfahren();
+            motorsteuerung->stampferAusfahren(kaffeeprogramm->getstampfHoehe_mm());
+            state = STAMPFEN;
         }
         break;
     case STAMPFEN:
-        if (stampfer->getStatus() == Kolbenmotor::motorStatus::runterfahren && inkrementalencoder->getPosition_mm() == kaffeeprogramm->getstampfHoehe_mm()) {
-            stampfer->stoppen();
+        if (event == MOTORABGESCHLOSSEN) {
             wasserzufuhr->oeffnen();
             tropfstopfventil->oeffnen();
-            currentState = KOCHBEREIT;
+            state = KOCHEN;
         }
         break;
-    case KOCHBEREIT:
-        if (nextState == ENTLEEREN) {
+    case KOCHEN:
+        if (event == KOCHENAUFGEHOERT) {
             wasserzufuhr->schliessen();
             tropfstopfventil->schliessen();
             entleerklappe->oeffnen();
-            stampfer->runterfahren();
-            currentState = ENTLEEREN;
+            motorsteuerung->stampferAusfahren(0);
+            state = ENTLEEREN;
         }
         break;
     case ENTLEEREN:
-        if (nextState == ZURUECKSETZEN) {
-            stampfer->hochfahren();
+        if (event == MOTORABGESCHLOSSEN) {
+            motorsteuerung->stampferAusfahren(MAX_MOTOR_HEIGHT_MM);
             entleerklappe->schliessen();
-            currentState = ZURUECKSETZEN;
+            state = ZURUECKSETZEN;
         }
         break;
     case ZURUECKSETZEN:
-        if (nextState == WARTEN) {
-            stampfer->stoppen();
-            currentState = WARTEN;
+        if (event == MOTORABGESCHLOSSEN) {
+            state = WARTEN;
         }
     }
+}
+
+void Bruehgruppe::setKaffeeprogramm(Kaffeeprogramm *kaffeeprogramm){
+    this->kaffeeprogramm = kaffeeprogramm;
+}
+
+void Bruehgruppe::setTropfstopfventil(Ventil *tropfstopfventil){
+    this->tropfstopfventil = tropfstopfventil;
+}
+
+void Bruehgruppe::setWasserzufuhr(Ventil *wasserzufuhr){
+    this->wasserzufuhr = wasserzufuhr;
+}
+
+void Bruehgruppe::setKaffeezufuhr(Ventil *kaffeeezufuhr){
+    this->kaffeezufuhr = kaffeeezufuhr;
 }
 
 BruehState Bruehgruppe::getState() {

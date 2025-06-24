@@ -10,7 +10,7 @@ class Bruehgruppe;
 #include "kaffeeprogramm.h"
 
 enum BruehState {WARTEN, ENTLEEREN, STAMPFEN, KOCHEN, KAFFEEZUFUHR, ZURUECKSETZEN};
-enum BruehEvent {STARTEZUFUHR, ZUFUHRABGESCHLOSSEN, MOTORABGESCHLOSSEN, KOCHENAUFGEHOERT};
+enum BruehEvent {ZUFUHRSTART, ZUFUHRABGESCHLOSSEN, MOTORABGESCHLOSSEN, KOCHENAUFGEHOERT};
 class Bruehgruppe : public QObject
 {
 Q_OBJECT
@@ -20,10 +20,12 @@ public:
 
     void trigger(BruehEvent event);
     BruehState getState();
+    void setKaffeeprogramm(Kaffeeprogramm *kaffeeprogramm);
 
     void setTropfstopfventil(Ventil *tropfstopfventil);
     void setWasserzufuhr(Ventil *wasserzufuhr);
     void setKaffeezufuhr(Ventil *kaffeeezufuhr);
+
 private:
     BruehState state;
     Ventil *tropfstopfventil, *wasserzufuhr, *kaffeezufuhr;

@@ -7,6 +7,8 @@
 class Motorsteuerung;
 #include "bruehgruppe.h"
 
+#define MAX_MOTOR_HEIGHT_MM 20
+
 class Motorsteuerung : public QObject
 {
     Q_OBJECT
