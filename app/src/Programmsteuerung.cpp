@@ -2,228 +2,130 @@
 #include "Heizregler.h"
 #include "bruehgruppe.h"
 #include "Schaeumer.h"
-//#include "Zuckerdispenser.h"
-//#include "Fuellstandsmessung.h"
-#include "Pumpesteuerung.h"
-//#include "clock.h"
 #include "kaffeeprogramm.h"
-
+#include "Pumpe.h"
+#include "Zuckerdispenser.h"
 
 #include <QDebug>
 
-
 Programmsteuerung::Programmsteuerung()
-   :status(0),
-    programm(nullptr),
+   :busy(false),
+    tickCounter(0),
+    currentProgramm(nullptr),
     temperaturregler_wasser(nullptr),
     temperaturregler_milch(nullptr),
     zucker(nullptr),
     milchschaeumer(nullptr),
     bruehgruppe(nullptr),
-    steuerung(nullptr),
+    wasserpumpe(nullptr),
+    milchpumpe(nullptr),
     messung(nullptr),
     coffeeState(CoffeeState::IDLE)
     {}
 
 Programmsteuerung::~Programmsteuerung(){}
 
-    void Programmsteuerung::setPumpesteuerung(Pumpesteuerung* pump_steuerung){
-        this->steuerung = pump_steuerung;
-        connect(steuerung, &Pumpesteuerung::pumpingFinished, this, &Programmsteuerung::onPumpingFinished);
-        connect(steuerung, &Pumpesteuerung::fehler, this, &Programmsteuerung::fehleraufgetreten);
-    }
-
     void Programmsteuerung::setBruehgruppe(Bruehgruppe* gruppe){
         this->bruehgruppe = gruppe;
     }
-
     void Programmsteuerung::setWasserHeizer(Heizregler* heizer){
         this->temperaturregler_wasser = heizer;
     }
-
     void Programmsteuerung::setMilchHeizer(Heizregler* heizer){
         this->temperaturregler_milch = heizer;
     }
     void Programmsteuerung::setMilchschaeumer(Schaeumer* schaeumer){
         this->milchschaeumer = schaeumer;
     }
-
-    void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm){
-        {
-            if (!steuerung || !bruehgruppe || !temperaturregler_wasser || !temperaturregler_milch || !milchschaeumer) {
-
-                return;
-            }
-
-            if (coffeeState != CoffeeState::IDLE) {
-
-                return;
-            }
-
-            this->currentProgramm = programm;
-            busy=true;
-            QTimer::singleShot(1000, this, SLOT(nextStep()));
-        }
+    void Programmsteuerung::setWasserpumpe(Pumpe* pumpe){
+        this->wasserpumpe = pumpe;
+    }
+    void Programmsteuerung::setMilchpumpe(Pumpe* pumpe){
+        this->milchpumpe = pumpe;
+    }
+    void Programmsteuerung::setZuckerdispenser(Zuckerdispenser* dispenser){
+        this->zucker = dispenser;
     }
 
-    void Programmsteuerung::tick(){
+    void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm){
+            this->currentProgramm = programm;
+            busy = true;
+     }
 
+
+    void Programmsteuerung::tick(){
+        if (!busy){
+            return;
+        }
         switch (coffeeState) {
         case CoffeeState::IDLE:
             if (busy == true) {
-                // Wassererhitzer starten
-                // Millcherhitzer starten
+                temperaturregler_wasser->temperaturRegeln(currentProgramm->getWasserKochhitze_Cel());// Wassererhitzer starten
+                temperaturregler_milch->temperaturRegeln(currentProgramm->getMilchKochhitze_Cel());// Millcherhitzer starten
+                coffeeState = CoffeeState::HEIZEN;
+            }
+                break;
+
+        case CoffeeState::HEIZEN:
+            if (temperaturregler_wasser->istTemperaturErreicht() && temperaturregler_milch->istTemperaturErreicht()){// milch hitze prüfen -> milcherhitzer stoppen
+                bruehgruppe->trigger(ZUFUHRSTART),// wasserhitze prüfen -> wassererhitzer stoppen
+                coffeeState = CoffeeState::KAFFEEZUFUHR;// wenn milch- UND wasserhitze richtig sind (prüfen) ->
+                tickCounter = 0;
             }
             break;
-        case CoffeeState::HEIZEN:
-            // milch hitze prüfen -> milcherhitzer stoppen
-            // wasserhitze prüfen -> wassererhitzer stoppen
-            // wenn milch- UND wasserhitze richtig sind (prüfen) ->
-            {
-                coffeeState = CoffeeState::FUELLEN;
-                tickCounter = 0;
-                bruehgruppe->trigger(ZUFUHRSTART);
-                coffeeState = CoffeeState::KAFFEEZUFUHR;
-            }
+
         case CoffeeState::KAFFEEZUFUHR:
             if (tickCounter >= currentProgramm->getKaffeemenge_g()/0.3) {
                 bruehgruppe->trigger(ZUFUHRABGESCHLOSSEN);
                 coffeeState = CoffeeState::WARTENAUFBRUEHGRUPPE;
             }
+            break;
+
         case CoffeeState::WARTENAUFBRUEHGRUPPE:
             if (bruehgruppe->getState() == KOCHEN) {
                 coffeeState = CoffeeState::PUMPING_WATER;
-                //steuerung->startPumpingWater(currentProgramm->getWassermenge_ml());
-                wasserpumpe->pumpenStarten()
+                wasserpumpe->pumpeStarten();
                 tickCounter = 0;
             }
             break;
+
         case CoffeeState::PUMPING_WATER:
             // prüfen ob Wasser fertig gepumpt
-            if (tickCounter >= currentProgramm->getWassermenge_ml()/10)
-            {
-                wasserpumpe->pumpenStoppen();
+            if (tickCounter >= currentProgramm->getWassermenge_ml()/10){
+                wasserpumpe->pumpeStoppen();
                 milchpumpe->pumpeStarten();
                 milchschaeumer->aufschaeumenStarten();
-               // steuerung->startPumpingMilk(currentProgramm->getMilchmenge_ml());
                 coffeeState = CoffeeState::PUMPING_MILK;
+                tickCounter = 0;
             }
             break;
         case CoffeeState::PUMPING_MILK:
             // prüfen ob Milch fertig gepumpt
-            {
+            if (tickCounter >= currentProgramm->getMilchmenge_ml()/10){
                 milchschaeumer->aufschaeumenStoppen();
+                milchpumpe->pumpeStoppen();
+                zucker->zuckerAuswerfen();
                 bruehgruppe->trigger(KOCHENAUFGEHOERT);
-                coffeeState = CoffeeState::ZURUECKSETZEN;
+                coffeeState = CoffeeState::ZUCKERAUSWERFEN;
+                tickCounter = 0;
             }
             break;
+
+        case CoffeeState::ZUCKERAUSWERFEN:
+            if (tickCounter >= currentProgramm->getMitZucker()*5){
+                zucker->ausschalten();
+                coffeeState = CoffeeState::ZURUECKSETZEN;
+            }
+
         case CoffeeState::ZURUECKSETZEN:
             if (bruehgruppe->getState() == WARTEN) {
                 coffeeState = CoffeeState::IDLE;
                 busy = false;
             }
             break;
+
         default:
             break;
         }
         tickCounter++;
-
     }
-
-    void Programmsteuerung::onPumpingFinished(){
-        if(coffeeState == CoffeeState::PUMPING_WATER){
-            coffeeState = CoffeeState::PUMPING_MILK;
-            steuerung->startPumpingMilk(currentProgramm->getMilchmenge_ml());
-        } else if(coffeeState == CoffeeState::PUMPING_MILK){
-            nextStep();
-        }
-    }
-
-    void Programmsteuerung::fehleraufgetreten(const QString& message){
-
-        coffeeState = CoffeeState::FEHLER;
-    }
-    /*void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm) {
-
-    status =  1;
-    qDebug() << "Kaffeeprogramm gesetzt";
-
-    // Durchlauferhitzer wasser und milch auf die richtige Temperatur bringen
-     temperaturregler_milch->temperaturRegeln(programm->getMilchKochhitze_Cel());
-    temperaturregler_wasser->temperaturRegeln(programm->getWasserKochhitze_Cel());
-    QTimer::singleShot(5000, this, SLOT(nextStep()));
-
-    bruehgruppe->kaffeeFuellen();
-    QTimer::singleShot(6000, this, SLOT(nextStep()));
-
-
-    // Wasser pumpen
-    steuerung->mypumpe1(programm->getWassermenge_ml());
-    QTimer::singleShot(1000, this, SLOT(nextStep()));
-
-    //Milch pumpen
-    steuerung->mypumpe2((programm->getMilchmenge_ml()));
-    QTimer::singleShot(2000, this, SLOT(nextStep()));
-    milchschaeumer->aufschaeumenStarten();
-    QTimer::singleShot(1000, this, SLOT(nextStep()));
-    milchschaeumer->aufschaeumenStoppen();
-    QTimer::singleShot(500, this, SLOT(nextStep()));
-
-    bruehgruppe->entleeren();*/
-
-    /*
-     QTimer::singleShot(5000, this, SLOT(nextStep()));
-
-    // Kaffee vorbereiten
-     bruehgruppe->kaffeepulver_hinzufuegen(programm->getKaffeemenge_g());
-     QTimer::singleShot(3000, this, SLOT(nextStep()));
-     bruehgruppe->kaffee_pressen(programm->getstampfHoehe_mm());
-     QTimer::singleShot(7000, this, SLOT(nextStep()));
-
-    // Milch pumpen
-     milchschaeumer->aufschaeumenStarten();
-     QTimer::singleShot(15000, this, SLOT(nextStep()));
-
-    //  Milch fertig
-     milchschaeumer->aufschaeumenStoppen();
-
-    // Wasserzufuhrventil in Brühgruppe öffnen
-     bruehgruppe->wasserzufuhr_oeffnen();
-     QTimer::singleShot(2000, this, SLOT(nextStep()));
-
-    //Wasser pumpen
-     steuerung->mypumpe(50);
-     QTimer::singleShot(1000, this, SLOT(nextStep()));
-
-    // zucker ausgeben
-     zucker->zuckerAuswerfen();
-     QTimer::singleShot(5000, this, SLOT(nextStep()));
-
-    // Wasserzufuhr schließen
-     bruehgruppe->wasserzufuhr_schliessen();
-
-    //tropfstopfventil offnen
-     bruehgruppe->tropfstopfventilOeffnen();
-     QTimer::singleShot(3000, this, SLOT(nextStep()));
-
-    //tropfstopfventil schließen
-     bruehgruppe->tropfstopfventilSchließen();
-
-    // Brühgruppe entleeren
-     bruehgruppe->entleeren();
-     QTimer::singleShot(5000, this, SLOT(nextStep()));
-
-    // einmal mit Wasser spülen (reinigen)
-     bruehgruppe->wasserzufuhr_oeffnen();
-     steuerung->mypumpe(50);
-     QTimer::singleShot(1000, this, SLOT(nextStep()));
-     bruehgruppe->wasserzufuhr_schliessen();
-     bruehgruppe->entleeren();
-    */
-
-
-  //  status = 0;
-  //  qDebug() << "Kaffeeprogramm abgeschlossen";
-//}
-
-

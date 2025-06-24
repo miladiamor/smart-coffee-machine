@@ -1,9 +1,8 @@
 #include "Temperatursensor.h"
 
-Temperatursensor::Temperatursensor(){
-}
+Temperatursensor::Temperatursensor() : temperatur_Cel(20){}
 
-int Temperatursensor::getTemperatur_Cel(){
+int Temperatursensor::getTemperatur_Cel() const{
     return temperatur_Cel;
 }
 

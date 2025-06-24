@@ -2,20 +2,24 @@
 #define ZUCKERDISPENSER_H
 
 #include <QObject>
-#include <QTimer>
-#include <QThread>
 
 class Zuckerdispenser : public QObject {
 
     Q_OBJECT
+
     private:
         bool eingeschaltet;
-        QTimer sleeper;
+
+    signals:
+        void auswerfenGestartet();
+        void auswerfenBeendet();
 
     public:
-        Zuckerdispenser();
-        void zuckerAuswerfen();
+        Zuckerdispenser(QObject *parent = nullptr);
         bool istAktiv() const;
+
+    public slots:
+        void zuckerAuswerfen();
         void ausschalten();
 }; 
 

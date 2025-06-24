@@ -3,21 +3,20 @@
 #include "Temperatursensor.h"
 class Heizregler {
 
-private:
-    bool eingeschaltet;
-    int zieltemperatur_Cel;
-    Temperatursensor *sensor;
-    Heizelemente *heizen;
-    //void einschalten();
-    //void ausschalten();
-
 public:
     Heizregler();
+    ~Heizregler();
 
     bool getEingeschaltet();
     void temperaturRegeln(int zieltemperatur_Cel);
-    //void regelnStoppen();
+    bool istTemperaturErreicht() const;
+    void updateTemperatur();
 
-    
+private:
+    bool eingeschaltet;
+    int zieltemperatur_Cel;
+    int aktuelleTemperatur_Cel;
+    Temperatursensor *sensor;
+    Heizelemente *heizen;   
 };
 
