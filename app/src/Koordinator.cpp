@@ -4,9 +4,7 @@ Koordinator::Koordinator()
     : zahlung(nullptr),
     steuerung(nullptr),
     state(KoordinatorStates::WARTEN),
-    mitZucker(false),
-    milchFrageNotwendig(false),
-    mitMilch(false)
+    mitZucker(false)
 {}
 
 void Koordinator::setZahlungseinheit(Zahlungseinheit* z) {
@@ -17,70 +15,55 @@ void Koordinator::setSteuerung(Programmsteuerung* steuerung) {
     this->steuerung = steuerung;
 }
 
+// DRINK RECIPES
 void Koordinator::cappuccino() {
     programm.setKaffeemenge_g(9);
     programm.setWassermenge_ml(30);
+    programm.setMilchmenge_ml(120);
     programm.setWasserKochhitze_Cel(93);
+    programm.setMilchKochhitze_Cel(65);
     programm.setMilchZuerst(true);
-
-    milchFrageNotwendig = true;
-    state = KoordinatorStates::MILCH;
+    state = KoordinatorStates::ZUCKER;
 }
 
 void Koordinator::milchkaffee() {
     programm.setKaffeemenge_g(9);
     programm.setWassermenge_ml(30);
+    programm.setMilchmenge_ml(150);
     programm.setWasserKochhitze_Cel(92);
+    programm.setMilchKochhitze_Cel(70);
     programm.setMilchZuerst(true);
-
-    milchFrageNotwendig = true;
-    state = KoordinatorStates::MILCH;
+    state = KoordinatorStates::ZUCKER;
 }
 
 void Koordinator::kaffeeCrema() {
     programm.setKaffeemenge_g(9);
     programm.setWassermenge_ml(80);
-    programm.setWasserKochhitze_Cel(95);
-    programm.setMilchZuerst(false);
-
     programm.setMilchmenge_ml(0);
+    programm.setWasserKochhitze_Cel(95);
     programm.setMilchKochhitze_Cel(0);
-    milchFrageNotwendig = false;
-
+    programm.setMilchZuerst(false);
     state = KoordinatorStates::ZUCKER;
 }
 
 void Koordinator::latteMacchiato() {
     programm.setKaffeemenge_g(9);
     programm.setWassermenge_ml(30);
+    programm.setMilchmenge_ml(200);
     programm.setWasserKochhitze_Cel(92);
+    programm.setMilchKochhitze_Cel(60);
     programm.setMilchZuerst(true);
-
-    milchFrageNotwendig = true;
-    state = KoordinatorStates::MILCH;
-}
-
-void Koordinator::milchWaehlen(bool mitMilch) {
-    this->mitMilch = mitMilch;
-
-    if (mitMilch) {
-        // Default milk config or adjust by drink type if needed
-        programm.setMilchmenge_ml(120);
-        programm.setMilchKochhitze_Cel(65);
-    } else {
-        programm.setMilchmenge_ml(0);
-        programm.setMilchKochhitze_Cel(0);
-    }
-
     state = KoordinatorStates::ZUCKER;
 }
 
+// SUGAR SELECTION
 void Koordinator::zuckerWaehlen(bool mitZucker) {
     this->mitZucker = mitZucker;
     programm.setMitZucker(mitZucker);
     state = KoordinatorStates::BEZAHLEN;
 }
 
+// PAYMENT + START PROGRAM
 void Koordinator::kaufen() {
     if (!zahlung) return;
 

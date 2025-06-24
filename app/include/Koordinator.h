@@ -6,7 +6,6 @@
 
 enum class KoordinatorStates {
     WARTEN,
-    MILCH,
     ZUCKER,
     BEZAHLEN,
     AUSFUEHREN
@@ -18,10 +17,7 @@ private:
     Zahlungseinheit* zahlung;
     Programmsteuerung* steuerung;
     KoordinatorStates state;
-
     bool mitZucker;
-    bool milchFrageNotwendig;
-    bool mitMilch;
 
 public:
     Koordinator();
@@ -32,11 +28,11 @@ public:
     void kaffeeCrema();
     void latteMacchiato();
 
-    // User preferences
-    void milchWaehlen(bool mitMilch);
+    // User choices
     void zuckerWaehlen(bool mitZucker);
     void kaufen();
 
+    // Setup
     void setZahlungseinheit(Zahlungseinheit* z);
     void setSteuerung(Programmsteuerung* steuerung);
 };

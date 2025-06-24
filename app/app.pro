@@ -23,8 +23,7 @@ INCLUDEPATH += $$PWD/include
 
 # The source files (e.g. *.cpp)
 SOURCES += \
-    display.cpp \
-    include/motorsteuerung.cpp \
+    src/display.cpp \
     src/kaffeeprogramm.cpp \
     src/mainwindow.cpp \
     src/Pumpe.cpp \
@@ -47,11 +46,12 @@ SOURCES += \
     src/Schaeumer.cpp \
     src/Zuckerdispenser.cpp \
     src/Programmsteuerung.cpp \
-    srs/Muenzenschieber.cpp
+    src/Muenzenschieber.cpp
+    src/motorsteuerung.cpp \
 
 # The header files (e.g. *.h)
 HEADERS += \
-    display.h \
+    include/display.h \
     include/Pumpe.h \
     include/Koordinator.h \
     include/Tankwaage.h \

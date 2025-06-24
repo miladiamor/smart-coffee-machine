@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QPointF>
-class Display;
-#include "mainwindow.h"
+#include <QImage>
+#include <QPainter>
+class MainWindow;
 
 class Display : public QObject
 {
@@ -17,6 +18,8 @@ public:
     void displayScreen(const QImage &img);
 
     void setMainWindow(MainWindow *mw);
+
+    void displaySelection();
 
 public slots:
     void acceptTouch(QPointF &lastTouch);
