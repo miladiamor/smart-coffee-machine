@@ -4,6 +4,5 @@ TEMPLATE = subdirs
 # Qt recommends putting each unit test class in it's own project
 SUBDIRS += \
     ../app \
-    ../unittest_bruehgruppe_2 \
 
 

@@ -36,9 +36,6 @@ void Simulation::setSchaeumer(Schaeumer *schaeumer) {
     this->schaeumer = schaeumer;
 }
 
-static bool wasserResetDone = false;
-static bool milchResetDone = false;
-
 // Motorgeschwindigkeit definieren
 #define MOTORGESCHWINDIGKEIT_MM_PRO_S 20
 
