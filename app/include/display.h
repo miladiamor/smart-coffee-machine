@@ -1,6 +1,4 @@
-#ifndef DISPLAY_H
-#define DISPLAY_H
-
+#pragma once
 #include <QObject>
 #include <QPointF>
 #include <QImage>
@@ -29,4 +27,4 @@ private:
     MainWindow *mw;
 };
 
-#endif // DISPLAY_H
+

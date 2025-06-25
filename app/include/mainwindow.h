@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 class Koordinator;
 #include <QMainWindow>
@@ -46,4 +45,4 @@ private:
     Display *display;
 };
 
-#endif // MAINWINDOW_H
+
