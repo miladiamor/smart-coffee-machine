@@ -1,6 +1,7 @@
 #include "Kaffeeprogramm.h"
 class Bruehgruppe;
 
+/*
 Kaffeeprogramm::Kaffeeprogramm()
     : wassermenge_g(0),
     milchmenge_ml(0),
@@ -12,7 +13,7 @@ Kaffeeprogramm::Kaffeeprogramm()
     stampfHoehe_mm(0),
     produkt(nullptr)
 {}
-
+*/
 Kaffeeprogramm::Kaffeeprogramm(Ressourcen benoetigteRessourcen)
     : benoetigteRessourcen(benoetigteRessourcen),
     wassermenge_g(0),

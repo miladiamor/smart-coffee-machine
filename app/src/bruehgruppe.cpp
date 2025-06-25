@@ -87,3 +87,7 @@ void Bruehgruppe::setKaffeezufuhr(Ventil *kaffeeezufuhr){
 BruehState Bruehgruppe::getState() {
     return state;
 }
+
+void Bruehgruppe::setState(BruehState state) {
+    this->state = state;
+}

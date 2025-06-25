@@ -5,7 +5,7 @@
 
 class Kaffeeprogramm {
 public:
-    Kaffeeprogramm();
+    Kaffeeprogramm() = default;
     Kaffeeprogramm(Ressourcen benoetigteRessourcen);
 
     // Getters
@@ -16,7 +16,7 @@ public:
     int getMilchKochhitze_Cel() const;
     bool getMitZucker() const;
     bool getMilchZuerst() const;
-    virtual float getstampfHoehe_mm() const;
+    float getstampfHoehe_mm() const;
     Produkt* getProdukt() const;
     Ressourcen getBenoetigteRessourcen() const;
 

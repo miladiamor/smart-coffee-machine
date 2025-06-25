@@ -1,27 +1,27 @@
 #include <QtTest>
 #include "bruehgruppe.h"
 #include "ventil.h"
-#include "kolbenmotor.h"
+#include "klappe.h"
+#include "motorsteuerung.h"
 #include "kaffeeprogramm.h"
-#include <QVector>
+#include <vector>
 
-class FakeProgramm : public Kaffeeprogramm
-{
-public:
-    virtual ~FakeProgramm() = default;
-    float getstampfHoehe_mm() const override { return 6; }   // arbitrary test value
-};
+//MockUps
+int ventilOffen = 0;
+void Ventil::oeffnen() {ventilOffen++;}
+void Ventil::schliessen() {ventilOffen--;}
 
-class FakeMotorsteuerung : public Motorsteuerung
-{
-public:
-    FakeMotorsteuerung() : hoehen() {}
-    virtual ~FakeMotorsteuerung() = default;
-    QVector<float> hoehen;
-    void stampferAusfahren(float stampfhoehe_mm) override {hoehen.append(stampfhoehe_mm);}
-    void hoehenLeeren() {hoehen.clear();}
-};
+int klappeOffen = 0;
+void Klappe::oeffnen() {klappeOffen++;}
+void Klappe::schliessen() {klappeOffen--;}
 
+float Kaffeeprogramm::getstampfHoehe_mm() const {return 7.0;}
+
+std::vector<float> hoehen = {};
+void Motorsteuerung::stampferAusfahren(float stampfHoehe_mm) {hoehen.push_back(stampfHoehe_mm);}
+void Motorsteuerung::tick() {}
+
+//Implementierung Test
 class tbruehgruppe : public QObject
 {
     Q_OBJECT
@@ -30,84 +30,114 @@ private slots:
     void cleanup();
     void initTestCase();
     void cleanupTestCase();
-    void test_case1();
+    void testWartenZuKaffeezufhur();
+    void testKaffeezufuhrZuStampfen();
+    void testStampfenZuKochen();
+    void testKochenZuEntleeren();
+    void testEntleerenZuZuruecksetzen();
+    void testZuruecksetzenZuWarten();
 
 private:
-    FakeProgramm *fprogramm;
-    FakeMotorsteuerung *fmotorstr;
-    Bruehgruppe *bg;
-    Ventil *fwasserzufuhr, *fkaffeezufuhr, *ftropfstopf;
-    Klappe *fentleerklappe;
+    Bruehgruppe *mBG;
+    Kaffeeprogramm *mKaffeeprogramm;
+    Motorsteuerung *mMotorsteuerung;
+    Ventil *mWasserzufuhr, *mKaffeezufuhr, *mTropfstopf;
+    Klappe *mEntleer;
 };
 
 void tbruehgruppe::init() {
-    fprogramm = new FakeProgramm();
-    fmotorstr = new FakeMotorsteuerung();
-    fwasserzufuhr = new Ventil();
-    fkaffeezufuhr = new Ventil();
-    ftropfstopf = new Ventil();
-    fentleerklappe = new Klappe();
+    // Bruehgruppe und Komponenten initialisieren
+    mBG = new Bruehgruppe();
+    mKaffeeprogramm = new Kaffeeprogramm();
+    mWasserzufuhr = new Ventil();
+    mKaffeezufuhr = new Ventil();
+    mTropfstopf = new Ventil();
+    mEntleer = new Klappe();
+
+    // Bruehgruppe die Komponenten übergeben
+    mBG->setKaffeeprogramm(mKaffeeprogramm);
+    mBG->setMotorsteuerung(mMotorsteuerung);
+    mBG->setTropfstopfventil(mTropfstopf);
+    mBG->setKaffeezufuhr(mKaffeezufuhr);
+    mBG->setWasserzufuhr(mWasserzufuhr);
+    mBG->setEntleerklappe(mEntleer);
 }
 
 void tbruehgruppe::cleanup() {
-    delete bg;
-    delete fprogramm;
-    delete fmotorstr;
-    delete fwasserzufuhr;
-    delete fkaffeezufuhr;
-    delete ftropfstopf;
-    delete fentleerklappe;
+
 }
 
 void tbruehgruppe::initTestCase() {
-    bg = new Bruehgruppe();
-    bg->setKaffeeprogramm(fprogramm);
-    bg->setMotorsteuerung(fmotorstr);
-    bg->setTropfstopfventil(ftropfstopf);
-    bg->setKaffeezufuhr(fkaffeezufuhr);
-    bg->setWasserzufuhr(fwasserzufuhr);
-    bg->setEntleerklappe(fentleerklappe);
+
 }
 
 void tbruehgruppe::cleanupTestCase() {
-    fmotorstr->hoehenLeeren();
-    delete bg;
+    ventilOffen = 0;
+    klappeOffen = 0;
+    hoehen.clear();
 }
 
-void tbruehgruppe::test_case1() {
-    QCOMPARE(bg->getState(), WARTEN);
-    QVERIFY(fmotorstr->hoehen.length() == 0);
+void tbruehgruppe::testWartenZuKaffeezufhur() {
+    //Bruehgruppe auf state initialisieren
+    mBG->setState(WARTEN);
 
-    bg->trigger(ZUFUHRSTART);
-    QCOMPARE(bg->getState(), KAFFEEZUFUHR);
-    QVERIFY(fkaffeezufuhr->get_ist_offen());
+    QCOMPARE(mBG->getState(), WARTEN);
+    QVERIFY(hoehen.size() == 0);
 
-    bg->trigger(ZUFUHRABGESCHLOSSEN);
-    QCOMPARE(bg->getState(), STAMPFEN);
-    QVERIFY(!fkaffeezufuhr->get_ist_offen());
-    QVERIFY(fmotorstr->hoehen[0] == 6);
+    mBG->trigger(ZUFUHRSTART);
+    QCOMPARE(mBG->getState(), KAFFEEZUFUHR);
+    QVERIFY(ventilOffen == 1);
+}
 
-    bg->trigger(MOTORABGESCHLOSSEN);
-    QCOMPARE(bg->getState(), KOCHEN);
-    QVERIFY(ftropfstopf->get_ist_offen());
-    QVERIFY(fwasserzufuhr->get_ist_offen());
+void tbruehgruppe::testKaffeezufuhrZuStampfen(){
+    //Bruehgruppe auf state initialisieren
+    mBG->setState(KAFFEEZUFUHR);
+    ventilOffen = 1;
 
-    bg->trigger(KOCHENAUFGEHOERT);
-    QCOMPARE(bg->getState(), ENTLEEREN);
-    QVERIFY(!ftropfstopf->get_ist_offen());
-    QVERIFY(!fwasserzufuhr->get_ist_offen());
-    QVERIFY(fentleerklappe->get_ist_offen());
-    QVERIFY(fmotorstr->hoehen[1] == 0);
+    mBG->trigger(ZUFUHRABGESCHLOSSEN);
+    QCOMPARE(mBG->getState(), STAMPFEN);
+    QVERIFY(ventilOffen == 0);
+    QVERIFY(hoehen[0] == 7.0);
+}
 
-    bg->trigger(MOTORABGESCHLOSSEN);
-    QCOMPARE(bg->getState(), ZURUECKSETZEN);
-    QVERIFY(!fentleerklappe->get_ist_offen());
-    QVERIFY(fmotorstr->hoehen[2] == MAX_MOTOR_HEIGHT_MM);
+void tbruehgruppe::testStampfenZuKochen(){
+    //Bruehgruppe auf state initialisieren
+    mBG->setState(STAMPFEN);
 
-    bg->trigger(MOTORABGESCHLOSSEN);
-    QCOMPARE(bg->getState(), WARTEN);
+    mBG->trigger(MOTORABGESCHLOSSEN);
+    QCOMPARE(mBG->getState(), KOCHEN);
+    QVERIFY(ventilOffen == 2);
+}
 
+void tbruehgruppe::testKochenZuEntleeren(){
+    //Bruehgruppe auf state initialisieren
+    mBG->setState(KOCHEN);
+    ventilOffen = 2;
 
+    mBG->trigger(KOCHENAUFGEHOERT);
+    QCOMPARE(mBG->getState(), ENTLEEREN);
+    QVERIFY(klappeOffen == 1);
+    QVERIFY(ventilOffen == 0);
+    QVERIFY(hoehen[0] == 0);
+}
+
+void tbruehgruppe::testEntleerenZuZuruecksetzen(){
+    //Bruehgruppe auf state initialisieren
+    mBG->setState(ENTLEEREN);
+    klappeOffen = 1;
+
+    mBG->trigger(MOTORABGESCHLOSSEN);
+    QCOMPARE(mBG->getState(), ZURUECKSETZEN);
+    QVERIFY(klappeOffen == 0);
+    QVERIFY(hoehen[0] == MAX_MOTOR_HEIGHT_MM);
+}
+
+void tbruehgruppe::testZuruecksetzenZuWarten(){
+    //Bruehgruppe auf state initialisieren
+    mBG->setState(ZURUECKSETZEN);
+
+    mBG->trigger(MOTORABGESCHLOSSEN);
+    QCOMPARE(mBG->getState(), WARTEN);
 }
 
 QTEST_APPLESS_MAIN(tbruehgruppe)

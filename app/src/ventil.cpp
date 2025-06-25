@@ -1,7 +1,5 @@
 #include "ventil.h"
 
-Ventil::Ventil() : ist_offen(0) {}
-
 void Ventil::oeffnen() {
     ist_offen = true;
 }

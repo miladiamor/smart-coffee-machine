@@ -7,7 +7,7 @@ class Ventil : public QObject
 {
     Q_OBJECT
 public:
-    Ventil();
+    Ventil() : ist_offen(0) {}
     void oeffnen();
     void schliessen();
     bool get_ist_offen();

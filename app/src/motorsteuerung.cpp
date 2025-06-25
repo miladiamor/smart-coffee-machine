@@ -1,8 +1,10 @@
 #include "motorsteuerung.h"
 
+/*
 Motorsteuerung::Motorsteuerung(QObject *parent)
     : QObject{parent}
 {}
+*/
 
 void Motorsteuerung::stampferAusfahren(float stampfhoehe_mm){
     this->stampfhoehe_mm = stampfhoehe_mm;
