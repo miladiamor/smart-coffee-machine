@@ -18,7 +18,7 @@ SOURCES +=  tst_tbruehgruppe.cpp \
     ../app/src/inkrementalencoder.cpp \
     ../app/src/klappe.cpp \
     ../app/src/kolbenmotor.cpp \
-    ../app/src/ventil.cpp \
+    ../app/src/ventil.cpp
 
 HEADERS += \
     ../app/include/bruehgruppe.h \
@@ -27,4 +27,4 @@ HEADERS += \
     ../app/include/kolbenmotor.h \
     ../app/include/motorsteuerung.h \
     ../app/include/ventil.h \
-    ../app/include/kaffeeprogramm.h \
+    ../app/include/kaffeeprogramm.h

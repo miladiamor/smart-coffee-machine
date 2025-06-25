@@ -1,5 +1,5 @@
 #include "bruehgruppe.h"
-#include "kolbenmotor.h"
+#include "motorsteuerung.h"
 #include <QTimer>
 
 Bruehgruppe::Bruehgruppe(QObject *parent)
