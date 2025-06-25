@@ -1,6 +1,4 @@
 #include <QtTest>
-
-#include <QtTest>
 #include "bruehgruppe.h"
 #include "ventil.h"
 #include "kolbenmotor.h"
