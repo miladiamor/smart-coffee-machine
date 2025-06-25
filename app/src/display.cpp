@@ -1,32 +1,27 @@
 #include "display.h"
-#include <QDebug>
 #include "mainwindow.h"
-
 Display::Display(QObject *parent)
-    : QObject{parent}, mw(nullptr)
+    : QObject{parent}
 {
 }
 
-Display::~Display()
-{
+Display::~Display(){
+
 }
 
 QPointF Display::getLastTouch() {
-    return lastTouch;
+    return this->lastTouch;
+}
+void Display::displayScreen(const QImage &img) {
+    mw->displayScreen(img);
 }
 
-void Display::acceptTouch(QPointF &lastTouch) {
+void Display::acceptTouch(QPointF &lastTouch){
     this->lastTouch = lastTouch;
-    qDebug() << "Touch accepted at:" << lastTouch;
 }
 
-void Display::setMainWindow(MainWindow *mw) {
+void Display::setMainWindow(MainWindow *mw){
     this->mw = mw;
 }
 
-void Display::displayScreen(const QImage &img) {
-    if (mw) {
-        mw->displayScreen(img);
-    }
-}
 

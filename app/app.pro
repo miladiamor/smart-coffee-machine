@@ -23,66 +23,74 @@ INCLUDEPATH += $$PWD/include
 
 # The source files (e.g. *.cpp)
 SOURCES += \
-    src/display.cpp \
-    src/kaffeeprogramm.cpp \
-    src/mainwindow.cpp \
-    src/Pumpe.cpp \
-    src/Koordinator.cpp \
-    src/Temperatursensor.cpp \
-    src/Tankwaage.cpp \
     src/Fuellstandsmessung.cpp \
+    src/Heizelemente.cpp \
+    src/Heizregler.cpp \
+    src/Koordinator.cpp \
+    src/MuenzAuswerfer.cpp \
+    src/MuenzEingabeSensor.cpp \
+    src/Muenzenschieber.cpp \
+    src/Muenzroehre.cpp \
+    src/Muenzroehrenspeicher.cpp \
+    src/Produkt.cpp \
     src/Programmsteuerung.cpp \
+    src/Pumpe.cpp \
     src/Ressourcen.cpp \
+    src/Schaeumer.cpp \
+    src/Tankwaage.cpp \
+    src/Temperatursensor.cpp \
+    src/Zahlungseinheit.cpp \
+    src/Zuckerdispenser.cpp \
     src/bruehgruppe.cpp \
     src/clock.cpp \
+    src/display.cpp \
     src/inkrementalencoder.cpp \
+    src/kaffeeprogramm.cpp \
     src/klappe.cpp \
     src/kolbenmotor.cpp \
-    src/simulation.cpp \
-    src/ventil.cpp \
     src/main.cpp \
-    src/Heizregler.cpp \
-    src/Heizelemente.cpp \
-    src/Schaeumer.cpp \
-    src/Zuckerdispenser.cpp \
-    src/Muenzenschieber.cpp\
-    src/motorsteuerung.cpp
+    src/mainwindow.cpp \
+    src/motorsteuerung.cpp \
+    src/muenze.cpp \
+    src/simulation.cpp \
+    src/ventil.cpp
+
 # The header files (e.g. *.h)
 HEADERS += \
-    include/display.h \
-    include/Pumpe.h \
-    include/Koordinator.h \
-    include/Tankwaage.h \
-    include/Fuellstandsmessung.h \
-    include/Heizelemente.h \
-    include/Heizregler.h \
-    include/Programmsteuerung.h \
-    include/Ressourcen.h \
-    include/Rezept.h \
-    include/Schaeumer.h \
-    include/Temperatursensor.h \
-    include/Zuckerdispenser.h \
     include/ausgabeeinheit.h \
     include/bruehgruppe.h \
-    include/geldschein.h \
+    include/clock.h \
+    include/display.h \
+    include/Fuellstandsmessung.h \
     include/geldscheinbehaelter.h \
     include/geldscheinsensor.h \
+    include/Heizelemente.h \
+    include/Heizregler.h \
     include/inkrementalencoder.h \
+    include/kaffeeprogramm.h \
     include/klappe.h \
     include/kolbenmotor.h \
+    include/Koordinator.h \
+    include/mainwindow.h \
     include/motorsteuerung.h \
+    include/Muenzenschieber.h \
     include/muenze.h \
     include/muenzroehre.h \
     include/muenzroehrenspeicher.h \
     include/muenzsensor.h \
     include/produkt.h \
+    include/Programmsteuerung.h \
+    include/Pumpe.h \
+    include/Ressourcen.h \
+    include/Rezept.h \
+    include/Schaeumer.h \
+    include/simulation.h \
+    include/Tankwaage.h \
+    include/Temperatursensor.h \
     include/ventil.h \
     include/zahlungseinheit.h \
-    include/clock.h \
-    include/simulation.h \
-    include/kaffeeprogramm.h \
-    include/mainwindow.h \
-    include/Muenzenschieber.h
+    include/Zuckerdispenser.h
+
 # The GUI definition files (so-called forms)
 FORMS += \
     mainwindow.ui

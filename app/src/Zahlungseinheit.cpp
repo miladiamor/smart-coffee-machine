@@ -1,5 +1,5 @@
 
-#include "Zahlungseinheit.h"
+#include "zahlungseinheit.h"
 
 Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* roehren,
                                  MuenzEingabeSensor* eingabe,
@@ -14,7 +14,7 @@ bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
     this->produkt = produkt;
     float preis = produkt->getPreis();
 
-    // Schleife: Nutzer wirft Münzen ein, bis Preis erreicht ist
+    // Schleife: Nutzer wirft Mnzen ein, bis Preis erreicht ist
     while (roehren->gesamtWert() < preis) {
         float muenzwert = eingabe->erkenneMuenze();
 
@@ -40,6 +40,6 @@ bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
 }
 
 void Zahlungseinheit::zahlungAbbrechen() {
-    // Gibt aktuellen Betrag im Speicher als Rückgeld aus
+    // Gibt aktuellen Betrag im Speicher als Rckgeld aus
     auswerfer->auswerfen(roehren->gesamtWert());
 }
