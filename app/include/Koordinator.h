@@ -1,5 +1,5 @@
 #pragma once
-
+#include "display.h"
 #include "Kaffeeprogramm.h"
 #include "Zahlungseinheit.h"
 #include "Programmsteuerung.h"
@@ -16,6 +16,7 @@ private:
     Kaffeeprogramm programm;
     Zahlungseinheit* zahlung;
     Programmsteuerung* steuerung;
+     Display* display;
     KoordinatorStates state;
     bool mitZucker;
 
@@ -35,4 +36,7 @@ public:
     // Setup
     void setZahlungseinheit(Zahlungseinheit* z);
     void setSteuerung(Programmsteuerung* steuerung);
+
+    void setDisplay(Display* d);
+     void zeigeAuswahl();
 };

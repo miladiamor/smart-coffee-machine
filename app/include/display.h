@@ -1,9 +1,11 @@
-#pragma once
+#ifndef DISPLAY_H
+#define DISPLAY_H
+
 #include <QObject>
 #include <QPointF>
 #include <QImage>
-#include <QPainter>
-class MainWindow;
+
+class MainWindow;  // Forward declaration
 
 class Display : public QObject
 {
@@ -14,10 +16,7 @@ public:
 
     QPointF getLastTouch();
     void displayScreen(const QImage &img);
-
     void setMainWindow(MainWindow *mw);
-
-    void displaySelection();
 
 public slots:
     void acceptTouch(QPointF &lastTouch);
@@ -27,4 +26,4 @@ private:
     MainWindow *mw;
 };
 
-
+#endif // DISPLAY_H

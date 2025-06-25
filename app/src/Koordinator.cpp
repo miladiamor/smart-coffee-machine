@@ -1,8 +1,11 @@
 #include "Koordinator.h"
+#include <QPainter>
+#include <QImage>
 
 Koordinator::Koordinator()
     : zahlung(nullptr),
     steuerung(nullptr),
+    display(nullptr),  // 🔹 Initialize display to nullptr
     state(KoordinatorStates::WARTEN),
     mitZucker(false)
 {}
@@ -15,7 +18,39 @@ void Koordinator::setSteuerung(Programmsteuerung* steuerung) {
     this->steuerung = steuerung;
 }
 
-// DRINK RECIPES
+void Koordinator::setDisplay(Display* d) {
+    this->display = d;
+}
+
+void Koordinator::zeigeAuswahl() {
+    QImage img(400, 400, QImage::Format_ARGB32);
+    img.fill(Qt::white);
+
+    QPainter painter(&img);
+    painter.setPen(Qt::black);
+    painter.setFont(QFont("Arial", 14));
+
+    // Draw drink names
+    painter.drawText(50, 100, "Cappuccino");
+    painter.drawText(250, 100, "Milchkaffee");
+    painter.drawText(50, 250, "KaffeeCrema");
+    painter.drawText(250, 250, "LatteMacchiato");
+
+    // Draw selection hitboxes
+    painter.setBrush(Qt::lightGray);
+    painter.drawEllipse(QPointF(50, 100), 40, 20);
+    painter.drawEllipse(QPointF(250, 100), 40, 20);
+    painter.drawEllipse(QPointF(50, 250), 40, 20);
+    painter.drawEllipse(QPointF(250, 250), 40, 20);
+
+    painter.end();
+
+    if (display) {
+        display->displayScreen(img);
+    }
+}
+
+// DRINK SELECTION
 void Koordinator::cappuccino() {
     programm.setKaffeemenge_g(9);
     programm.setWassermenge_ml(30);
@@ -56,14 +91,14 @@ void Koordinator::latteMacchiato() {
     state = KoordinatorStates::ZUCKER;
 }
 
-// SUGAR SELECTION
+// USER CHOICES
 void Koordinator::zuckerWaehlen(bool mitZucker) {
     this->mitZucker = mitZucker;
     programm.setMitZucker(mitZucker);
     state = KoordinatorStates::BEZAHLEN;
 }
 
-// PAYMENT + START PROGRAM
+// PAYMENT + EXECUTION
 void Koordinator::kaufen() {
     if (!zahlung) return;
 
