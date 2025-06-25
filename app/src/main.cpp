@@ -10,7 +10,7 @@ int main()
 {
     Bruehgruppe bruehgruppe;
     Clock clock(50);
-    Simulation simulation;
+    //Simulation simulation;
 
 
 

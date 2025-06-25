@@ -9,10 +9,10 @@ class Pumpe{
 
     public:
         Pumpe();
-        virtual ~Pumpe();
-        virtual void pumpeStarten();
-        virtual void pumpeStoppen();
-        virtual bool istAktiv() const;
+        ~Pumpe();
+        void pumpeStarten();
+        void pumpeStoppen();
+        bool istAktiv() const;
 };
 
 #endif // PUMPE_H

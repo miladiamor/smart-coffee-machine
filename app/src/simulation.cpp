@@ -40,7 +40,7 @@ void Simulation::setSchaeumer(Schaeumer *schaeumer) {
 #define MOTORGESCHWINDIGKEIT_MM_PRO_S 20
 
 void Simulation::update(){
-    /*
+
     // Kaffeezufuhr && Kaffeepulverbehältersimulation
     const float kaffee_g_pro_s = 5.7;
     const float hoeheKaffeepulver_mm_pro_g = 0.33;
@@ -51,6 +51,7 @@ void Simulation::update(){
         kaffeebehaelter_g -= kaffee_g_pro_frame;
     }
 
+    /*
     // Motorsimulation & Kaffeerestbehälter
     const float kaffeerest_g_pro_mm = 0.315;
     const float bewegung_pro_frame = MOTORGESCHWINDIGKEIT_MM_PRO_S * std::pow(10, -3);
@@ -59,7 +60,7 @@ void Simulation::update(){
             motorPosition_mm += bewegung_pro_frame;
             // Füllstand der Restbehälters
             // füllt sich wenn die Entleerklappe offen ist
-            if (bruehgruppe->getEntleerklappeOffen()){
+            if (){
                 kaffeerestbehaelter_fuellstand_g += kaffeerest_g_pro_mm * bewegung_pro_frame;
             }
         } else if (kolbenmotor->getStatus() == Kolbenmotor::motorStatus::hochfahren && motorPosition_mm > 0) {
@@ -67,6 +68,9 @@ void Simulation::update(){
         }
     }
 
+    */
+
+    /*
     // Temperatur
     const float heizrate_cel = 0.2;
     if (heizregler.getEingeschaltet() == true) {
@@ -77,7 +81,7 @@ void Simulation::update(){
     inkrementalencoder->setPosition(motorPosition_mm);
     kaffeerestbehaelter->setGewicht(kaffeerestbehaelter_fuellstand_g);
     temperatursensor.setTemperatur_Cel(wassertemperatur_cel);
-    */
+
     //Durchflusssensor & Pumpe
     const float pumpmenge_wasser_pro_s_in_g = 11.35;
     const float pumpmenge_milch_pro_s_in_g = 9.2;
@@ -86,7 +90,7 @@ void Simulation::update(){
     float milchmenge_pro_frame = pumpmenge_milch_pro_s_in_g;
 
     // Wasserfluss
-/*
+
     if (!wasserResetDone && wasserpumpe->istAktiv() == true) {
         wasserzaehler->setNull();
         wasserResetDone = true;
@@ -116,7 +120,7 @@ void Simulation::update(){
     if (milchzaehler->getWassermenge_g() >= 75.0) {
         milchpumpe->pumpeStoppen();
     }
-*/
+
 
     // Schaeumer
     const float MILCH_STARTTEMP_CEL = 25.0;
@@ -139,6 +143,7 @@ void Simulation::update(){
         zuckerdispenser.zuckerAuswerfen();
     }
    // zuckerdispenser.update(delta_t_ms);
+    */
 
 }
 

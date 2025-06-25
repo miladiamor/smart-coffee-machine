@@ -40,9 +40,9 @@ private:
     //Aktoren
     Kolbenmotor *kolbenmotor;
     Bruehgruppe *bruehgruppe;
-    Heizelemente heizelemente;
-    Heizregler heizregler;
-    Zuckerdispenser zuckerdispenser;
+    Heizelemente *heizelemente;
+    Heizregler *heizregler;
+    Zuckerdispenser *zuckerdispenser;
     Schaeumer *schaeumer;
     Pumpe *wasserpumpe;
     Pumpe *milchpumpe;

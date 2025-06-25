@@ -26,6 +26,10 @@ bool Heizregler::istTemperaturErreicht() const {
     return (aktuelleTemperatur_Cel >= zieltemperatur_Cel);
 }
 
+bool Heizregler::getEingeschaltet() {
+    return eingeschaltet;
+}
+
 void Heizregler::tick(){
     if (eingeschaltet){
         if (istTemperaturErreicht()){

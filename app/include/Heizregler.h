@@ -8,15 +8,14 @@ class Heizregler : public QObject {
 
 public:
     Heizregler(QObject* parent = nullptr);
-    virtual ~Heizregler();
+    ~Heizregler();
 
-    virtual bool getEingeschaltet();
-    virtual void temperaturRegeln(int zieltemperatur_Cel);
-    virtual bool istTemperaturErreicht() const;
-    virtual void updateTemperatur();
+    bool getEingeschaltet();
+    void temperaturRegeln(int zieltemperatur_Cel);
+    bool istTemperaturErreicht() const;
 
 public slots:
-    virtual void tick();
+    void tick();
 
 private:
     bool eingeschaltet;

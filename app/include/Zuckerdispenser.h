@@ -16,8 +16,8 @@ class Zuckerdispenser : public QObject {
 
     public:
         Zuckerdispenser(QObject *parent) : QObject(parent), eingeschaltet(false) {}
-        virtual ~Zuckerdispenser();
-        virtual bool istAktiv() const;
+        ~Zuckerdispenser() = default;
+        bool istAktiv() const;
 
     public slots:
         void zuckerAuswerfen();
