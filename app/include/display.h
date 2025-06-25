@@ -17,7 +17,6 @@ public:
     QPointF getLastTouch();
     void displayScreen(const QImage &img);
     void setMainWindow(MainWindow *mw);
-
 public slots:
     void acceptTouch(QPointF &lastTouch);
 

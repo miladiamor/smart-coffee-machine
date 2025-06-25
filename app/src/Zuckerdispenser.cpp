@@ -4,6 +4,7 @@
 Zuckerdispenser::Zuckerdispenser(QObject *parent)
     : QObject(parent), eingeschaltet(false) {}
 
+
 void Zuckerdispenser::zuckerAuswerfen() {
     if (eingeschaltet) {
         return;

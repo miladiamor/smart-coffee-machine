@@ -105,7 +105,8 @@ void Koordinator::kaufen() {
     Produkt* produkt = programm.getProdukt();
     if (!produkt) return;
 
-    bool bezahlt = zahlung->versucheZahlung(produkt);
+    bool bezahlt = false;
+    //bezahlt = zahlung->versucheZahlung(produkt);
     if (bezahlt) {
         state = KoordinatorStates::AUSFUEHREN;
         if (steuerung) {

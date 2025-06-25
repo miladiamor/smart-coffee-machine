@@ -24,3 +24,4 @@ void Display::setMainWindow(MainWindow *mw){
     this->mw = mw;
 }
 
+
