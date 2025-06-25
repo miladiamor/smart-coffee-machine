@@ -16,9 +16,6 @@ public:
     void displayScreen(const QImage &img);
 
     void setMainWindow(MainWindow *mw);
-
-    void displaySelection();
-
 public slots:
     void acceptTouch(QPointF &lastTouch);
 
