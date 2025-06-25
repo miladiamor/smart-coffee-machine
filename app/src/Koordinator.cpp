@@ -5,7 +5,7 @@
 Koordinator::Koordinator()
     : zahlung(nullptr),
     steuerung(nullptr),
-    display(nullptr),  // 🔹 Initialize display to nullptr
+    display(nullptr),
     state(KoordinatorStates::WARTEN),
     mitZucker(false)
 {}
