@@ -7,9 +7,10 @@ private:
     bool eingeschaltet;
 public:
     Schaeumer();
-    bool getEingeschaltet();
-    void aufschaeumenStarten();
-    void aufschaeumenStoppen();
+    virtual ~Schaeumer();
+    virtual bool getEingeschaltet();
+    virtual void aufschaeumenStarten();
+    virtual void aufschaeumenStoppen();
 
 };
 
