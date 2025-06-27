@@ -5,6 +5,7 @@
 #include "Kaffeeprogramm.h"
 #include "display.h"
 #include <QPointF>
+#include <QImage>
 
 // Konstruktor
 Koordinator::Koordinator()
@@ -14,11 +15,21 @@ Koordinator::Koordinator()
     zustand(KoordinatorZustand::WARTEN),
     mitZucker(false)
 {
+    zeigeBild(":/selection.png"); // Show selection screen initially
+}
+
+// Helper: Bild anzeigen
+void Koordinator::zeigeBild(const QString& pfad) {
+    if (display) {
+        QImage bild(pfad);
+        display->displayScreen(bild);
+    }
 }
 
 // Setze Display
 void Koordinator::setzeDisplay(Display* d) {
     this->display = d;
+    zeigeBild(":/selection.png"); // Show selection when display is ready
 }
 
 // Setze Programmsteuerung
@@ -40,6 +51,7 @@ void Koordinator::waehleCappuccino() {
     kaffeeprogramm.setMilchKochhitze_Cel(65);
     kaffeeprogramm.setMilchZuerst(true);
     zustand = KoordinatorZustand::ZUCKERWAHL;
+    zeigeBild(":/sugar.png");
 }
 
 void Koordinator::waehleMilchkaffee() {
@@ -50,6 +62,7 @@ void Koordinator::waehleMilchkaffee() {
     kaffeeprogramm.setMilchKochhitze_Cel(70);
     kaffeeprogramm.setMilchZuerst(true);
     zustand = KoordinatorZustand::ZUCKERWAHL;
+    zeigeBild(":/sugar.png");
 }
 
 void Koordinator::waehleKaffeeCrema() {
@@ -60,6 +73,7 @@ void Koordinator::waehleKaffeeCrema() {
     kaffeeprogramm.setMilchKochhitze_Cel(0);
     kaffeeprogramm.setMilchZuerst(false);
     zustand = KoordinatorZustand::ZUCKERWAHL;
+    zeigeBild(":/sugar.png");
 }
 
 void Koordinator::waehleLatteMacchiato() {
@@ -70,6 +84,7 @@ void Koordinator::waehleLatteMacchiato() {
     kaffeeprogramm.setMilchKochhitze_Cel(60);
     kaffeeprogramm.setMilchZuerst(true);
     zustand = KoordinatorZustand::ZUCKERWAHL;
+    zeigeBild(":/sugar.png");
 }
 
 // Zuckerwahl
@@ -90,18 +105,19 @@ void Koordinator::fuehreKaufDurch() {
 
     if (bezahlt) {
         zustand = KoordinatorZustand::AUSFUEHREN;
+        zeigeBild(":/brewing.png");
         if (programmsteuerung) {
             programmsteuerung->ausfuehren(&kaffeeprogramm);
         }
     } else {
         zustand = KoordinatorZustand::WARTEN;
+        zeigeBild(":/selection.png");
     }
 }
 
 // Touch-Verarbeitung
 void Koordinator::verarbeiteTouch(const QPointF& position) {
     if (zustand == KoordinatorZustand::WARTEN) {
-        // Beispielhafte Bereiche prüfen (Dummy-Werte, anpassen an dein Layout)
         if (position.x() < 200 && position.y() < 200) {
             waehleCappuccino();
         } else if (position.x() > 200 && position.y() < 200) {
@@ -111,20 +127,31 @@ void Koordinator::verarbeiteTouch(const QPointF& position) {
         } else if (position.x() > 200 && position.y() > 200) {
             waehleLatteMacchiato();
         }
-    }
-    else if (zustand == KoordinatorZustand::ZUCKERWAHL) {
-        // Example touch zones for sugar yes/no buttons:
+    } else if (zustand == KoordinatorZustand::ZUCKERWAHL) {
         if (position.x() < 200 && position.y() < 200) {
-            waehleZucker(true); // User wants sugar
+            waehleZucker(true);
         } else if (position.x() > 200 && position.y() < 200) {
-            waehleZucker(false); // User does not want sugar
+            waehleZucker(false);
         }
-    }
-    else if (zustand == KoordinatorZustand::BEZAHLEN) {
-        // Example touch zone for "Bezahlen" button:
+    } else if (zustand == KoordinatorZustand::BEZAHLEN) {
         if (position.x() > 100 && position.x() < 300 &&
             position.y() > 300 && position.y() < 400) {
             fuehreKaufDurch();
+        }
+    }
+}
+
+// Update to check if program is finished
+void Koordinator::update() {
+    if (programmsteuerung) {
+        programmsteuerung->tick();
+    }
+
+    if (zustand == KoordinatorZustand::AUSFUEHREN) {
+        if (programmsteuerung && programmsteuerung->istFertig()) {
+            zeigeBild(":/done.png");
+            zustand = KoordinatorZustand::WARTEN;
+            zeigeBild(":/selection.png");
         }
     }
 }

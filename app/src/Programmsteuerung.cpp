@@ -52,6 +52,9 @@ Programmsteuerung::~Programmsteuerung(){}
             busy = true;
      }
 
+    bool Programmsteuerung::istFertig() const {
+        return !busy;
+    }
 
     void Programmsteuerung::tick(){
         if (!busy){

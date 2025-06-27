@@ -1,13 +1,14 @@
 #pragma once
 
-class Koordinator;
 #include <QMainWindow>
 #include <QProgressBar>
 #include <QImage>
 #include <QTouchEvent>
 #include <QPointF>
-class MainWindow;
+#include <QTimer>
+
 #include "display.h"
+#include "Koordinator.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,17 +27,7 @@ signals:
 
 public slots:
     void updateWindow(const QImage &img);
-
-private slots:
-    /*void on_btnCappucino_clicked();
-
-    void on_btnMilkCoffee_clicked();
-
-    void on_btnCoffeeCrema_clicked();
-
-    void on_btnLatteMachiato_clicked();
-*/
-
+    void updateSystem();
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
@@ -44,6 +35,7 @@ private:
     Ui::MainWindow *ui;
     QProgressBar* cup;
     Display *display;
+    Koordinator *koordinator;
+    Programmsteuerung *programmsteuerung;
+    QTimer *updateTimer;
 };
-
-

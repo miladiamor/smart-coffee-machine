@@ -45,6 +45,8 @@ private:
     Pumpe* milchpumpe;
     Fuellstandsmessung* messung;
     CoffeeState coffeeState;
+public:
+    bool istFertig() const;
 
 public:
     Programmsteuerung();
