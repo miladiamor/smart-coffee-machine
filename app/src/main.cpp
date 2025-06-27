@@ -1,18 +1,24 @@
-#include <iostream>
-
-#include "bruehgruppe.h"
-#include "simulation.h"
-#include "clock.h"
+#include <QApplication>
+#include "display.h"
+#include "mainwindow.h"
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
-    Bruehgruppe bruehgruppe;
-    Clock clock(50);
-    //Simulation simulation;
+    QApplication app(argc, argv);
 
+    Display display;
+    MainWindow mw;
+    QObject::connect(&mw, &MainWindow::sentTouch,
+                     &display, &Display::acceptTouch,
+                    Qt::DirectConnection);
 
+    QObject::connect(&display, &Display::updateDisplay,
+                    &mw, &MainWindow::updateWindow,
+                     Qt::DirectConnection);
 
-    return 0;
+    mw.show();
+
+    return app.exec();
 }
