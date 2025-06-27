@@ -8,7 +8,7 @@ class Klappe : public QObject
 {
     Q_OBJECT
     public:
-        Klappe();
+        Klappe() : ist_offen(false) {}
         void oeffnen();
         void schliessen();
         int  get_ist_offen();

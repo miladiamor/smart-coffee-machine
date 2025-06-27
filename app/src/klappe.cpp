@@ -1,8 +1,10 @@
 #include "klappe.h"
 
+/*
 Klappe::Klappe() : ist_offen(false) {
 
 }
+*/
 
 void Klappe::oeffnen() {
     ist_offen = true;

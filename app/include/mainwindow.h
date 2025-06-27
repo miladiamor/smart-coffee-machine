@@ -21,10 +21,11 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void displayScreen(const QImage &img);
-
 signals:
     void sentTouch(QPointF &lastTouch);
+
+public slots:
+    void updateWindow(const QImage &img);
 
 private slots:
     /*void on_btnCappucino_clicked();

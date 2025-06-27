@@ -20,6 +20,7 @@ public:
 
     void trigger(BruehEvent event);
     BruehState getState();
+
     void setKaffeeprogramm(Kaffeeprogramm *kaffeeprogramm);
     void setMotorsteuerung(Motorsteuerung *motorsteuerung);
     void setTropfstopfventil(Ventil *tropfstopfventil);
@@ -27,8 +28,10 @@ public:
     void setKaffeezufuhr(Ventil *kaffeeezufuhr);
     void setEntleerklappe(Klappe *entleerklappe);
 
+    // fürs testen
+    void setState(BruehState state);
 private:
-    BruehState state;
+    BruehState state = WARTEN;
     Ventil *tropfstopfventil, *wasserzufuhr, *kaffeezufuhr;
     Klappe *entleerklappe;
     Motorsteuerung *motorsteuerung;

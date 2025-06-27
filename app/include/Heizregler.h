@@ -13,7 +13,6 @@ public:
     bool getEingeschaltet();
     void temperaturRegeln(int zieltemperatur_Cel);
     bool istTemperaturErreicht() const;
-    void updateTemperatur();
 
 public slots:
     void tick();

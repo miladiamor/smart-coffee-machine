@@ -9,6 +9,7 @@ class Pumpe{
 
     public:
         Pumpe();
+        ~Pumpe();
         void pumpeStarten();
         void pumpeStoppen();
         bool istAktiv() const;

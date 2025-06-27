@@ -7,6 +7,7 @@ private:
     bool eingeschaltet;
 public:
     Schaeumer();
+    ~Schaeumer();
     bool getEingeschaltet();
     void aufschaeumenStarten();
     void aufschaeumenStoppen();
