@@ -21,13 +21,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::displayScreen(const QImage &img)
-{
-    // Scale & show your image in the label:
-    QPixmap pm = QPixmap::fromImage(img).scaled(ui->touchDisplayLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    ui->touchDisplayLabel->setPixmap(pm);
-}
-
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
     QPointF lastTouch;
@@ -45,6 +38,12 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
     }
     return QMainWindow::eventFilter(watched, event);
 }
+
+void MainWindow::updateWindow(const QImage &img) {
+    QPixmap pm = QPixmap::fromImage(img).scaled(ui->touchDisplayLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    ui->touchDisplayLabel->setPixmap(pm);
+}
+
 /*
 void MainWindow::on_btnCappucino_clicked()
 {

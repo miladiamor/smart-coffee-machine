@@ -5,7 +5,8 @@ TEMPLATE = subdirs
 SUBDIRS += \
     ../app \
     ../unittest_bruehgruppe_2 \
-    #../unittest_programmsteuerung
+ \    #../unittest_programmsteuerung
+    ../unittest_display
 
 
 

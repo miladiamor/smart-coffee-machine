@@ -49,6 +49,7 @@ void tbruehgruppe::init() {
     // Bruehgruppe und Komponenten initialisieren
     mBG = new Bruehgruppe();
     mKaffeeprogramm = new Kaffeeprogramm();
+    mMotorsteuerung = new Motorsteuerung();
     mWasserzufuhr = new Ventil();
     mKaffeezufuhr = new Ventil();
     mTropfstopf = new Ventil();
@@ -64,7 +65,9 @@ void tbruehgruppe::init() {
 }
 
 void tbruehgruppe::cleanup() {
-
+    ventilOffen = 0;
+    klappeOffen = 0;
+    hoehen.clear();
 }
 
 void tbruehgruppe::initTestCase() {
@@ -72,9 +75,7 @@ void tbruehgruppe::initTestCase() {
 }
 
 void tbruehgruppe::cleanupTestCase() {
-    ventilOffen = 0;
-    klappeOffen = 0;
-    hoehen.clear();
+
 }
 
 void tbruehgruppe::testWartenZuKaffeezufhur() {
