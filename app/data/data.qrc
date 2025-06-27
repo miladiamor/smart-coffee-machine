@@ -1,3 +1,8 @@
 <RCC>
-    <qresource prefix="/"/>
+    <qresource prefix="/">
+        <file>brewing.png</file>
+        <file>done.png</file>
+        <file>selection.png</file>
+        <file>sugar.png</file>
+    </qresource>
 </RCC>
