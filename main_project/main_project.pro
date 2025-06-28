@@ -4,8 +4,10 @@ TEMPLATE = subdirs
 # Qt recommends putting each unit test class in it's own project
 SUBDIRS += \
     ../app \
+    ../unittest_Programmsteuerung_3 \
     ../unittest_bruehgruppe_2 \
-    #../unittest_programmsteuerung
+ \    #../unittest_programmsteuerung
+
 
 
 
