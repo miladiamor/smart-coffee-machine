@@ -13,37 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->touchDisplayLabel->installEventFilter(this);
 
     this->cup = findChild<QProgressBar*>("cup");
-
-
-    // Initialize and connect Display
-    display = new Display(this);
-    connect(display, &Display::updateDisplay, this, &MainWindow::updateWindow);
-
-    // Initialize Programmsteuerung and Koordinator
-    programmsteuerung = new Programmsteuerung();
-    koordinator = new Koordinator();
-
-    // Connect Koordinator with Programmsteuerung and Display
-    koordinator->setzeProgrammsteuerung(programmsteuerung);
-    koordinator->setzeDisplay(display);
-
-    // Set up periodic updates (every 100 ms)
-    updateTimer = new QTimer(this);
-    connect(updateTimer, &QTimer::timeout, this, &MainWindow::updateSystem);
-    updateTimer->start(100);
-
-    // Connect touch signal to Display
-    connect(this, &MainWindow::sentTouch, display, &Display::acceptTouch);
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete updateTimer;
-    delete koordinator;
-    delete programmsteuerung;
-    delete display;
 }
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
@@ -57,7 +31,7 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
         auto *te = static_cast<QTouchEvent*>(event);
         if (!te->points().isEmpty()) {
             lastTouch = te->points().first().position();
-            emit sentTouch(lastTouch);          // passed to Display
+            emit sentTouch(lastTouch);
         }
         return true;
     }
@@ -65,16 +39,32 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 }
 
 void MainWindow::updateWindow(const QImage &img) {
-    QPixmap pm = QPixmap::fromImage(img).scaled(ui->touchDisplayLabel->size(),
-                                                Qt::KeepAspectRatio,
-                                                Qt::SmoothTransformation);
+    QPixmap pm = QPixmap::fromImage(img).scaled(ui->touchDisplayLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     ui->touchDisplayLabel->setPixmap(pm);
 }
 
-
-void MainWindow::updateSystem() {
-    if (koordinator) {
-        koordinator->update();
-    }
+/*
+void MainWindow::on_btnCappucino_clicked()
+{
+    display.update(150, 150);
 }
 
+
+void MainWindow::on_btnMilkCoffee_clicked()
+{
+    display.update(150, 250);
+}
+
+
+void MainWindow::on_btnCoffeeCrema_clicked()
+{
+    display.update(250, 150);
+}
+
+
+void MainWindow::on_btnLatteMachiato_clicked()
+{
+    display.update(250, 250);
+}
+
+*/

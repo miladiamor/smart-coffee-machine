@@ -24,33 +24,24 @@ private:
     KoordinatorZustand zustand;
     bool mitZucker;
 
+    QPointF lastTouch; // store last handled touch
+
     // Helper to show images from QRC
     void zeigeBild(const QString& pfad);
 
 public:
-    // Constructor
     Koordinator();
 
-    // Setters for dependency injection
     void setzeDisplay(Display* d);
     void setzeProgrammsteuerung(Programmsteuerung* p);
     void setzeZahlungseinheit(Zahlungseinheit* z);
 
-    // Getränkeauswahl
     void waehleCappuccino();
     void waehleMilchkaffee();
     void waehleKaffeeCrema();
     void waehleLatteMacchiato();
-
-    // Zuckerwahl
     void waehleZucker(bool mitZucker);
-
-    // Kauf und Ausführung
     void fuehreKaufDurch();
 
-    // Touch-Verarbeitung
-    void verarbeiteTouch(const QPointF& position);
-
-    // To handle post-brewing cleanup
-    void update();
+    void tick(); // renamed from update()
 };
