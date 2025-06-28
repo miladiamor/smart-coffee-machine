@@ -15,6 +15,7 @@ public:
     void setZuckermenge_TL(short tl);
     void setRestkaffee_g(int g);
 
+
     int getWassermenge_ml() const;
     int getMilchmenge_ml() const;
     int getKaffeemenge_g() const;

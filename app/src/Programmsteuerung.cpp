@@ -19,7 +19,6 @@ Programmsteuerung::Programmsteuerung()
     bruehgruppe(nullptr),
     wasserpumpe(nullptr),
     milchpumpe(nullptr),
-    messung(nullptr),
     coffeeState(CoffeeState::IDLE)
     {}
 
@@ -52,11 +51,23 @@ Programmsteuerung::~Programmsteuerung(){}
             busy = true;
      }
 
+    Programmsteuerung::CoffeeState Programmsteuerung::getCurrentState() const{
+        return this->coffeeState;
+    }
+
+    void Programmsteuerung::setCurrentState(CoffeeState state){
+        this->coffeeState = state;
+    }
+
+    bool Programmsteuerung::isBusy() const{
+        return this->busy;
+    }
 
     void Programmsteuerung::tick(){
         if (!busy){
-            return;
+           return;
         }
+
         switch (coffeeState) {
         case CoffeeState::IDLE:
             if (busy == true) {
@@ -68,13 +79,13 @@ Programmsteuerung::~Programmsteuerung(){}
 
         case CoffeeState::HEIZEN:
             if (temperaturregler_wasser->istTemperaturErreicht() && temperaturregler_milch->istTemperaturErreicht()){// milch hitze prüfen -> milcherhitzer stoppen
-                bruehgruppe->trigger(ZUFUHRSTART),// wasserhitze prüfen -> wassererhitzer stoppen
-                coffeeState = CoffeeState::KAFFEEZUFUHR;// wenn milch- UND wasserhitze richtig sind (prüfen) ->
+                bruehgruppe->trigger(ZUFUHRSTART);// wasserhitze prüfen -> wassererhitzer stoppen
+                coffeeState = CoffeeState::KAFFEE_ZUFUHR;// wenn milch- UND wasserhitze richtig sind (prüfen) ->
                 tickCounter = 0;
             }
             break;
 
-        case CoffeeState::KAFFEEZUFUHR:
+        case CoffeeState::KAFFEE_ZUFUHR:
             if (tickCounter >= currentProgramm->getKaffeemenge_g()/0.3) {
                 bruehgruppe->trigger(ZUFUHRABGESCHLOSSEN);
                 coffeeState = CoffeeState::WARTENAUFBRUEHGRUPPE;
@@ -114,10 +125,11 @@ Programmsteuerung::~Programmsteuerung(){}
         case CoffeeState::ZUCKERAUSWERFEN:
             if (tickCounter >= currentProgramm->getMitZucker()*5){
                 zucker->ausschalten();
-                coffeeState = CoffeeState::ZURUECKSETZEN;
+                coffeeState = CoffeeState::ZURUECK_SETZEN;
             }
+            break;
 
-        case CoffeeState::ZURUECKSETZEN:
+        case CoffeeState::ZURUECK_SETZEN:
             if (bruehgruppe->getState() == WARTEN) {
                 coffeeState = CoffeeState::IDLE;
                 busy = false;

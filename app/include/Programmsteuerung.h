@@ -15,23 +15,25 @@ class Kaffeeprogramm;
 class Clock;
 class Pumpe;
 
+
+
 class Programmsteuerung : public QObject {
     Q_OBJECT
 
-private:
+public:
     enum class CoffeeState{
         IDLE,
         HEIZEN,
         WARTENAUFBRUEHGRUPPE,
-        KAFFEEZUFUHR,
+        KAFFEE_ZUFUHR,
         PUMPING_WATER,
         PUMPING_MILK,
         SCHAEUMEN,
         PROGRAMM_ABGESCHLOSSEN,
         ZUCKERAUSWERFEN,
-        ZURUECKSETZEN,
-        FEHLER
+        ZURUECK_SETZEN,
     };
+
 private:
     bool busy = false;
     int tickCounter;
@@ -43,7 +45,6 @@ private:
     Bruehgruppe* bruehgruppe;
     Pumpe* wasserpumpe;
     Pumpe* milchpumpe;
-    Fuellstandsmessung* messung;
     CoffeeState coffeeState;
 
 public:
@@ -57,6 +58,9 @@ public:
     void setMilchpumpe(Pumpe* pumpe);
     void setZuckerdispenser(Zuckerdispenser* dispenser);
     void ausfuehren(Kaffeeprogramm *programm);
+    void setCurrentState(CoffeeState state);
+    bool isBusy() const;
+    CoffeeState getCurrentState() const;
 
 public slots:
     void tick();

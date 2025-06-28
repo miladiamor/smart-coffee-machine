@@ -1,10 +1,9 @@
 #include "Zuckerdispenser.h"
-#include <QTimer>
 
-/*
 Zuckerdispenser::Zuckerdispenser(QObject *parent)
-    : QObject(parent), eingeschaltet(false) {}
-*/
+    : QObject(parent), eingeschaltet(false){}
+
+Zuckerdispenser::~Zuckerdispenser(){}
 
 void Zuckerdispenser::zuckerAuswerfen() {
     if (eingeschaltet) {
@@ -12,6 +11,8 @@ void Zuckerdispenser::zuckerAuswerfen() {
     }
     eingeschaltet = true;
     emit auswerfenGestartet();
+
+    eingeschaltet = false;
     emit auswerfenBeendet();
 }
 

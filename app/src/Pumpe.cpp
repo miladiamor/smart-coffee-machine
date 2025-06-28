@@ -1,18 +1,21 @@
 #include "Pumpe.h"
 
+
 Pumpe::Pumpe() {
 
-    this->starten = false;
+    starten = false;
 }
 
+Pumpe::~Pumpe(){}
+
 void Pumpe::pumpeStarten(){
-    this->starten = true;
+    starten = true;
 }
 
 void Pumpe::pumpeStoppen(){
-    this->starten = false;
+    starten = false;
 }
 
 bool Pumpe::istAktiv() const {
-    return status != 0;
+    return starten;
 }

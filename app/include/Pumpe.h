@@ -1,10 +1,12 @@
 #ifndef PUMPE_H
 #define PUMPE_H
+#include <QObject>
 
-class Pumpe{
+class Pumpe : public QObject{
+    Q_OBJECT
 
     private:
-        int status;
+        //int status;
         bool starten;
 
     public:

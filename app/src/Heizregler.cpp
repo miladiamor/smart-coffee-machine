@@ -4,14 +4,14 @@
 Heizregler::Heizregler(QObject* parent) : QObject(parent),
     eingeschaltet(false),
     zieltemperatur_Cel(0),
-    aktuelleTemperatur_Cel(20),
-    sensor(new Temperatursensor()),
-    heizen(new Heizelemente())
+    aktuelleTemperatur_Cel(20)
+   // sensor(new Temperatursensor()),
+   // heizen(new Heizelemente())
 {}
 
 Heizregler::~Heizregler(){
-    delete sensor;
-    delete heizen;
+    //delete sensor;
+    //delete heizen;
 }
 
 void Heizregler::temperaturRegeln(int zieltemperatur_Cel) {

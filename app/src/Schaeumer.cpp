@@ -3,6 +3,8 @@
 Schaeumer::Schaeumer() : eingeschaltet(false) {
 }
 
+Schaeumer::~Schaeumer(){}
+
 bool Schaeumer::getEingeschaltet(){
     return eingeschaltet;
 }
