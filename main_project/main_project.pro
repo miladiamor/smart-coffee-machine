@@ -6,12 +6,8 @@ SUBDIRS += \
     ../app \
     ../unittest_Programmsteuerung_3 \
     ../unittest_bruehgruppe_2 \
- \    #../unittest_programmsteuerung
-<<<<<<< HEAD
-
-=======
     ../unittest_display
->>>>>>> 17d3ece5af8bdd9769a1b9f5e81ad8ba67592aaf
+
 
 
 
