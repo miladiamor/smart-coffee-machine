@@ -46,6 +46,8 @@ private:
     Pumpe* wasserpumpe;
     Pumpe* milchpumpe;
     CoffeeState coffeeState;
+public:
+    bool istFertig() const;
 
 public:
     Programmsteuerung();

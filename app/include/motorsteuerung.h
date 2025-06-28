@@ -14,7 +14,7 @@ class Motorsteuerung : public QObject
     Q_OBJECT
 public:
     Motorsteuerung(QObject *parent = nullptr) : QObject{parent} {}
-    virtual void stampferAusfahren(float stampfhoehe_mm);
+    void stampferAusfahren(float stampfhoehe_mm);
 
     void setBruehgruppe(Bruehgruppe *bruehgruppe);
     void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);

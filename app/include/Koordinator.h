@@ -1,42 +1,56 @@
 #pragma once
-#include "display.h"
+
 #include "Kaffeeprogramm.h"
 #include "Zahlungseinheit.h"
 #include "Programmsteuerung.h"
+#include "display.h"
+#include <QPointF>
+#include <QString>
 
-enum class KoordinatorStates {
+// State enum
+enum class KoordinatorZustand {
     WARTEN,
-    ZUCKER,
+    ZUCKERWAHL,
     BEZAHLEN,
     AUSFUEHREN
 };
 
 class Koordinator {
 private:
-    Kaffeeprogramm programm;
-    Zahlungseinheit* zahlung;
-    Programmsteuerung* steuerung;
-     Display* display;
-    KoordinatorStates state;
+    Kaffeeprogramm kaffeeprogramm;
+    Zahlungseinheit* zahlungseinheit;
+    Programmsteuerung* programmsteuerung;
+    Display* display;
+    KoordinatorZustand zustand;
     bool mitZucker;
 
+    // Helper to show images from QRC
+    void zeigeBild(const QString& pfad);
+
 public:
+    // Constructor
     Koordinator();
 
-    // Drink selection
-    void cappuccino();
-    void milchkaffee();
-    void kaffeeCrema();
-    void latteMacchiato();
+    // Setters for dependency injection
+    void setzeDisplay(Display* d);
+    void setzeProgrammsteuerung(Programmsteuerung* p);
+    void setzeZahlungseinheit(Zahlungseinheit* z);
 
-    // User choices
-    void zuckerWaehlen(bool mitZucker);
-    void kaufen();
+    // Getränkeauswahl
+    void waehleCappuccino();
+    void waehleMilchkaffee();
+    void waehleKaffeeCrema();
+    void waehleLatteMacchiato();
 
-    // Setup
-    void setZahlungseinheit(Zahlungseinheit* z);
-    void setSteuerung(Programmsteuerung* steuerung);
+    // Zuckerwahl
+    void waehleZucker(bool mitZucker);
 
-    void setDisplay(Display* d);
-     void zeigeAuswahl();
+    // Kauf und Ausführung
+    void fuehreKaufDurch();
+
+    // Touch-Verarbeitung
+    void verarbeiteTouch(const QPointF& position);
+
+    // To handle post-brewing cleanup
+    void update();
 };

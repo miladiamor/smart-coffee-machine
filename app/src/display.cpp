@@ -1,5 +1,5 @@
 #include "display.h"
-#include "mainwindow.h"
+
 Display::Display(QObject *parent)
     : QObject{parent}
 {
@@ -13,15 +13,11 @@ QPointF Display::getLastTouch() {
     return this->lastTouch;
 }
 void Display::displayScreen(const QImage &img) {
-    mw->displayScreen(img);
+    emit updateDisplay(img);
 }
 
 void Display::acceptTouch(QPointF &lastTouch){
     this->lastTouch = lastTouch;
-}
-
-void Display::setMainWindow(MainWindow *mw){
-    this->mw = mw;
 }
 
 

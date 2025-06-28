@@ -5,8 +5,6 @@
 #include <QPointF>
 #include <QImage>
 
-class MainWindow;  // Forward declaration
-
 class Display : public QObject
 {
     Q_OBJECT
@@ -16,13 +14,15 @@ public:
 
     QPointF getLastTouch();
     void displayScreen(const QImage &img);
-    void setMainWindow(MainWindow *mw);
+
+signals:
+    void updateDisplay(const QImage &img);
+
 public slots:
     void acceptTouch(QPointF &lastTouch);
 
 private:
     QPointF lastTouch;
-    MainWindow *mw;
 };
 
 #endif // DISPLAY_H
