@@ -51,7 +51,7 @@ Programmsteuerung::~Programmsteuerung(){}
             busy = true;
      }
 
-<<<<<<< HEAD
+
     Programmsteuerung::CoffeeState Programmsteuerung::getCurrentState() const{
         return this->coffeeState;
     }
@@ -62,10 +62,11 @@ Programmsteuerung::~Programmsteuerung(){}
 
     bool Programmsteuerung::isBusy() const{
         return this->busy;
-=======
+    }
+
     bool Programmsteuerung::istFertig() const {
         return !busy;
->>>>>>> 17d3ece5af8bdd9769a1b9f5e81ad8ba67592aaf
+
     }
 
     void Programmsteuerung::tick(){
