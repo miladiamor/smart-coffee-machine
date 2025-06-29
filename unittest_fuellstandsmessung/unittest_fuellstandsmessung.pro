@@ -11,9 +11,7 @@ INCLUDEPATH += $$PWD/../app/include
 
 SOURCES += \
     tst_tst_fuellstandsmessung.cpp\
-    ../app/src/Fuellstandsmessung.cpp \
-    ../app/src/Tankwaage.cpp \
-    ../app/src/Ressourcen.cpp
+    ../app/src/Fuellstandsmessung.cpp
 
 HEADERS += \
     ../app/include/Fuellstandsmessung.h \

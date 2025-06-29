@@ -12,7 +12,7 @@ TEMPLATE = app
 INCLUDEPATH += $$PWD/../app/include
 
 SOURCES +=  tst_tprogrammsteuerung.cpp \
-    ../app/src/Programmsteuerung.cpp \
+    ../app/src/Programmsteuerung.cpp
 
 HEADERS += \
     ../app/include/Programmsteuerung.h \
