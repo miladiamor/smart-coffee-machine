@@ -8,8 +8,13 @@ class Heizregler : public QObject{
     Q_OBJECT
 
     public:
-        Heizregler(QObject *parent = nullptr);
-        ~Heizregler();
+        Heizregler(QObject *parent = nullptr) : QObject(parent),
+            eingeschaltet(false),
+            zieltemperatur_Cel(0),
+            aktuelleTemperatur_Cel(20),
+            sensor (nullptr),
+            heizen (nullptr) {}
+        ~Heizregler() {}
         bool getEingeschaltet();
         void temperaturRegeln(int zieltemperatur_Cel);
         bool istTemperaturErreicht() const;

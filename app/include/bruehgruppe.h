@@ -15,8 +15,8 @@ class Bruehgruppe : public QObject
 {
 Q_OBJECT
 public:
-    Bruehgruppe(QObject *parent = nullptr);
-    ~Bruehgruppe();
+    Bruehgruppe(QObject *parent = nullptr) : QObject{parent} {}
+    ~Bruehgruppe() {}
 
     void trigger(BruehEvent event);
     BruehState getState();

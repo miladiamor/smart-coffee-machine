@@ -1,16 +1,5 @@
 #include "Heizregler.h"
 
-Heizregler::Heizregler(QObject* parent)
-    :QObject(parent),
-    eingeschaltet(false),
-    zieltemperatur_Cel(0),
-    aktuelleTemperatur_Cel(20),
-    sensor (nullptr),
-    heizen (nullptr)
-{}
-
-Heizregler::~Heizregler(){}
-
 void Heizregler::temperaturRegeln(int zieltemperatur_Cel) {
     if(!eingeschaltet && zieltemperatur_Cel > aktuelleTemperatur_Cel){
     this->zieltemperatur_Cel = zieltemperatur_Cel;

@@ -2,18 +2,17 @@
 #include "motorsteuerung.h"
 #include <QTimer>
 
-Bruehgruppe::Bruehgruppe(QObject *parent)
-    : QObject{parent} {}
-
+/*
 Bruehgruppe::~Bruehgruppe(){
-    /*delete tropfstopfventil;
+    delete tropfstopfventil;
     delete wasserzufuhr;
     delete kaffeezufuhr;
     delete entleerklappe;
     delete stampfer;
     delete inkrementalencoder;
-    */
+
 }
+*/
 
 void Bruehgruppe::trigger(BruehEvent event) {
     switch(state){
