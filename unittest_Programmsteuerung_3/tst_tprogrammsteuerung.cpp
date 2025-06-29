@@ -7,7 +7,7 @@
 #include "Heizregler.h"
 #include "Schaeumer.h"
 #include "bruehgruppe.h"
-//#include <vector>
+#include <vector>
 
 // Mockup für die Pumpe
 int PumpeAktiv = 0;
@@ -15,21 +15,39 @@ void Pumpe::pumpeStarten() {PumpeAktiv++;}
 void Pumpe::pumpeStoppen() {PumpeAktiv--;}
 
 // Mockup für die Kaffeeprogramm
+std::vector<int> abgefragteWasserKochhitzen;
+std::vector<int> abgefragteMilchKochhitzen;
 int Kaffeeprogramm::getKaffeemenge_g() const {return 20;}
 int Kaffeeprogramm::getWassermenge_ml() const {return 10;}
 int Kaffeeprogramm::getMilchmenge_ml() const {return 15;}
-int Kaffeeprogramm::getWasserKochhitze_Cel() const { return 85; }
-int Kaffeeprogramm::getMilchKochhitze_Cel() const { return 40; }
+int Kaffeeprogramm::getWasserKochhitze_Cel() const {
+    int wert = 85;
+    abgefragteWasserKochhitzen.push_back(wert);
+    return wert;
+}
+int Kaffeeprogramm::getMilchKochhitze_Cel() const {
+    int wert = 40;
+    abgefragteMilchKochhitzen.push_back(wert);
+    return wert;
+}
 bool MitZucker = true;
 bool Kaffeeprogramm::getMitZucker() const {return MitZucker;}
 
 //Mockup für die Heizregler
-int zielTemperatur = 0;
+Heizregler* globalWasserHeizer = nullptr;
+Heizregler* globalMilchHeizer = nullptr;
+int zielTemperaturWasser = 0;
+int zielTemperaturMilch = 0;
 bool istReglerAktiv = false;
 void Heizregler::temperaturRegeln(int zieltemperatur_Cel){
-    zielTemperatur = zieltemperatur_Cel;
-    istReglerAktiv = true;
+    if (this == globalWasserHeizer){
+        zielTemperaturWasser = zieltemperatur_Cel;
+    } else if (this == globalMilchHeizer){
+        zielTemperaturMilch = zieltemperatur_Cel;
+    }
+        istReglerAktiv = true;
 }
+
 bool Heizregler::getEingeschaltet() {
     return istReglerAktiv;
 }
@@ -112,6 +130,8 @@ void tProgrammsteuerung::init() {
     mKP = new Kaffeeprogramm();
     mWasserheizer = new Heizregler();
     mMilchheizer = new Heizregler();
+    globalWasserHeizer = mWasserheizer;
+    globalMilchHeizer = mMilchheizer;
     mMP = new Pumpe();
     mWP = new Pumpe();
     mBG = new Bruehgruppe();
@@ -132,11 +152,15 @@ void tProgrammsteuerung::init() {
 void tProgrammsteuerung::cleanup() {
     PumpeAktiv = 0;
     MitZucker = true;
-    zielTemperatur = 0;
+    zielTemperaturWasser = 0;
+    zielTemperaturMilch = 0;
     istReglerAktiv = false;
     ZuckerdispenserAktiv = false;
     SchaeumerAktiv = 0;
     bruehState = WARTEN;
+    abgefragteWasserKochhitzen.clear();
+    abgefragteMilchKochhitzen.clear();
+
 }
 
 void tProgrammsteuerung::initTestCase() {}
@@ -149,7 +173,8 @@ void tProgrammsteuerung::testIdleZuHeizen()
     QVERIFY(mPT->isBusy());
     mPT->tick();
     QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::HEIZEN);
-    QCOMPARE(zielTemperatur, mKP->getWasserKochhitze_Cel());
+    QCOMPARE(zielTemperaturWasser, mKP->getWasserKochhitze_Cel());
+    QCOMPARE(zielTemperaturMilch, mKP->getMilchKochhitze_Cel());
     QVERIFY(istReglerAktiv);
 }
 
@@ -165,7 +190,9 @@ void tProgrammsteuerung::testKaffee_ZufuhrZuWartenaufbruehgruppe()
 {
     testHeizenZuKaffe_Zufur();
     int ticks = static_cast<int>(mKP->getKaffeemenge_g() / 0.3);
-    for (int i = 0; i < ticks; ++i) mPT->tick();
+    for (int i = 0; i < ticks + 1; ++i) mPT->tick();
+    //bruehState = STAMPFEN;
+    //mPT->tick();
     QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::WARTENAUFBRUEHGRUPPE);
     QCOMPARE(bruehState, STAMPFEN);
 }
