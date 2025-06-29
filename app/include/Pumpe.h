@@ -6,15 +6,14 @@ class Pumpe : public QObject{
     Q_OBJECT
 
     private:
-        //int status;
-        bool starten;
+        bool ist_Aktiv;
 
     public:
-        Pumpe();
-        ~Pumpe();
+        Pumpe() : ist_Aktiv(0){}
         void pumpeStarten();
         void pumpeStoppen();
-        bool istAktiv() const;
+        bool get_Aktiv();
+
 };
 
 #endif // PUMPE_H

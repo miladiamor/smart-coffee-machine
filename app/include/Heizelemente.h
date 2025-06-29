@@ -6,7 +6,7 @@ private:
     bool eingeschaltet;
 
 public:
-    Heizelemente();
+    Heizelemente(): eingeschaltet(false) {}
     void einschalten();
     void ausschalten();
     bool istEingeschaltet() const;

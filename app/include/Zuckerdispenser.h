@@ -10,13 +10,13 @@ class Zuckerdispenser : public QObject {
     private:
         bool eingeschaltet;
 
-    signals:
+   /* signals:
         void auswerfenGestartet();
-        void auswerfenBeendet();
+        void auswerfenBeendet();*/
 
     public:
-        Zuckerdispenser(QObject *parent = nullptr);
-        ~Zuckerdispenser();
+        Zuckerdispenser() : eingeschaltet(false){}//(QObject *parent = nullptr);
+        //~Zuckerdispenser();
         bool istAktiv() const;
 
     public slots:

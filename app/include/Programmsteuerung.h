@@ -43,9 +43,9 @@ private:
     Zuckerdispenser* zucker;
     Schaeumer* milchschaeumer;
     Bruehgruppe* bruehgruppe;
-    Pumpe* wasserpumpe;
-    Pumpe* milchpumpe;
-    CoffeeState coffeeState;
+    Pumpe* wasserpumpe, *milchpumpe;
+
+    CoffeeState coffeeState = Programmsteuerung::CoffeeState::IDLE;
 public:
     bool istFertig() const;
 
@@ -63,6 +63,7 @@ public:
     void setCurrentState(CoffeeState state);
     bool isBusy() const;
     CoffeeState getCurrentState() const;
+    //void setCurrentState(Programmsteuerung::CoffeeState CurrentState);
 
 public slots:
     void tick();

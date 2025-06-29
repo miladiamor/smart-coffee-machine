@@ -1,13 +1,15 @@
 #ifndef SCHAEUMER_H
 #define SCHAEUMER_H
 
-class Schaeumer {
+#include <QObject>
+
+class Schaeumer : public QObject {
+    Q_OBJECT
 
 private:
     bool eingeschaltet;
 public:
-    Schaeumer();
-    ~Schaeumer();
+    Schaeumer() : eingeschaltet(false){}
     bool getEingeschaltet();
     void aufschaeumenStarten();
     void aufschaeumenStoppen();

@@ -8,28 +8,89 @@
 #include "Schaeumer.h"
 #include "bruehgruppe.h"
 //#include <vector>
-// add necessary includes here
 
+// Mockup für die Pumpe
+int PumpeAktiv = 0;
+void Pumpe::pumpeStarten() {PumpeAktiv++;}
+void Pumpe::pumpeStoppen() {PumpeAktiv--;}
+
+// Mockup für die Kaffeeprogramm
+int Kaffeeprogramm::getKaffeemenge_g() const {return 20;}
+int Kaffeeprogramm::getWassermenge_ml() const {return 10;}
+int Kaffeeprogramm::getMilchmenge_ml() const {return 15;}
+int Kaffeeprogramm::getWasserKochhitze_Cel() const { return 85; }
+int Kaffeeprogramm::getMilchKochhitze_Cel() const { return 40; }
+bool MitZucker = true;
+bool Kaffeeprogramm::getMitZucker() const {return MitZucker;}
+
+//Mockup für die Heizregler
+int zielTemperatur = 0;
+bool istReglerAktiv = false;
+void Heizregler::temperaturRegeln(int zieltemperatur_Cel){
+    zielTemperatur = zieltemperatur_Cel;
+    istReglerAktiv = true;
+}
+bool Heizregler::getEingeschaltet() {
+    return istReglerAktiv;
+}
+bool Heizregler::istTemperaturErreicht() const {
+    return true;
+}
+void Heizregler::tick() {}
+
+//Mockup für die Zuckerdispenser
+bool ZuckerdispenserAktiv = false;
+void Zuckerdispenser::zuckerAuswerfen() {
+    ZuckerdispenserAktiv = true;
+}
+void Zuckerdispenser::ausschalten() {
+    ZuckerdispenserAktiv = false;
+}
+bool Zuckerdispenser::istAktiv() const {
+    return ZuckerdispenserAktiv;
+}
+
+//Mockup für der Schaeumer
+int SchaeumerAktiv = 0;
+void Schaeumer::aufschaeumenStarten() {SchaeumerAktiv++;}
+void Schaeumer::aufschaeumenStoppen() {SchaeumerAktiv--;}
+bool Schaeumer::getEingeschaltet() {return SchaeumerAktiv;}
+
+//Mockup für die Bruehgruppe
+BruehState bruehState = WARTEN;
+void Bruehgruppe::trigger(BruehEvent event) {
+    if (event == ZUFUHRSTART) {
+        bruehState = KAFFEEZUFUHR;
+    } else if (event == ZUFUHRABGESCHLOSSEN) {
+        bruehState = STAMPFEN;
+    } else if (event == KOCHENAUFGEHOERT) {
+        bruehState = WARTEN;
+    }
+}
+BruehState Bruehgruppe::getState(){return bruehState;}
+
+// Implementierung Test
 class tProgrammsteuerung : public QObject
 {
     Q_OBJECT
 
-public:
+/*public:
     tProgrammsteuerung();
-    ~tProgrammsteuerung();
+    ~tProgrammsteuerung();*/
 
 private slots:
     void initTestCase();
     void cleanupTestCase();
     void init();
     void cleanup();
-    void testStartenFuehrtZuHeizen();
-    void testHeizenFuehrtZuKaffeezufuhr();
-    void testKaffeezufuhrFuehrtZuWasserpumpen();
-    void testWasserpumpenFuehrtZuMilchpumpen();
-    void testMilchpumpenFuehrtZuZuckerauswerfen();
-    void testZuckerauswerfenFuehrtZuZuruecksetzen();
-    void testZuruecksetzenFuehrtZuIdle();
+    void testIdleZuHeizen();
+    void testHeizenZuKaffe_Zufur();
+    void testKaffee_ZufuhrZuWartenaufbruehgruppe();
+    void testWartenaufbruehgruppeZuPumping_Water();
+    void testPumping_WaterZuPumping_Milk();
+    void testPumping_MilkZuZuckerAuswerfen();
+    void testZuckerAuswerfenZuZurueck_Setzen();
+    void testZurueck_SetzenZuIdle();
 
 private:
     Programmsteuerung* mPT;
@@ -43,8 +104,8 @@ private:
     Zuckerdispenser* mZD;
 };
 
-tProgrammsteuerung::tProgrammsteuerung() {}
-tProgrammsteuerung::~tProgrammsteuerung() {}
+/*tProgrammsteuerung::tProgrammsteuerung() {}
+tProgrammsteuerung::~tProgrammsteuerung() {}*/
 
 void tProgrammsteuerung::init() {
     mPT = new Programmsteuerung();
@@ -57,8 +118,8 @@ void tProgrammsteuerung::init() {
     mS  = new Schaeumer();
     mZD = new Zuckerdispenser();
 
-    mBG->setState(WARTEN);
-    mBG->setKaffeeprogramm(mKP);
+    //mBG->setState(WARTEN);
+    //mBG->setKaffeeprogramm(mKP);
     mPT->setWasserHeizer(mWasserheizer);
     mPT->setMilchHeizer(mMilchheizer);
     mPT->setWasserpumpe(mWP);
@@ -69,73 +130,86 @@ void tProgrammsteuerung::init() {
 }
 
 void tProgrammsteuerung::cleanup() {
-    delete mPT;
-    delete mKP;
-    delete mWasserheizer;
-    delete mMilchheizer;
-    delete mWP;
-    delete mMP;
-    delete mS;
-    delete mZD;
-    delete mBG;
+    PumpeAktiv = 0;
+    MitZucker = true;
+    zielTemperatur = 0;
+    istReglerAktiv = false;
+    ZuckerdispenserAktiv = false;
+    SchaeumerAktiv = 0;
+    bruehState = WARTEN;
 }
 
-void tProgrammsteuerung::testStartenFuehrtZuHeizen() {
+void tProgrammsteuerung::initTestCase() {}
+
+void tProgrammsteuerung::cleanupTestCase() {}
+
+void tProgrammsteuerung::testIdleZuHeizen()
+{
     mPT->ausfuehren(mKP);
     QVERIFY(mPT->isBusy());
     mPT->tick();
     QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::HEIZEN);
+    QCOMPARE(zielTemperatur, mKP->getWasserKochhitze_Cel());
+    QVERIFY(istReglerAktiv);
 }
 
-void tProgrammsteuerung::testHeizenFuehrtZuKaffeezufuhr() {
-    mPT->ausfuehren(mKP);
-    mPT->tick();
-    //QVERIFY(mBG->getKaffeeprogramm() != nullptr);
-    for(int i = 0; i < 100; ++i) mPT->tick();
+void tProgrammsteuerung::testHeizenZuKaffe_Zufur()
+{
+    testIdleZuHeizen();
+    mPT->tick(); //Kaffeezufuhr
     QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::KAFFEE_ZUFUHR);
+    QCOMPARE(bruehState, KAFFEEZUFUHR);
 }
 
-void tProgrammsteuerung::testKaffeezufuhrFuehrtZuWasserpumpen() {
-    mPT->ausfuehren(mKP);
-    for(int i = 0; i < 130; ++i) mPT->tick();
+void tProgrammsteuerung::testKaffee_ZufuhrZuWartenaufbruehgruppe()
+{
+    testHeizenZuKaffe_Zufur();
+    int ticks = static_cast<int>(mKP->getKaffeemenge_g() / 0.3);
+    for (int i = 0; i < ticks; ++i) mPT->tick();
+    QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::WARTENAUFBRUEHGRUPPE);
+    QCOMPARE(bruehState, STAMPFEN);
+}
+
+void tProgrammsteuerung::testWartenaufbruehgruppeZuPumping_Water() {
+    testKaffee_ZufuhrZuWartenaufbruehgruppe();
+    bruehState = KOCHEN;
+    mPT->tick();
     QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::PUMPING_WATER);
-    QVERIFY(mWP->istAktiv());
+    QCOMPARE(PumpeAktiv, 1);  // Wasserpumpe aktiv
 }
 
-void tProgrammsteuerung::testWasserpumpenFuehrtZuMilchpumpen() {
-    testKaffeezufuhrFuehrtZuWasserpumpen();
-    for(int i = 0; i < 20; ++i) mPT->tick();
-    QVERIFY(!mWP->istAktiv());
-    QVERIFY(mMP->istAktiv());
-    QVERIFY(mS->getEingeschaltet());
+
+void tProgrammsteuerung::testPumping_WaterZuPumping_Milk() {
+    testWartenaufbruehgruppeZuPumping_Water();
+    int ticks = static_cast<int>(mKP->getWassermenge_ml() / 10);
+    for (int i = 0; i < ticks; ++i) mPT->tick();
     QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::PUMPING_MILK);
+    QCOMPARE(PumpeAktiv, 1); // Milchpumpe +1, Wasserpumpe -1
+    QCOMPARE(SchaeumerAktiv, 1);
 }
 
-void tProgrammsteuerung::testMilchpumpenFuehrtZuZuckerauswerfen() {
-    testWasserpumpenFuehrtZuMilchpumpen();
-    for(int i = 0; i < 15; ++i) mPT->tick();
-    QVERIFY(!mMP->istAktiv());
-    QVERIFY(mZD->istAktiv());
+void tProgrammsteuerung::testPumping_MilkZuZuckerAuswerfen() {
+    testPumping_WaterZuPumping_Milk();
+    int ticks = static_cast<int>(mKP->getMilchmenge_ml() / 10);
+    for (int i = 0; i < ticks; ++i) mPT->tick();
     QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::ZUCKERAUSWERFEN);
+    QVERIFY(ZuckerdispenserAktiv);
 }
 
-void tProgrammsteuerung::testZuckerauswerfenFuehrtZuZuruecksetzen() {
-    testMilchpumpenFuehrtZuZuckerauswerfen();
-    for(int i = 0; i < 6; ++i) mPT->tick();
-    QVERIFY(!mZD->istAktiv());
-    QVERIFY(!mS->getEingeschaltet());
+void tProgrammsteuerung::testZuckerAuswerfenZuZurueck_Setzen() {
+    testPumping_MilkZuZuckerAuswerfen();
+    for (int i = 0; i < 5; ++i) mPT->tick(); // getMitZucker() == true -> 5 Ticks
     QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::ZURUECK_SETZEN);
-}
-
-void tProgrammsteuerung::testZuruecksetzenFuehrtZuIdle() {
-    testZuckerauswerfenFuehrtZuZuruecksetzen();
+    QVERIFY(!ZuckerdispenserAktiv);
+    bruehState = WARTEN;
     mPT->tick();
     QCOMPARE(mPT->getCurrentState(), Programmsteuerung::CoffeeState::IDLE);
     QVERIFY(!mPT->isBusy());
 }
 
-void tProgrammsteuerung::initTestCase() {}
-void tProgrammsteuerung::cleanupTestCase() {}
+void tProgrammsteuerung::testZurueck_SetzenZuIdle() {
+    testZuckerAuswerfenZuZurueck_Setzen();
+}
 
 QTEST_APPLESS_MAIN(tProgrammsteuerung)
 #include "tst_tprogrammsteuerung.moc"

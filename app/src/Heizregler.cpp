@@ -1,23 +1,21 @@
 #include "Heizregler.h"
-#include <QDebug>
 
-Heizregler::Heizregler(QObject* parent) : QObject(parent),
+Heizregler::Heizregler(QObject* parent)
+    :QObject(parent),
     eingeschaltet(false),
     zieltemperatur_Cel(0),
-    aktuelleTemperatur_Cel(20)
-   // sensor(new Temperatursensor()),
-   // heizen(new Heizelemente())
+    aktuelleTemperatur_Cel(20),
+    sensor (nullptr),
+    heizen (nullptr)
 {}
 
-Heizregler::~Heizregler(){
-    //delete sensor;
-    //delete heizen;
-}
+Heizregler::~Heizregler(){}
 
 void Heizregler::temperaturRegeln(int zieltemperatur_Cel) {
     if(!eingeschaltet && zieltemperatur_Cel > aktuelleTemperatur_Cel){
     this->zieltemperatur_Cel = zieltemperatur_Cel;
     this->eingeschaltet = true;
+    //if (heizen) heizen->einschalten();
     this->heizen->einschalten();
     }
 }

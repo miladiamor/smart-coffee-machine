@@ -1,19 +1,19 @@
 #include "Zuckerdispenser.h"
 
-Zuckerdispenser::Zuckerdispenser(QObject *parent)
-    : QObject(parent), eingeschaltet(false){}
+//Zuckerdispenser::Zuckerdispenser(QObject *parent)
+//    : QObject(parent), eingeschaltet(false){}
 
-Zuckerdispenser::~Zuckerdispenser(){}
+//Zuckerdispenser::~Zuckerdispenser(){}
 
 void Zuckerdispenser::zuckerAuswerfen() {
     if (eingeschaltet) {
         return;
     }
     eingeschaltet = true;
-    emit auswerfenGestartet();
+    //emit auswerfenGestartet();
 
     eingeschaltet = false;
-    emit auswerfenBeendet();
+    //emit auswerfenBeendet();
 }
 
 void Zuckerdispenser::ausschalten() {

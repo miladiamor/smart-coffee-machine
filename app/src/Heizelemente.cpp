@@ -1,17 +1,17 @@
 #include "Heizelemente.h"
 #include <QDebug>
 
-Heizelemente::Heizelemente() : eingeschaltet(false){}
+//Heizelemente::Heizelemente() : eingeschaltet(false){}
 
 void Heizelemente::einschalten() {
-    this->eingeschaltet = true;
+    eingeschaltet = true;
 }
 
 void Heizelemente::ausschalten() {
-    this->eingeschaltet = false;
+    eingeschaltet = false;
 
 }
 
 bool Heizelemente::istEingeschaltet() const{
-    return this->eingeschaltet;
+    return eingeschaltet;
 }
