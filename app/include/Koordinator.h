@@ -1,32 +1,36 @@
 #pragma once
 
-#include "Kaffeeprogramm.h"
-#include "Zahlungseinheit.h"
-#include "Programmsteuerung.h"
-#include "display.h"
 #include <QPointF>
 #include <QString>
+#include <QImage>
 
-// State enum
+#include "Kaffeeprogramm.h"
+#include "Programmsteuerung.h"
+#include "Zahlungseinheit.h"
+#include "Fuellstandsmessung.h"
+#include "Display.h"
+
 enum class KoordinatorZustand {
     WARTEN,
     ZUCKERWAHL,
     BEZAHLEN,
-    AUSFUEHREN
+    AUSFUEHREN,
+    WARTEN_AUF_FERTIG,
+    FERTIG
 };
 
 class Koordinator {
 private:
-    Kaffeeprogramm kaffeeprogramm;
-    Zahlungseinheit* zahlungseinheit;
-    Programmsteuerung* programmsteuerung;
-    Display* display;
-    KoordinatorZustand zustand;
-    bool mitZucker;
+    Kaffeeprogramm* kaffeeprogramm = nullptr;
+    Programmsteuerung* programmsteuerung = nullptr;
+    Zahlungseinheit* zahlungseinheit = nullptr;
+    Fuellstandsmessung* fuellstandsmessung = nullptr;
+    Display* display = nullptr;
 
-    QPointF lastTouch; // store last handled touch
+    KoordinatorZustand zustand = KoordinatorZustand::WARTEN;
+    bool mitZucker = false;
+    QPointF lastTouch;
 
-    // Helper to show images from QRC
     void zeigeBild(const QString& pfad);
 
 public:
@@ -35,13 +39,7 @@ public:
     void setzeDisplay(Display* d);
     void setzeProgrammsteuerung(Programmsteuerung* p);
     void setzeZahlungseinheit(Zahlungseinheit* z);
+    void setzeFuellstandsmessung(Fuellstandsmessung* f);
 
-    void waehleCappuccino();
-    void waehleMilchkaffee();
-    void waehleKaffeeCrema();
-    void waehleLatteMacchiato();
-    void waehleZucker(bool mitZucker);
-    void fuehreKaufDurch();
-
-    void tick(); // renamed from update()
+    void tick();
 };

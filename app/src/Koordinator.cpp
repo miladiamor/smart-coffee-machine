@@ -1,35 +1,10 @@
 #include "Koordinator.h"
-#include "Produkt.h"
-#include "Programmsteuerung.h"
-#include "Zahlungseinheit.h"
-#include "Kaffeeprogramm.h"
-#include "display.h"
-#include <QImage>
+#include <QDebug>
 
-// Constructor
-Koordinator::Koordinator()
-    : zahlungseinheit(nullptr),
-    programmsteuerung(nullptr),
-    display(nullptr),
-    zustand(KoordinatorZustand::WARTEN),
-    mitZucker(false),
-    lastTouch(-1, -1) // init invalid
-{
-    zeigeBild(":/selection.png");
-}
+Koordinator::Koordinator() {}
 
-// Helper: Show image
-void Koordinator::zeigeBild(const QString& pfad) {
-    if (display) {
-        QImage bild(pfad);
-        display->displayScreen(bild);
-    }
-}
-
-// Setters
 void Koordinator::setzeDisplay(Display* d) {
     display = d;
-    zeigeBild(":/selection.png");
 }
 
 void Koordinator::setzeProgrammsteuerung(Programmsteuerung* p) {
@@ -40,123 +15,119 @@ void Koordinator::setzeZahlungseinheit(Zahlungseinheit* z) {
     zahlungseinheit = z;
 }
 
-// Getränkeauswahl
-void Koordinator::waehleCappuccino() { /* same as before */ kaffeeprogramm.setKaffeemenge_g(9);
-    kaffeeprogramm.setWassermenge_ml(30);
-    kaffeeprogramm.setMilchmenge_ml(120);
-    kaffeeprogramm.setWasserKochhitze_Cel(93);
-    kaffeeprogramm.setMilchKochhitze_Cel(65);
-    kaffeeprogramm.setMilchZuerst(true);
-    zustand = KoordinatorZustand::ZUCKERWAHL;
-    zeigeBild(":/sugar.png");
+void Koordinator::setzeFuellstandsmessung(Fuellstandsmessung* f) {
+    fuellstandsmessung = f;
 }
 
-void Koordinator::waehleMilchkaffee() { /* same as before */
-    kaffeeprogramm.setKaffeemenge_g(9);
-    kaffeeprogramm.setWassermenge_ml(30);
-    kaffeeprogramm.setMilchmenge_ml(150);
-    kaffeeprogramm.setWasserKochhitze_Cel(92);
-    kaffeeprogramm.setMilchKochhitze_Cel(70);
-    kaffeeprogramm.setMilchZuerst(true);
-    zustand = KoordinatorZustand::ZUCKERWAHL;
-    zeigeBild(":/sugar.png");
-}
-
-void Koordinator::waehleKaffeeCrema() { /* same as before */
-    kaffeeprogramm.setKaffeemenge_g(9);
-    kaffeeprogramm.setWassermenge_ml(80);
-    kaffeeprogramm.setMilchmenge_ml(0);
-    kaffeeprogramm.setWasserKochhitze_Cel(95);
-    kaffeeprogramm.setMilchKochhitze_Cel(0);
-    kaffeeprogramm.setMilchZuerst(false);
-    zustand = KoordinatorZustand::ZUCKERWAHL;
-    zeigeBild(":/sugar.png");
-}
-
-void Koordinator::waehleLatteMacchiato() { /* same as before */
-    kaffeeprogramm.setKaffeemenge_g(9);
-    kaffeeprogramm.setWassermenge_ml(30);
-    kaffeeprogramm.setMilchmenge_ml(200);
-    kaffeeprogramm.setWasserKochhitze_Cel(92);
-    kaffeeprogramm.setMilchKochhitze_Cel(60);
-    kaffeeprogramm.setMilchZuerst(true);
-    zustand = KoordinatorZustand::ZUCKERWAHL;
-    zeigeBild(":/sugar.png");
-}
-
-// Zuckerwahl
-void Koordinator::waehleZucker(bool mitZucker) {
-    this->mitZucker = mitZucker;
-    kaffeeprogramm.setMitZucker(mitZucker);
-    zustand = KoordinatorZustand::BEZAHLEN;
-}
-
-// Kaufabwicklung
-void Koordinator::fuehreKaufDurch() {
-    if (!zahlungseinheit) return;
-
-    Produkt* produkt = kaffeeprogramm.getProdukt();
-    if (!produkt) return;
-
-    bool bezahlt = zahlungseinheit->versucheZahlung(produkt);
-
-    if (bezahlt) {
-        zustand = KoordinatorZustand::AUSFUEHREN;
-        zeigeBild(":/brewing.png");
-        if (programmsteuerung) {
-            programmsteuerung->ausfuehren(&kaffeeprogramm);
-        }
-    } else {
-        zustand = KoordinatorZustand::WARTEN;
-        zeigeBild(":/selection.png");
+void Koordinator::zeigeBild(const QString& pfad) {
+    if (display) {
+        display->displayScreen(QImage(pfad));
     }
 }
 
-// Tick function: replaces verarbeiteTouch and update
 void Koordinator::tick() {
-    if (programmsteuerung) {
-        programmsteuerung->tick();
+    if (!display || !programmsteuerung || !zahlungseinheit || !fuellstandsmessung) {
+        qDebug() << "[Koordinator] Missing component(s)";
+        return;
     }
 
-    // Poll touch
-    if (!display) return;
-    QPointF touch = display->getLastTouch();
+    lastTouch = display->getLastTouch();
+    qDebug() << "[Koordinator] Current State:" << static_cast<int>(zustand);
+    qDebug() << "[Koordinator] Last Touch:" << lastTouch;
 
-    if (touch != lastTouch) { // new touch detected
-        lastTouch = touch;
+    switch (zustand) {
+    case KoordinatorZustand::WARTEN:
+        zeigeBild(":/images/selection.png");
 
-        if (zustand == KoordinatorZustand::WARTEN) {
-            if (touch.x() < 200 && touch.y() < 200) {
-                waehleCappuccino();
-            } else if (touch.x() > 200 && touch.y() < 200) {
-                waehleMilchkaffee();
-            } else if (touch.x() < 200 && touch.y() > 200) {
-                waehleKaffeeCrema();
-            } else if (touch.x() > 200 && touch.y() > 200) {
-                waehleLatteMacchiato();
-            }
-        }
-        else if (zustand == KoordinatorZustand::ZUCKERWAHL) {
-            if (touch.x() < 200 && touch.y() < 200) {
-                waehleZucker(true);
-            } else if (touch.x() > 200 && touch.y() < 200) {
-                waehleZucker(false);
-            }
-        }
-        else if (zustand == KoordinatorZustand::BEZAHLEN) {
-            if (touch.x() > 100 && touch.x() < 300 &&
-                touch.y() > 300 && touch.y() < 400) {
-                fuehreKaufDurch();
-            }
-        }
-    }
+        if (lastTouch != QPointF(0, 0)) {
+            int width = 400;   // adjust as needed
+            int height = 400;  // adjust as needed
 
-    // Check if brewing finished
-    if (zustand == KoordinatorZustand::AUSFUEHREN) {
-        if (programmsteuerung && programmsteuerung->istFertig()) {
-            zeigeBild(":/done.png");
-            zustand = KoordinatorZustand::WARTEN;
-            zeigeBild(":/selection.png");
+            Ressourcen res; // Empty for now
+            kaffeeprogramm = new Kaffeeprogramm(res);
+
+            if (lastTouch.x() < width / 2 && lastTouch.y() < height / 2) {
+                qDebug() << "[Koordinator] Selected: Milchkaffee";
+                kaffeeprogramm->setKaffeemenge_g(15);
+                kaffeeprogramm->setMilchmenge_ml(150);
+                kaffeeprogramm->setWassermenge_ml(50);
+                kaffeeprogramm->setWasserKochhitze_Cel(90);
+                kaffeeprogramm->setMilchKochhitze_Cel(65);
+            } else if (lastTouch.x() >= width / 2 && lastTouch.y() < height / 2) {
+                qDebug() << "[Koordinator] Selected: KaffeeCrema";
+                kaffeeprogramm->setKaffeemenge_g(18);
+                kaffeeprogramm->setMilchmenge_ml(0);
+                kaffeeprogramm->setWassermenge_ml(150);
+                kaffeeprogramm->setWasserKochhitze_Cel(92);
+                kaffeeprogramm->setMilchKochhitze_Cel(0);
+            } else if (lastTouch.x() < width / 2 && lastTouch.y() >= height / 2) {
+                qDebug() << "[Koordinator] Selected: LatteMacchiato";
+                kaffeeprogramm->setKaffeemenge_g(12);
+                kaffeeprogramm->setMilchmenge_ml(170);
+                kaffeeprogramm->setWassermenge_ml(40);
+                kaffeeprogramm->setWasserKochhitze_Cel(88);
+                kaffeeprogramm->setMilchKochhitze_Cel(60);
+            } else {
+                qDebug() << "[Koordinator] Selected: Cappuccino";
+                kaffeeprogramm->setKaffeemenge_g(14);
+                kaffeeprogramm->setMilchmenge_ml(120);
+                kaffeeprogramm->setWassermenge_ml(60);
+                kaffeeprogramm->setWasserKochhitze_Cel(90);
+                kaffeeprogramm->setMilchKochhitze_Cel(65);
+            }
+
+            zustand = KoordinatorZustand::ZUCKERWAHL;
         }
+        break;
+
+    case KoordinatorZustand::ZUCKERWAHL:
+        zeigeBild(":/images/sugar.png");
+
+        if (lastTouch != QPointF(0, 0)) {
+            int width = 400;
+            if (lastTouch.x() < width / 2) {
+                qDebug() << "[Koordinator] Sugar selected";
+                mitZucker = true;
+            } else {
+                qDebug() << "[Koordinator] Sugar not selected";
+                mitZucker = false;
+            }
+            kaffeeprogramm->setMitZucker(mitZucker);
+            zustand = KoordinatorZustand::BEZAHLEN;
+        }
+        break;
+
+    case KoordinatorZustand::BEZAHLEN:
+        zeigeBild(":/images/brewing.png"); // placeholder for payment
+        qDebug() << "[Koordinator] Payment placeholder step";
+
+        if (zahlungseinheit->versucheZahlung(kaffeeprogramm->getProdukt())) {
+            qDebug() << "[Koordinator] Payment successful";
+            zustand = KoordinatorZustand::AUSFUEHREN;
+        } else {
+            qDebug() << "[Koordinator] Waiting for payment";
+        }
+        break;
+
+    case KoordinatorZustand::AUSFUEHREN:
+        zeigeBild(":/images/brewing.png");
+        qDebug() << "[Koordinator] Starting coffee program";
+
+        programmsteuerung->ausfuehren(kaffeeprogramm);
+        zustand = KoordinatorZustand::WARTEN_AUF_FERTIG;
+        break;
+
+    case KoordinatorZustand::WARTEN_AUF_FERTIG:
+        if (programmsteuerung->istFertig()) {
+            qDebug() << "[Koordinator] Coffee program finished";
+            zustand = KoordinatorZustand::FERTIG;
+        }
+        break;
+
+    case KoordinatorZustand::FERTIG:
+        zeigeBild(":/images/done.png");
+        qDebug() << "[Koordinator] Returning to WARTEN";
+        zustand = KoordinatorZustand::WARTEN;
+        break;
     }
 }
