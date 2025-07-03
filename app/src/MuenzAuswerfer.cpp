@@ -1,11 +1,11 @@
 #include "MuenzAuswerfer.h"
 
 void MuenzAuswerfer::auswerfenMuenze(float wert) {
-    std::cout << "Wirf eine " << wert << " Euro Münze aus." << std::endl;
+    std::cout << "Wirf eine " << wert << " Euro Muenze aus." << std::endl;
 }
 
 void MuenzAuswerfer::auswerfen(float betrag) {
-    // Münzen in absteigender Reihenfolge auswerfen
+
     while (betrag >= 2.0f) {
         auswerfenMuenze(2.0f);
         betrag -= 2.0f;

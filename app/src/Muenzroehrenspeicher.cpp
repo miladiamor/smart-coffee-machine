@@ -45,3 +45,14 @@ void Muenzroehrenspeicher::leeren() {
     roehre20Cent->leeren();
     roehre10Cent->leeren();
 }
+
+Muenzroehrenspeicher::Muenzroehrenspeicher() {
+    // Leerer Dummy Konstruktor fuer unittest
+    roehre2Euro = nullptr;
+    roehre1Euro = nullptr;
+    roehre50Cent = nullptr;
+    roehre20Cent = nullptr;
+    roehre10Cent = nullptr;
+    schieber = nullptr;
+    auswerfer = nullptr;
+}

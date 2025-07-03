@@ -3,6 +3,10 @@
 Muenzroehre::Muenzroehre(float wert, int kapazitaet)
     : wert(wert), kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
 
+
+Muenzroehre::Muenzroehre(int kapazitaet)
+    : wert(0.0f), kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
+
 bool Muenzroehre::istVoll() const {
     return aktuelleAnzahl >= kapazitaet;
 }
@@ -28,4 +32,3 @@ void Muenzroehre::erhoeheAnzahl() {
         aktuelleAnzahl++;
     }
 }
-

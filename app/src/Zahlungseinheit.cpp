@@ -1,4 +1,3 @@
-
 #include "zahlungseinheit.h"
 
 Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* roehren,
@@ -13,25 +12,27 @@ bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
 
     this->produkt = produkt;
     float preis = produkt->getPreis();
+    float gesamterEinwurf = 0.0f;
 
-    // Schleife: Nutzer wirft Mnzen ein, bis Preis erreicht ist
-    while (roehren->gesamtWert() < preis) {
-        float muenzwert = eingabe->erkenneMuenze();
-
-        if (eingabe->ungueltigeMuenze()) {
-            auswerfer->auswerfenMuenze(muenzwert);
-            continue;
-        }
+    while (gesamterEinwurf < preis) {
+        float muenzwert = eingabe->getEingeworfeneMuenze();
 
         if (!roehren->fuegeMuenzeEin(muenzwert)) {
             auswerfer->auswerfenMuenze(muenzwert);
+        } else {
+            gesamterEinwurf += muenzwert;
         }
+
+        break;
     }
 
-    // Zahlung erfolgreich
+    if (gesamterEinwurf < preis) {
+        return false;
+    }
+
     produkt->dekrementiereAnzahl();
 
-    float rueckgeld = roehren->gesamtWert() - preis;
+    float rueckgeld = gesamterEinwurf - preis;
     if (rueckgeld > 0.0f) {
         auswerfer->auswerfen(rueckgeld);
     }
@@ -40,6 +41,5 @@ bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
 }
 
 void Zahlungseinheit::zahlungAbbrechen() {
-    // Gibt aktuellen Betrag im Speicher als Rckgeld aus
     auswerfer->auswerfen(roehren->gesamtWert());
 }
