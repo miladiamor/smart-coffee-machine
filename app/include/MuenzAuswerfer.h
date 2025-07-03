@@ -12,7 +12,7 @@ public:
     void auswerfenMuenze(float wert);
 };
 
-#endif // MUENZAUSWERFER_H
+#endif
 
 
 

@@ -18,4 +18,4 @@ public:
     void dekrementiereAnzahl();
 };
 
-#endif // PRODUKT_H
+#endif

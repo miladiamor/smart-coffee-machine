@@ -20,10 +20,12 @@ public:
     Muenzroehrenspeicher(Muenzroehre* r2, Muenzroehre* r1, Muenzroehre* r50,
                          Muenzroehre* r20, Muenzroehre* r10,
                          Muenzenschieber* schieber, MuenzAuswerfer* auswerfer);
+    Muenzroehrenspeicher(); // Dummy Konstruktor fuer Tests
+
 
     bool fuegeMuenzeEin(float wert);
     float gesamtWert() const;
     void leeren();
 };
 
-#endif // MUENZROEHRENSPEICHER_H
+#endif
