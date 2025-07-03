@@ -13,6 +13,7 @@ private:
     Ressourcen* ressourcen;
 
 public:
+    Fuellstandsmessung();
     Fuellstandsmessung(Tankwaage* wasser,
                        Tankwaage* milch,
                        Tankwaage* kaffee,

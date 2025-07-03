@@ -1,5 +1,4 @@
-#ifndef ZAHLUNGSEINHEIT_H
-#define ZAHLUNGSEINHEIT_H
+#pragma once
 
 #include "Muenzroehrenspeicher.h"
 #include "MuenzEingabeSensor.h"
@@ -14,6 +13,7 @@ private:
     Produkt* produkt;
 
 public:
+    Zahlungseinheit();  // ich habe das addiert um ein problem in meinen test yu loeschen
     Zahlungseinheit(Muenzroehrenspeicher* roehren,
                     MuenzEingabeSensor* eingabe,
                     MuenzAuswerfer* auswerfer);
@@ -21,6 +21,3 @@ public:
     bool versucheZahlung(Produkt* produkt);
     void zahlungAbbrechen();
 };
-
-#endif
-

@@ -1,5 +1,13 @@
 #include "zahlungseinheit.h"
 
+// ich habe das addiert um ein problem in meinen test yu loeschen
+Zahlungseinheit::Zahlungseinheit() {
+    roehren = nullptr;
+    eingabe = nullptr;
+    auswerfer = nullptr;
+    produkt = nullptr;
+}
+
 Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* roehren,
                                  MuenzEingabeSensor* eingabe,
                                  MuenzAuswerfer* auswerfer)

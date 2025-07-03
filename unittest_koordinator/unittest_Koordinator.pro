@@ -9,7 +9,3 @@ TEMPLATE = app
 
 SOURCES += tst_tkoordinator.cpp
 
-# If you place MockKoordinator in a separate .cpp, add it here:
-# SOURCES += MockKoordinator.cpp
-
-# No HEADERS needed unless you separate into .h/.cpp

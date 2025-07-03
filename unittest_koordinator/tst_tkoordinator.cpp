@@ -200,12 +200,12 @@ void tKoordinator::testWartenAufFertigToFertig() {
     touchDetected = true; k.tick();
     k.tick();
     k.tick();
-    k.tick(); // should now move to FERTIG
+    k.tick();
     QCOMPARE(k.getCurrentState(), KoordinatorZustand::FERTIG);
     QCOMPARE(lastDisplayedPath, QString(":/images/ready.png"));
 }
 
-void tKoordinator::testFertigToWarten() { // NEW TEST
+void tKoordinator::testFertigToWarten() {
     MockKoordinator k;
     MockDisplay d;
     MockProgrammsteuerung p;
@@ -216,8 +216,8 @@ void tKoordinator::testFertigToWarten() { // NEW TEST
     touchDetected = true; k.tick();
     k.tick();
     k.tick();
-    k.tick(); // FERTIG
-    k.tick(); // should reset to WARTEN
+    k.tick();
+    k.tick();
     QCOMPARE(k.getCurrentState(), KoordinatorZustand::WARTEN);
     QCOMPARE(lastDisplayedPath, QString(":/images/selection.png"));
 }

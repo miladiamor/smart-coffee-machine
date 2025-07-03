@@ -1,5 +1,11 @@
 #include "Fuellstandsmessung.h"
-
+Fuellstandsmessung::Fuellstandsmessung() {
+    wasser = nullptr;
+    milch = nullptr;
+    kaffee = nullptr;
+    zucker = nullptr;
+    ressourcen = nullptr;
+}
 Fuellstandsmessung::Fuellstandsmessung(Tankwaage* wasser,
                                        Tankwaage* milch,
                                        Tankwaage* kaffee,
