@@ -9,6 +9,7 @@ private:
 
 public:
     Muenzroehre(float wert, int kapazitaet);
+    Muenzroehre(int kapazitaet);
 
     bool istVoll() const;
     void leeren();
@@ -20,4 +21,4 @@ public:
     void erhoeheAnzahl();
 };
 
-#endif // MUENZROEHRE_H
+#endif

@@ -22,5 +22,5 @@ public:
     void zahlungAbbrechen();
 };
 
-#endif // ZAHLUNGSEINHEIT_H
+#endif
 

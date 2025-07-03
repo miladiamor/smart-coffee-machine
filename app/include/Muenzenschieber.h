@@ -10,9 +10,9 @@ private:
 public:
     Muenzenschieber();
 
-    // Wähle Zielröhre und simuliere Schiebemechanismus
+
     void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre);
 };
 
-#endif // MUENZENSCHIEBER_H
+#endif
 

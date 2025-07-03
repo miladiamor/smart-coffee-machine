@@ -3,15 +3,28 @@
 
 class MuenzEingabeSensor {
 private:
-    float wert;
+    float letzteMuenze;
 
 public:
-    MuenzEingabeSensor();
+    MuenzEingabeSensor() : letzteMuenze(0.0f) {}
 
-    // Gibt den erkannten Münzwert zurück
-    float erkenneMuenze();
-    // Prüft, ob es eine gültige Münze ist (nur 2€, 1€, 0.5€, ...)
-    bool ungueltigeMuenze();
+    void simuliereMuenze(float wert) {
+        letzteMuenze = wert;
+    }
+
+    float getEingeworfeneMuenze() {
+        return letzteMuenze;
+    }
+
+    float erkenneMuenze() {
+        return letzteMuenze;
+    }
+
+    bool ungueltigeMuenze() {
+        return !(letzteMuenze == 2.0f || letzteMuenze == 1.0f ||
+                 letzteMuenze == 0.5f || letzteMuenze == 0.2f ||
+                 letzteMuenze == 0.1f);
+    }
 };
 
-#endif // MUENZEINGABESENSOR_H
+#endif
