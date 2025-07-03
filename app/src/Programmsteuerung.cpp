@@ -47,8 +47,9 @@ Programmsteuerung::~Programmsteuerung(){}
     }
 
     void Programmsteuerung::ausfuehren(Kaffeeprogramm *programm){
-            this->currentProgramm = programm;
-            busy = true;
+        this->currentProgramm = programm;
+        bruehgruppe->setKaffeeprogramm(programm);
+        busy = true;
      }
 
 
@@ -84,9 +85,9 @@ Programmsteuerung::~Programmsteuerung(){}
                 break;
 
         case CoffeeState::HEIZEN:
-            if (temperaturregler_wasser->istTemperaturErreicht() && temperaturregler_milch->istTemperaturErreicht()){// milch hitze prüfen -> milcherhitzer stoppen
-                bruehgruppe->trigger(ZUFUHRSTART);// wasserhitze prüfen -> wassererhitzer stoppen
-                coffeeState = CoffeeState::KAFFEE_ZUFUHR;// wenn milch- UND wasserhitze richtig sind (prüfen) ->
+            if (temperaturregler_wasser->istTemperaturErreicht() && temperaturregler_milch->istTemperaturErreicht()){
+                bruehgruppe->trigger(ZUFUHRSTART);
+                coffeeState = CoffeeState::KAFFEE_ZUFUHR;
                 tickCounter = 0;
             }
             break;
