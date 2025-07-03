@@ -42,4 +42,7 @@ public:
     void setzeFuellstandsmessung(Fuellstandsmessung* f);
 
     void tick();
+
+    KoordinatorZustand getCurrentState() const { return zustand; }
+
 };

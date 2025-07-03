@@ -5,11 +5,13 @@ TEMPLATE = subdirs
 SUBDIRS += \
     ../app \
     #../integrationstest_programmsteuerung_bruehgruppe \
+    ../unittest_Koordinator \
     ../unittest_Programmsteuerung_3 \
     ../unittest_bruehgruppe_2 \
-    #../unittest_fuellstandsmessung \
+    ../unittest_fuellstandsmessung \
     ../unittest_display \
-
+    ../unittest_koordinator\
+    ../unittest_zahlungseinheit
 
 
 
