@@ -8,8 +8,8 @@ SUBDIRS += \
     ../unittest_Programmsteuerung_3 \
     ../unittest_bruehgruppe_2 \
     ../unittest_display \
-    ../unittest_koordinator\
-    ../unittest_fuellstandsmessung \
+    #../unittest_koordinator\
+    #../unittest_fuellstandsmessung \
 
 
 

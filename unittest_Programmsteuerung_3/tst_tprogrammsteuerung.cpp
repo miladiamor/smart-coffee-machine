@@ -87,6 +87,8 @@ void Bruehgruppe::trigger(BruehEvent event) {
 }
 BruehState Bruehgruppe::getState(){return bruehState;}
 
+void Bruehgruppe::setKaffeeprogramm(Kaffeeprogramm *kaffeeprogramm) {}
+
 // Implementierung Test
 class tProgrammsteuerung : public QObject
 {
