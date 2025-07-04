@@ -7,18 +7,29 @@
 
 class Zahlungseinheit {
 private:
-    bool zahlungErfolgreich = 0;
+    enum ZahlungsState {
+        ZAHLUNG_IDLE,         // Kein aktiver Zahlungsvorgang
+        ZAHLUNG_LAEUFT,       // Zahlung ist aktiv
+        ZAHLUNG_ERFOLGREICH,  // Zahlung abgeschlossen
+        ZAHLUNG_ABORT         // Zahlung abgebrochen
+    };
+
+    ZahlungsState state = ZAHLUNG_IDLE;   // aktueller Zustand
+    bool zahlungAktiv = false;            // ob Zahlung läuft
+    float gesamterEinwurf = 0.0f;         // eingeworfener Betrag
+
     Muenzroehrenspeicher* roehren;
     MuenzEingabeSensor* eingabe;
     MuenzAuswerfer* auswerfer;
     Produkt* produkt;
 
 public:
-    Zahlungseinheit();  // ich habe das addiert um ein problem in meinen test yu loeschen
+    Zahlungseinheit();
     Zahlungseinheit(Muenzroehrenspeicher* roehren,
                     MuenzEingabeSensor* eingabe,
                     MuenzAuswerfer* auswerfer);
 
     bool versucheZahlung(Produkt* produkt);
     void zahlungAbbrechen();
+    void tick();  // zustandsbasierter Ablauf
 };
