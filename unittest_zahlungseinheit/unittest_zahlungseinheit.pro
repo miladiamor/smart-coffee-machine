@@ -1,4 +1,4 @@
-QT += testlib
+QT += testlib core
 CONFIG += console
 CONFIG -= app_bundle
 
@@ -7,16 +7,23 @@ TARGET = tst_tzahlungseinheit
 
 SOURCES += \
     tst_tzahlungseinheit.cpp \
-    Zahlungseinheit.cpp \
+    ../app/src/Zahlungseinheit.cpp \
+
+
+
 
 HEADERS += \
-    Zahlungseinheit.h \
-    MuenzEingabeSensor.h \
-    Produkt.h \
-    Muenzroehrenspeicher.h \
-    Muenzenschieber.h \
-    Muenzroehre.h \
-    MuenzAuswerfer.h
+    ../app/include/Zahlungseinheit.h \
+    ../app/include/MuenzEingabeSensor.h \
+    ../app/include/Produkt.h \
+    ../app/include/Muenzroehrenspeicher.h \
+    ../app/include/Muenzenschieber.h \
+    ../app/include/Muenzroehre.h \
+    ../app/include/MuenzAuswerfer.h
 
-INCLUDEPATH += ../
+
+
+
+
+INCLUDEPATH += $$PWD/../app/include
 DEPENDPATH += ../
