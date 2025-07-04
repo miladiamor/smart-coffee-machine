@@ -9,8 +9,6 @@ private:
 
 public:
     Muenzenschieber();
-
-
     void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre);
 };
 

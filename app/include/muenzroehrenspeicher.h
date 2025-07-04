@@ -4,9 +4,12 @@
 #include "Muenzroehre.h"
 #include "Muenzenschieber.h"
 #include "MuenzAuswerfer.h"
+#include <map>
 
 class Muenzroehrenspeicher {
 private:
+    std::map<int, float> muenzen;
+
     Muenzroehre* roehre2Euro;
     Muenzroehre* roehre1Euro;
     Muenzroehre* roehre50Cent;

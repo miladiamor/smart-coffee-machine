@@ -9,6 +9,8 @@ Muenzroehrenspeicher::Muenzroehrenspeicher(Muenzroehre* r2, Muenzroehre* r1, Mue
     schieber(schieber), auswerfer(auswerfer) {}
 
 bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
+    if (wert == 50) {muenzen[50] += 1;}
+
     Muenzroehre* ziel = nullptr;
 
     if (wert == 2.0f) ziel = roehre2Euro;

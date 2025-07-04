@@ -34,9 +34,11 @@ bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
         break;
     }
 
+    /*
     if (gesamterEinwurf < preis) {
         return false;
     }
+    */
 
     produkt->dekrementiereAnzahl();
 
@@ -48,6 +50,17 @@ bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
     return true;
 }
 
+void tick() {
+    // prüfen ob eine zahlung aktiv ist
+    // prüfen ob eine Münze eingeworfen wurde und ob sie valide ist
+    // prüfen welche münze eingeworfen wurde
+    // Muenzspeicher-counter für diese münze um 1 erhöhen
+    // Muenze in Rohr schieben
+    // zu zahlenden betrag ob münz wert reduzieren
+    // wenn mehr geld eingeworfen wurde als zu bezahlen
+    // bool zahlung erfoglreich setzen
+    // rückgeld ausgeben wenn nötig
+}
 void Zahlungseinheit::zahlungAbbrechen() {
     auswerfer->auswerfen(roehren->gesamtWert());
 }

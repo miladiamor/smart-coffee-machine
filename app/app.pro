@@ -28,7 +28,6 @@ SOURCES += \
     src/Heizregler.cpp \
     src/Koordinator.cpp \
     src/MuenzAuswerfer.cpp \
-    src/MuenzEingabeSensor.cpp \
     src/Muenzenschieber.cpp \
     src/Muenzroehre.cpp \
     src/Muenzroehrenspeicher.cpp \
@@ -62,8 +61,6 @@ HEADERS += \
     include/clock.h \
     include/display.h \
     include/Fuellstandsmessung.h \
-    include/geldscheinbehaelter.h \
-    include/geldscheinsensor.h \
     include/Heizelemente.h \
     include/Heizregler.h \
     include/inkrementalencoder.h \
@@ -74,7 +71,6 @@ HEADERS += \
     include/mainwindow.h \
     include/motorsteuerung.h \
     include/Muenzenschieber.h \
-    include/muenze.h \
     include/muenzroehre.h \
     include/muenzroehrenspeicher.h \
     include/muenzsensor.h \
@@ -89,7 +85,8 @@ HEADERS += \
     include/Temperatursensor.h \
     include/ventil.h \
     include/zahlungseinheit.h \
-    include/Zuckerdispenser.h
+    include/Zuckerdispenser.h \
+    include/MuenzEingabeSensor.h
 
 # The GUI definition files (so-called forms)
 FORMS += \

@@ -3,22 +3,20 @@
 
 class Muenzroehre {
 private:
-    float wert;
     int kapazitaet;
     int aktuelleAnzahl;
 
 public:
-    Muenzroehre(float wert, int kapazitaet);
     Muenzroehre(int kapazitaet);
+    ~Muenzroehre();
 
     bool istVoll() const;
     void leeren();
 
     int getAktuelleAnzahl() const;
     int getKapazitaet() const;
-    float getWert() const;
-
     void erhoeheAnzahl();
+    void reduziereAnzahl();
 };
 
 #endif

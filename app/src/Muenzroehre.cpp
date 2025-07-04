@@ -1,11 +1,11 @@
 #include "Muenzroehre.h"
 
-Muenzroehre::Muenzroehre(float wert, int kapazitaet)
-    : wert(wert), kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
+Muenzroehre::Muenzroehre(int kapazitaet)
+    : kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
 
 
 Muenzroehre::Muenzroehre(int kapazitaet)
-    : wert(0.0f), kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
+    : kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
 
 bool Muenzroehre::istVoll() const {
     return aktuelleAnzahl >= kapazitaet;
@@ -21,10 +21,6 @@ int Muenzroehre::getAktuelleAnzahl() const {
 
 int Muenzroehre::getKapazitaet() const {
     return kapazitaet;
-}
-
-float Muenzroehre::getWert() const {
-    return wert;
 }
 
 void Muenzroehre::erhoeheAnzahl() {

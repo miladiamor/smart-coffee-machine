@@ -7,6 +7,7 @@
 
 class Zahlungseinheit {
 private:
+    bool zahlungErfolgreich = 0;
     Muenzroehrenspeicher* roehren;
     MuenzEingabeSensor* eingabe;
     MuenzAuswerfer* auswerfer;
