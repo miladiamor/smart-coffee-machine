@@ -20,7 +20,7 @@ void Koordinator::setzeFuellstandsmessung(Fuellstandsmessung* f) {
 
 void Koordinator::zeigeBild(const QString& pfad) {
     if (display) {
-        display->displayScreen(QImage(pfad));
+        display->displayScreen(QImage(pfad)); // mock
     }
 }
 
@@ -29,18 +29,18 @@ void Koordinator::tick() {
         return;
     }
 
-    lastTouch = display->getLastTouch();
+    lastTouch = display->getLastTouch(); // mock
 
     switch (zustand) {
     case KoordinatorZustand::WARTEN:
         zeigeBild(":/images/selection.png");
 
         if (lastTouch != QPointF(0, 0)) {
-            int width = 400;   // adjust as needed
-            int height = 400;  // adjust as needed
+            int width = 400;
+            int height = 400;
 
             Ressourcen res;
-            kaffeeprogramm = new Kaffeeprogramm(res);
+            kaffeeprogramm = new Kaffeeprogramm(res); // mock
 
             if (lastTouch.x() < width / 2 && lastTouch.y() < height / 2) {
                 kaffeeprogramm->setKaffeemenge_g(15);
@@ -77,32 +77,28 @@ void Koordinator::tick() {
 
         if (lastTouch != QPointF(0, 0)) {
             int width = 400;
-            if (lastTouch.x() < width / 2) {
-                mitZucker = true;
-            } else {
-                mitZucker = false;
-            }
-            kaffeeprogramm->setMitZucker(mitZucker);
+            mitZucker = lastTouch.x() < width / 2;
+            kaffeeprogramm->setMitZucker(mitZucker); // mock
             zustand = KoordinatorZustand::BEZAHLEN;
         }
         break;
 
     case KoordinatorZustand::BEZAHLEN:
-        zeigeBild(":/images/brewing.png"); //new foto muss erstellt
+        zeigeBild(":/images/brewing.png");
 
-        if (zahlungseinheit->versucheZahlung(kaffeeprogramm->getProdukt())) {
+        if (zahlungseinheit->versucheZahlung(kaffeeprogramm->getProdukt())) { // mock
             zustand = KoordinatorZustand::AUSFUEHREN;
         }
         break;
 
     case KoordinatorZustand::AUSFUEHREN:
         zeigeBild(":/images/brewing.png");
-        programmsteuerung->ausfuehren(kaffeeprogramm);
+        programmsteuerung->ausfuehren(kaffeeprogramm); // mock
         zustand = KoordinatorZustand::WARTEN_AUF_FERTIG;
         break;
 
     case KoordinatorZustand::WARTEN_AUF_FERTIG:
-        if (programmsteuerung->istFertig()) {
+        if (programmsteuerung->istFertig()) { // mock
             zustand = KoordinatorZustand::FERTIG;
         }
         break;

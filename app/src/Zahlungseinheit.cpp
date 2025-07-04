@@ -1,6 +1,6 @@
 #include "zahlungseinheit.h"
 
-// ich habe das addiert um ein problem in meinen test yu loeschen
+// ich habe das addiert um ein problem in meinen test zu loeschen
 Zahlungseinheit::Zahlungseinheit() {
     roehren = nullptr;
     eingabe = nullptr;

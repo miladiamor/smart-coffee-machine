@@ -1,8 +1,5 @@
 #include "Muenzroehre.h"
 
-Muenzroehre::Muenzroehre(int kapazitaet)
-    : kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
-
 
 Muenzroehre::Muenzroehre(int kapazitaet)
     : kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
