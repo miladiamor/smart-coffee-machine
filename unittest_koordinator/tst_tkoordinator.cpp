@@ -116,7 +116,7 @@ void tkoordinator::testZuckerwahlZuBezahlen() {
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::BEZAHLEN);
 }
 
-void tkoordinator::testBezahlenZuAusfuehren() {
+/*void tkoordinator::testBezahlenZuAusfuehren() {
     while (sut->getCurrentState() != KoordinatorZustand::BEZAHLEN) {
         forcedTouch = QPointF(100, 100);
         sut->tick();
@@ -124,12 +124,30 @@ void tkoordinator::testBezahlenZuAusfuehren() {
 
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::BEZAHLEN);
     QVERIFY(!ausfuehrenCalled);
-
+    versucheZahlungReturn = true;
     int prevDisplayCalled = displayCalled;
     sut->tick();
 
     QVERIFY(ausfuehrenCalled);
     QVERIFY(displayCalled > prevDisplayCalled); // display updated on brewing screen
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN_AUF_FERTIG);
+}
+*/
+void tkoordinator::testBezahlenZuAusfuehren() {
+    while (sut->getCurrentState() != KoordinatorZustand::BEZAHLEN) {
+        forcedTouch = QPointF(100, 100);
+        sut->tick();
+    }
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::BEZAHLEN);
+    QVERIFY(!ausfuehrenCalled);
+    versucheZahlungReturn = true;
+    int prevDisplayCalled = displayCalled;
+    sut->tick();
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::AUSFUEHREN);
+    QVERIFY(displayCalled > prevDisplayCalled);
+    QVERIFY(!ausfuehrenCalled);
+    sut->tick();
+    QVERIFY(ausfuehrenCalled);
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN_AUF_FERTIG);
 }
 
