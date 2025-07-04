@@ -1,10 +1,13 @@
-QT += core gui testlib
+QT += testlib
+QT += gui
 
-CONFIG += console
+CONFIG += qt console warn_on depend_includepath testcase
 CONFIG -= app_bundle
 
 
-TEMPLATE = testlib
+CONFIG += c++17
+
+TEMPLATE = app
 
 INCLUDEPATH += $$PWD/../app/include
 

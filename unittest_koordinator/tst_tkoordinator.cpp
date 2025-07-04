@@ -16,7 +16,7 @@ bool ausfuehrenCalled = false;
 bool versucheZahlungReturn = true;
 
 // === MOCK Display ===
-Display::Display(QObject*) {}
+Display::Display(QObject *parent) : QObject{parent}{}
 Display::~Display() {}
 void Display::displayScreen(const QImage&) { displayCalled++; }
 QPointF Display::getLastTouch() { return forcedTouch; }
@@ -37,6 +37,7 @@ void Kaffeeprogramm::setWassermenge_ml(int) {}
 void Kaffeeprogramm::setWasserKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMilchKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMitZucker(bool) {}
+
 Produkt* Kaffeeprogramm::getProdukt() const { return nullptr; }
 
 // === MOCK Zahlungseinheit ===

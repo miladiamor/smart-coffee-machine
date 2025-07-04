@@ -50,7 +50,6 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/motorsteuerung.cpp \
-    src/muenze.cpp \
     src/simulation.cpp \
     src/ventil.cpp
 
@@ -73,7 +72,6 @@ HEADERS += \
     include/Muenzenschieber.h \
     include/muenzroehre.h \
     include/muenzroehrenspeicher.h \
-    include/muenzsensor.h \
     include/produkt.h \
     include/Programmsteuerung.h \
     include/Pumpe.h \
