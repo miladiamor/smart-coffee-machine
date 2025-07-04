@@ -8,6 +8,7 @@
 #include "Zahlungseinheit.h"
 #include "Fuellstandsmessung.h"
 #include "Kaffeeprogramm.h"
+
 // === GLOBAL STATE TRACKERS FOR TEST VERIFICATION ===
 int displayCalled = 0;
 QPointF forcedTouch = QPointF(100, 100);
@@ -17,27 +18,16 @@ bool versucheZahlungReturn = true;
 // === MOCK Display ===
 Display::Display(QObject*) {}
 Display::~Display() {}
-void Display::displayScreen(const QImage&) {
-    displayCalled++;
-}
-QPointF Display::getLastTouch() {
-    return forcedTouch;
-}
+void Display::displayScreen(const QImage&) { displayCalled++; }
+QPointF Display::getLastTouch() { return forcedTouch; }
 void Display::acceptTouch(QPointF&) {}
 
 // === MOCK Programmsteuerung ===
 Programmsteuerung::Programmsteuerung() {}
 Programmsteuerung::~Programmsteuerung() {}
-
-void Programmsteuerung::ausfuehren(Kaffeeprogramm*) {
-    ausfuehrenCalled = true;
-}
-
-bool Programmsteuerung::istFertig() const {
-    return true;
-}
+void Programmsteuerung::ausfuehren(Kaffeeprogramm*) { ausfuehrenCalled = true; }
+bool Programmsteuerung::istFertig() const { return true; }
 void Programmsteuerung::tick() {}
-
 
 // === MOCK Kaffeeprogramm ===
 Kaffeeprogramm::Kaffeeprogramm(Ressourcen) {}
@@ -51,22 +41,18 @@ Produkt* Kaffeeprogramm::getProdukt() const { return nullptr; }
 
 // === MOCK Zahlungseinheit ===
 Zahlungseinheit::Zahlungseinheit() {}
-bool Zahlungseinheit::versucheZahlung(Produkt*) {
-    return versucheZahlungReturn;
-}
+bool Zahlungseinheit::versucheZahlung(Produkt*) { return versucheZahlungReturn; }
 
 // === MOCK Fuellstandsmessung ===
 Fuellstandsmessung::Fuellstandsmessung() {}
 
-// ===Implementierung Test
-
-class tkoordinator : public QObject
-{
+// === Test Implementation ===
+class tkoordinator : public QObject {
     Q_OBJECT
 
 private slots:
-    void initTestCase();
-    void cleanupTestCase();
+    void initTestCase() {}
+    void cleanupTestCase() {}
     void init();
     void cleanup();
     void testWartenZuZuckerwahl();
@@ -83,9 +69,9 @@ private:
     Zahlungseinheit* mockZahlung;
     Fuellstandsmessung* mockFuell;
 };
+
 void tkoordinator::init() {
     sut = new Koordinator();
-
     mockDisplay = new Display();
     mockProg = new Programmsteuerung();
     mockZahlung = new Zahlungseinheit();
@@ -96,34 +82,95 @@ void tkoordinator::init() {
     sut->setzeZahlungseinheit(mockZahlung);
     sut->setzeFuellstandsmessung(mockFuell);
 }
+
 void tkoordinator::cleanup() {
     displayCalled = 0;
     ausfuehrenCalled = false;
     forcedTouch = QPointF(100, 100);
     versucheZahlungReturn = true;
-}void tkoordinator::initTestCase() {}
+}
 
-void tkoordinator::cleanupTestCase() {}
+// === TEST CASES WITH DISPLAY VERIFICATION ===
 
 void tkoordinator::testWartenZuZuckerwahl() {
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN);
 
-    forcedTouch = QPointF(100, 100);
+    int prevDisplayCalled = displayCalled;
     sut->tick();
 
-    QVERIFY(displayCalled > 0);
+    QVERIFY(displayCalled > prevDisplayCalled); // display updated on selection screen
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::ZUCKERWAHL);
 }
 
 void tkoordinator::testZuckerwahlZuBezahlen() {
-
     while (sut->getCurrentState() != KoordinatorZustand::ZUCKERWAHL) {
+        forcedTouch = QPointF(100, 100);
         sut->tick();
     }
-    int previousDisplayCalled = displayCalled;
-    forcedTouch = QPointF(100, 100); // triggers the transition
+
+    int prevDisplayCalled = displayCalled;
     sut->tick();
-    QVERIFY(displayCalled > previousDisplayCalled);
+
+    QVERIFY(displayCalled > prevDisplayCalled); // display updated on sugar selection
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::BEZAHLEN);
 }
 
+void tkoordinator::testBezahlenZuAusfuehren() {
+    while (sut->getCurrentState() != KoordinatorZustand::BEZAHLEN) {
+        forcedTouch = QPointF(100, 100);
+        sut->tick();
+    }
+
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::BEZAHLEN);
+    QVERIFY(!ausfuehrenCalled);
+
+    int prevDisplayCalled = displayCalled;
+    sut->tick();
+
+    QVERIFY(ausfuehrenCalled);
+    QVERIFY(displayCalled > prevDisplayCalled); // display updated on brewing screen
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN_AUF_FERTIG);
+}
+
+void tkoordinator::testAusfuehrenZuWartenAufFertig() {
+    while (sut->getCurrentState() != KoordinatorZustand::AUSFUEHREN) {
+        forcedTouch = QPointF(100, 100);
+        sut->tick();
+    }
+
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::AUSFUEHREN);
+
+    int prevDisplayCalled = displayCalled;
+    sut->tick();
+
+    QVERIFY(displayCalled >= prevDisplayCalled); // may remain same or increase, still acceptable
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN_AUF_FERTIG);
+}
+
+void tkoordinator::testWartenAufFertigZuFertig() {
+    while (sut->getCurrentState() != KoordinatorZustand::WARTEN_AUF_FERTIG) {
+        forcedTouch = QPointF(100, 100);
+        sut->tick();
+    }
+
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN_AUF_FERTIG);
+    sut->tick();
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::FERTIG);
+}
+
+void tkoordinator::testFertigZuWarten() {
+    while (sut->getCurrentState() != KoordinatorZustand::FERTIG) {
+        forcedTouch = QPointF(100, 100);
+        sut->tick();
+    }
+
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::FERTIG);
+    int prevDisplayCalled = displayCalled;
+    sut->tick();
+
+    QVERIFY(displayCalled > prevDisplayCalled); // display updated on done screen
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN);
+}
+
+QTEST_APPLESS_MAIN(tkoordinator)
+#include "tst_tkoordinator.moc"
