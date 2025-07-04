@@ -15,8 +15,8 @@ private:
     };
 
     ZahlungsState state = ZAHLUNG_IDLE;   // aktueller Zustand
-    bool zahlungAktiv = false;            // ob Zahlung läuft
-    float gesamterEinwurf = 0.0f;         // eingeworfener Betrag
+    bool zahlungAktiv = false;            // ob Zahlung laeuft
+    float gesamterEinwurf = 0.0f;         // bisher eingeworfener Betrag
 
     Muenzroehrenspeicher* roehren;
     MuenzEingabeSensor* eingabe;
@@ -24,12 +24,12 @@ private:
     Produkt* produkt;
 
 public:
-    Zahlungseinheit();
+    Zahlungseinheit();  // Standardkonstruktor fuer Unittests
     Zahlungseinheit(Muenzroehrenspeicher* roehren,
                     MuenzEingabeSensor* eingabe,
                     MuenzAuswerfer* auswerfer);
 
-    bool versucheZahlung(Produkt* produkt);
-    void zahlungAbbrechen();
-    void tick();  // zustandsbasierter Ablauf
+    bool versucheZahlung(Produkt* produkt);  // Startet Zahlung
+    void zahlungAbbrechen();                 // Bricht Zahlung ab
+    void tick();                             // Zustandsbasierte Ausfuehrung
 };

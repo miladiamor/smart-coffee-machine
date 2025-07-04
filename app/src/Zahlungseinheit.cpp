@@ -1,6 +1,6 @@
-#include "zahlungseinheit.h"
+#include "Zahlungseinheit.h"
 
-// leerer Konstruktor fuer Unit-Tests
+// Konstruktor ohne Parameter fuer Unittests
 Zahlungseinheit::Zahlungseinheit() {
     roehren = nullptr;
     eingabe = nullptr;
@@ -11,6 +11,7 @@ Zahlungseinheit::Zahlungseinheit() {
     zahlungAktiv = false;
 }
 
+// Konstruktor mit Abhaengigkeiten
 Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* roehren,
                                  MuenzEingabeSensor* eingabe,
                                  MuenzAuswerfer* auswerfer)
@@ -18,6 +19,7 @@ Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* roehren,
     produkt(nullptr), gesamterEinwurf(0.0f),
     state(ZAHLUNG_IDLE), zahlungAktiv(false) {}
 
+// Initialisiert die Zahlung fuer ein Produkt
 bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
     if (!produkt || produkt->getPreis() <= 0.0f || produkt->getAnzahl() <= 0) {
         return false;
@@ -31,23 +33,15 @@ bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
     return true;
 }
 
+// Fuehrt einen Tick aus: verarbeitet eine Muenze
 void Zahlungseinheit::tick() {
-    // pruefen ob eine zahlung aktiv ist
     if (!zahlungAktiv || !produkt || state != ZAHLUNG_LAEUFT)
         return;
 
-    // pruefen ob eine muenze eingeworfen wurde
     float muenzwert = eingabe->getEingeworfeneMuenze();
     if (muenzwert <= 0.0f)
         return;
 
-    // pruefen ob sie gueltig ist
-    if (eingabe->istUngueltigeMuenze()) {
-        auswerfer->auswerfenMuenze(muenzwert);
-        return;
-    }
-
-    // muenze in speicher einfuegen
     if (!roehren->fuegeMuenzeEin(muenzwert)) {
         auswerfer->auswerfenMuenze(muenzwert);
         return;
@@ -68,6 +62,7 @@ void Zahlungseinheit::tick() {
     }
 }
 
+// Bricht den Zahlungsvorgang ab und gibt Geld zurueck
 void Zahlungseinheit::zahlungAbbrechen() {
     if (zahlungAktiv) {
         auswerfer->auswerfen(gesamterEinwurf);

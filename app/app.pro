@@ -55,6 +55,7 @@ SOURCES += \
 
 # The header files (e.g. *.h)
 HEADERS += \
+    include/Zahlungseinheit.h \
     include/ausgabeeinheit.h \
     include/bruehgruppe.h \
     include/clock.h \
@@ -82,7 +83,6 @@ HEADERS += \
     include/Tankwaage.h \
     include/Temperatursensor.h \
     include/ventil.h \
-    include/zahlungseinheit.h \
     include/Zuckerdispenser.h \
     include/MuenzEingabeSensor.h
 
