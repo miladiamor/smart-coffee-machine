@@ -8,12 +8,6 @@ TARGET = tst_tzahlungseinheit
 SOURCES += \
     tst_tzahlungseinheit.cpp \
     Zahlungseinheit.cpp \
-    MuenzEingabeSensor.cpp \
-    Produkt.cpp \
-    Muenzroehrenspeicher.cpp \
-    Muenzenschieber.cpp \
-    Muenzroehre.cpp \
-    MuenzAuswerfer.cpp
 
 HEADERS += \
     Zahlungseinheit.h \

@@ -30,7 +30,6 @@ bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
         } else {
             gesamterEinwurf += muenzwert;
         }
-
         break;
     }
 
