@@ -15,8 +15,6 @@ class Kaffeeprogramm;
 class Clock;
 class Pumpe;
 
-
-
 class Programmsteuerung : public QObject {
     Q_OBJECT
 
