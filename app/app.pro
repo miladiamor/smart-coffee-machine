@@ -27,6 +27,7 @@ SOURCES += \
     src/Heizelemente.cpp \
     src/Heizregler.cpp \
     src/Koordinator.cpp \
+    src/MuenzEingabeSensor.cpp \
     src/MuenzAuswerfer.cpp \
     src/Muenzenschieber.cpp \
     src/Muenzroehre.cpp \

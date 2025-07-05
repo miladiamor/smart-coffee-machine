@@ -4,6 +4,10 @@
 Muenzroehre::Muenzroehre(float wert, int kapazitaet)
     : wert(wert), kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
 
+// Standardkonstruktor (z. B. für Mocks/Unittests)
+Muenzroehre::Muenzroehre()
+    : wert(1.0f), kapazitaet(10), aktuelleAnzahl(0) {}  // <- Dummywerte für Test
+
 // Gibt true zurueck, wenn Rohr voll ist
 bool Muenzroehre::istVoll() const {
     return aktuelleAnzahl >= kapazitaet;

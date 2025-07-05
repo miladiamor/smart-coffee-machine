@@ -12,6 +12,9 @@ public:
     // Konstruktor: Initialisiert Rohr mit Muenzwert und Kapazitaet
     Muenzroehre(float wert, int kapazitaet);
 
+    // Standardkonstruktor für Unittests
+    Muenzroehre();  // <-- hinzugefügt
+
     // Gibt zurueck, ob das Rohr voll ist
     bool istVoll() const;
 

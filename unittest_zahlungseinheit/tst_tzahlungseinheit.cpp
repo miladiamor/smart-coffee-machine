@@ -41,7 +41,7 @@ void MuenzAuswerfer::auswerfenMuenze(float wert) {
 // === MOCK MuenzEingabeSensor ===
 float gemockteMuenze = 0.0f;
 
-MuenzEingabeSensor::MuenzEingabeSensor() {}
+//MuenzEingabeSensor::MuenzEingabeSensor() {}
 
 float MuenzEingabeSensor::getEingeworfeneMuenze() {
     return gemockteMuenze;

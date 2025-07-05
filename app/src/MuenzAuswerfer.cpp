@@ -1,11 +1,14 @@
 #include "MuenzAuswerfer.h"
+#include <iostream>
+
+// Standardkonstruktor für Unit-Tests
+MuenzAuswerfer::MuenzAuswerfer() {}
 
 void MuenzAuswerfer::auswerfenMuenze(float wert) {
     std::cout << "Wirf eine " << wert << " Euro Muenze aus." << std::endl;
 }
 
 void MuenzAuswerfer::auswerfen(float betrag) {
-
     while (betrag >= 2.0f) {
         auswerfenMuenze(2.0f);
         betrag -= 2.0f;
@@ -26,6 +29,4 @@ void MuenzAuswerfer::auswerfen(float betrag) {
         auswerfenMuenze(0.1f);
         betrag -= 0.1f;
     }
-
 }
-
