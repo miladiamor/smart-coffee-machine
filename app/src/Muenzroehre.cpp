@@ -4,8 +4,8 @@ Muenzroehre::Muenzroehre(int kapazitaet)
     : kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
 
 
-Muenzroehre::Muenzroehre(int kapazitaet)
-    : kapazitaet(kapazitaet), aktuelleAnzahl(0) {}
+/*Muenzroehre::Muenzroehre(int kapazitaet)
+    : kapazitaet(kapazitaet), aktuelleAnzahl(0) {}*/
 
 bool Muenzroehre::istVoll() const {
     return aktuelleAnzahl >= kapazitaet;

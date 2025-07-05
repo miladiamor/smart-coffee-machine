@@ -24,8 +24,8 @@ public:
     enum class CoffeeState{
         IDLE,
         HEIZEN,
-        WARTENAUFBRUEHGRUPPE,
         KAFFEE_ZUFUHR,
+        WARTENAUFBRUEHGRUPPE,
         PUMPING_WATER,
         PUMPING_MILK,
         SCHAEUMEN,

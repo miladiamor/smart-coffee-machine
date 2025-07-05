@@ -50,7 +50,7 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/motorsteuerung.cpp \
-    src/muenze.cpp \
+    #src/muenze.cpp \
     src/simulation.cpp \
     src/ventil.cpp
 

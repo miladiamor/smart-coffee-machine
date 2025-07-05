@@ -216,18 +216,39 @@ void ti_programmsteuerung_bruehgruppe::testIdleZuHeizen() {
 
 void ti_programmsteuerung_bruehgruppe::testHeizenZuKaffe_Zufur() {
 
+    ps->ausfuehren(mKp);
+    ps->tick();
+    ps->tick();
+    QCOMPARE(ps->getCurrentState(), Programmsteuerung::CoffeeState::KAFFEE_ZUFUHR);
+    QCOMPARE(bg->getState(), KAFFEEZUFUHR);
 }
 
 void ti_programmsteuerung_bruehgruppe::testKaffee_ZufuhrZuWartenaufbruehgruppe() {
-
+    testHeizenZuKaffe_Zufur();
+    int ticks = mKp->getKaffeemenge_g() / 0.3 + 1;
+    for (int i = 0; i < ticks + 1; ++i){ps->tick();}
+    QCOMPARE(ps->getCurrentState(), Programmsteuerung::CoffeeState::WARTENAUFBRUEHGRUPPE);
+    QCOMPARE(bg->getState(), STAMPFEN);
 }
 
 void ti_programmsteuerung_bruehgruppe::testWartenaufbruehgruppeZuPumping_Water() {
+    ps->ausfuehren(mKp);
+    ps->tick();
+    ps->tick();
+    int ticks = mKp->getKaffeemenge_g() / 0.3 + 1;
+    for (int i = 0; i < ticks + 1; ++i){ps->tick();}
+    QCOMPARE(ps->getCurrentState(), Programmsteuerung::CoffeeState::WARTENAUFBRUEHGRUPPE);
 
+    // Bruehgruppe event trigger KOCHEN
+    bg->setState(KOCHEN);
+    ps->tick();
+    QCOMPARE(ps->getCurrentState(), Programmsteuerung::CoffeeState::PUMPING_WATER);
+    // überprüfen pumpe mock state
+    QVERIFY(wasserpumpeAktiv);
+    QCOMPARE(bg->getState(), KOCHEN);
 }
 
 void ti_programmsteuerung_bruehgruppe::testPumping_WaterZuPumping_Milk() {
-
 }
 
 void ti_programmsteuerung_bruehgruppe::testPumping_MilkZuZuckerAuswerfen() {
