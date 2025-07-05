@@ -72,24 +72,54 @@ void Koordinator::tick() {
         }
         break;
 
-    case KoordinatorZustand::ZUCKERWAHL:
+    case KoordinatorZustand::ZUCKERWAHL: {
         zeigeBild(":/images/sugar.png");
 
         if (lastTouch != QPointF(0, 0)) {
             int width = 400;
             mitZucker = lastTouch.x() < width / 2;
             kaffeeprogramm->setMitZucker(mitZucker); // mock
-            zustand = KoordinatorZustand::BEZAHLEN;
+
+            bool genugWasser = fuellstandsmessung->hatGenug(fuellstandsmessung->getWasserTank(), kaffeeprogramm->getWassermenge_ml(), 1.0f);
+            bool genugMilch = fuellstandsmessung->hatGenug(fuellstandsmessung->getMilchTank(), kaffeeprogramm->getMilchmenge_ml(), 1.0f);
+            bool genugKaffee = fuellstandsmessung->hatGenug(fuellstandsmessung->getKaffeeTank(), kaffeeprogramm->getKaffeemenge_g(), 1.0f);
+
+            if (genugWasser && genugMilch && genugKaffee) {
+                zustand = KoordinatorZustand::BEZAHLEN;
+            } else {
+                zeigeBild(":/images/not_enough.png");
+                delete kaffeeprogramm;
+                kaffeeprogramm = nullptr;
+                zustand = KoordinatorZustand::WARTEN;
+            }
         }
         break;
+    }
 
-    case KoordinatorZustand::BEZAHLEN:
+
+    case KoordinatorZustand::BEZAHLEN: {
         zeigeBild(":/images/brewing.png");
+
+        if (mitZucker) {
+            bool genugZucker = fuellstandsmessung->hatGenug(
+                fuellstandsmessung->getZuckerTank(),   5.0f
+                );
+
+            if (!genugZucker) {
+                zeigeBild(":/images/not_enough.png");
+                delete kaffeeprogramm;
+                kaffeeprogramm = nullptr;
+                zustand = KoordinatorZustand::WARTEN;
+                break;
+            }
+        }
 
         if (zahlungseinheit->versucheZahlung(kaffeeprogramm->getProdukt())) { // mock
             zustand = KoordinatorZustand::AUSFUEHREN;
         }
         break;
+    }
+    ;
 
     case KoordinatorZustand::AUSFUEHREN:
         zeigeBild(":/images/brewing.png");

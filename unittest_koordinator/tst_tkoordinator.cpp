@@ -14,6 +14,7 @@ int displayCalled = 0;
 QPointF forcedTouch = QPointF(100, 100);
 bool ausfuehrenCalled = false;
 bool versucheZahlungReturn = true;
+bool hatGenugReturn = true;
 
 // === MOCK Display ===
 Display::Display(QObject *parent) : QObject{parent}{}
@@ -37,8 +38,11 @@ void Kaffeeprogramm::setWassermenge_ml(int) {}
 void Kaffeeprogramm::setWasserKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMilchKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMitZucker(bool) {}
-
 Produkt* Kaffeeprogramm::getProdukt() const { return nullptr; }
+int Kaffeeprogramm::getKaffeemenge_g() const { return 10; }
+int Kaffeeprogramm::getMilchmenge_ml() const { return 20; }
+int Kaffeeprogramm::getWassermenge_ml() const { return 30; }
+
 
 // === MOCK Zahlungseinheit ===
 Zahlungseinheit::Zahlungseinheit() {}
@@ -46,6 +50,7 @@ bool Zahlungseinheit::versucheZahlung(Produkt*) { return versucheZahlungReturn; 
 
 // === MOCK Fuellstandsmessung ===
 Fuellstandsmessung::Fuellstandsmessung() {}
+bool Fuellstandsmessung::hatGenug(Tankwaage*, int, float) const { return hatGenugReturn; }
 
 // === Test Implementation ===
 class tkoordinator : public QObject {
@@ -89,12 +94,19 @@ void tkoordinator::cleanup() {
     ausfuehrenCalled = false;
     forcedTouch = QPointF(100, 100);
     versucheZahlungReturn = true;
+    hatGenugReturn = true;
+
 }
 
 // === TEST CASES WITH DISPLAY VERIFICATION ===
 
 void tkoordinator::testWartenZuZuckerwahl() {
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN);
+
+    // Simulate user interaction
+    forcedTouch = QPointF(100, 100);
+
+    hatGenugReturn = true; // simulate that enough resources are available
 
     int prevDisplayCalled = displayCalled;
     sut->tick();
@@ -103,36 +115,30 @@ void tkoordinator::testWartenZuZuckerwahl() {
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::ZUCKERWAHL);
 }
 
+
 void tkoordinator::testZuckerwahlZuBezahlen() {
+    // Ensure we are in ZUCKERWAHL state with touch simulation
     while (sut->getCurrentState() != KoordinatorZustand::ZUCKERWAHL) {
-        forcedTouch = QPointF(100, 100);
+        forcedTouch = QPointF(100, 100); // simulate user touch
         sut->tick();
     }
 
+    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::ZUCKERWAHL);
+
+    // Ensure resources are sufficient for transition to BEZAHLEN
+    hatGenugReturn = true;
+
     int prevDisplayCalled = displayCalled;
+
+    forcedTouch = QPointF(100, 100); // simulate user confirming sugar choice
     sut->tick();
 
     QVERIFY(displayCalled > prevDisplayCalled); // display updated on sugar selection
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::BEZAHLEN);
 }
 
-/*void tkoordinator::testBezahlenZuAusfuehren() {
-    while (sut->getCurrentState() != KoordinatorZustand::BEZAHLEN) {
-        forcedTouch = QPointF(100, 100);
-        sut->tick();
-    }
 
-    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::BEZAHLEN);
-    QVERIFY(!ausfuehrenCalled);
-    versucheZahlungReturn = true;
-    int prevDisplayCalled = displayCalled;
-    sut->tick();
 
-    QVERIFY(ausfuehrenCalled);
-    QVERIFY(displayCalled > prevDisplayCalled); // display updated on brewing screen
-    QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN_AUF_FERTIG);
-}
-*/
 void tkoordinator::testBezahlenZuAusfuehren() {
     while (sut->getCurrentState() != KoordinatorZustand::BEZAHLEN) {
         forcedTouch = QPointF(100, 100);

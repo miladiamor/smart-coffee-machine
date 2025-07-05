@@ -1,4 +1,5 @@
 #include "Kaffeeprogramm.h"
+#include "Ressourcen.h"
 class Bruehgruppe;
 
 /*

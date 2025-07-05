@@ -12,6 +12,7 @@
 // === GLOBAL STATE TRACKERS FOR TEST VERIFICATION ===
 bool ausfuehrenCalled = false;
 bool versucheZahlungReturn = true;
+bool hatGenugReturn = true;
 
 // === MOCK Programmsteuerung ===
 Programmsteuerung::Programmsteuerung() {}
@@ -28,8 +29,11 @@ void Kaffeeprogramm::setWassermenge_ml(int) {}
 void Kaffeeprogramm::setWasserKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMilchKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMitZucker(bool) {}
-
 Produkt* Kaffeeprogramm::getProdukt() const { return nullptr; }
+int Kaffeeprogramm::getKaffeemenge_g() const { return 10; }
+int Kaffeeprogramm::getMilchmenge_ml() const { return 20; }
+int Kaffeeprogramm::getWassermenge_ml() const { return 30; }
+
 
 // === MOCK Zahlungseinheit ===
 Zahlungseinheit::Zahlungseinheit() {}
@@ -37,7 +41,7 @@ bool Zahlungseinheit::versucheZahlung(Produkt*) { return versucheZahlungReturn; 
 
 // === MOCK Fuellstandsmessung ===
 Fuellstandsmessung::Fuellstandsmessung() {}
-
+bool Fuellstandsmessung::hatGenug(Tankwaage*, int, float) const { return hatGenugReturn; }
 // === Test Implementation ===
 class tkoordinator_display : public QObject {
     Q_OBJECT
@@ -78,13 +82,14 @@ void tkoordinator_display::init() {
 void tkoordinator_display::cleanup() {
     ausfuehrenCalled = false;
     versucheZahlungReturn = true;
+    hatGenugReturn = true;
 }
 
 // === TEST CASES WITH DISPLAY VERIFICATION ===
 
 void tkoordinator_display::testWartenZuZuckerwahl() {
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN);
-
+    hatGenugReturn = true;
     QSignalSpy spy(display, &Display::updateDisplay);
     QVERIFY(spy.isValid());
 
@@ -105,7 +110,7 @@ void tkoordinator_display::testZuckerwahlZuBezahlen() {
         display->acceptTouch(simulatedTouch);
         sut->tick();
     }
-
+    hatGenugReturn = true;
     QSignalSpy spy(display, &Display::updateDisplay);
     QVERIFY(spy.isValid());
 
