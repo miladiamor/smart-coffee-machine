@@ -75,6 +75,8 @@ HEADERS += \
     include/Muenzenschieber.h \
     include/muenzroehre.h \
     include/muenzroehrenspeicher.h \
+    include/MuenzEingabeSensor.h \
+    include/MuenzAuswerfer.h \
     include/produkt.h \
     include/Programmsteuerung.h \
     include/Pumpe.h \
@@ -85,8 +87,7 @@ HEADERS += \
     include/Tankwaage.h \
     include/Temperatursensor.h \
     include/ventil.h \
-    include/Zuckerdispenser.h \
-    include/MuenzEingabeSensor.h
+    include/Zuckerdispenser.h
 
 # The GUI definition files (so-called forms)
 FORMS += \

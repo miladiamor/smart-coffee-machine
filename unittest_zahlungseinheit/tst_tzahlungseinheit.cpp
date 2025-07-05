@@ -2,13 +2,13 @@
 #include <QObject>
 #include <QPointF>
 
-#include "zahlungseinheit.h"
-#include "produkt.h"
-#include "muenzroehre.h"
-#include "muenzenschieber.h"
-#include "muenzroehrenspeicher.h"
-#include "muenzeingabesensor.h"
-#include "muenzauswerfer.h"
+#include "Zahlungseinheit.h"
+#include "Produkt.h"
+#include "Muenzroehre.h"
+#include "Muenzenschieber.h"
+#include "Muenzroehrenspeicher.h"
+#include "MuenzEingabeSensor.h"
+#include "MuenzAuswerfer.h"
 
 
 // === GLOBALE FLAGS FÜR TEST-VERIFIKATION ===
@@ -119,10 +119,8 @@ void Muenzroehre::erhoeheAnzahl() {
 
 
 // === MOCK Muenzroehrenspeicher ===
-bool mockMuenzeAkzeptiert = true;
-float mockGesamtwert = 0.0f;
-bool mockRoehrenspeicherLeerCalled = false;
-float zuletztEingefuegteMuenze = 0.0f;
+
+
 
 Muenzroehrenspeicher::Muenzroehrenspeicher(
     Muenzroehre*, Muenzroehre*, Muenzroehre*,
@@ -133,7 +131,7 @@ Muenzroehrenspeicher::Muenzroehrenspeicher() {}
 
 bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
     zuletztEingefuegteMuenze = wert;
-    return mockMuenzeAkzeptiert;
+    return muenzeWurdeAkzeptiert;
 }
 
 float Muenzroehrenspeicher::gesamtWert() const {
@@ -204,4 +202,4 @@ void Zahlungseinheit::tick() {
     // Keine Logik im Mock – Steuerung erfolgt über globale Flags
 }
 
-
+#include "tst_tzahlungseinheit.moc"

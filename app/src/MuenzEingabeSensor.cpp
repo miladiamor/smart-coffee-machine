@@ -1,13 +1,13 @@
 #include "MuenzEingabeSensor.h"
 
-// Standardkonstruktor: Initialisiert mit 0.0 und ungueltig = false
+// Standardkonstruktor initialisiert mit 0.0 und ungueltig = false
 MuenzEingabeSensor::MuenzEingabeSensor()
     : eingeworfeneMuenze(0.0f), muenzeGueltig(false) {}
 
 void MuenzEingabeSensor::setEingeworfeneMuenze(float eingeworfeneMuenze) {
     this->eingeworfeneMuenze = eingeworfeneMuenze;
 
-    // Nur bestimmte Muenzen gelten als ungueltig → Negation
+    // Nur bestimmte Muenzen gelten als gueltig
     muenzeGueltig = !(eingeworfeneMuenze != 2.0f &&
                       eingeworfeneMuenze != 1.0f &&
                       eingeworfeneMuenze != 0.5f &&
@@ -21,4 +21,9 @@ float MuenzEingabeSensor::getEingeworfeneMuenze() {
 
 bool MuenzEingabeSensor::getMuenzeGueltig() {
     return muenzeGueltig;
+}
+
+// Diese wird speziell fuer Unittests verwendet um eine Muenze zu simulieren
+void MuenzEingabeSensor::simuliereMuenze(float wert) {
+    setEingeworfeneMuenze(wert);
 }
