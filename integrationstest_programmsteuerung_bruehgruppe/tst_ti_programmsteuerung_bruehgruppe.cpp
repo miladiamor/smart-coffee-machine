@@ -94,19 +94,25 @@ Heizregler* globalWasserHeizer = nullptr;
 Heizregler* globalMilchHeizer = nullptr;
 int zielTemperaturWasser = 0;
 int zielTemperaturMilch = 0;
-bool istReglerAktiv = false;
+bool wasserheizerAktiv = false;
+bool milchheizerAktiv = false;
 
 void Heizregler::temperaturRegeln(int zieltemperatur_Cel){
     if (this == globalWasserHeizer){
         zielTemperaturWasser = zieltemperatur_Cel;
+        wasserheizerAktiv = true;
     } else if (this == globalMilchHeizer){
         zielTemperaturMilch = zieltemperatur_Cel;
+        milchheizerAktiv = true;
     }
-    istReglerAktiv = true;
 }
 
 bool Heizregler::getEingeschaltet() {
-    return istReglerAktiv;
+    if (this == globalWasserHeizer){
+        return wasserheizerAktiv;
+    } else if (this == globalMilchHeizer){
+        return milchheizerAktiv;
+    }
 }
 
 bool Heizregler::istTemperaturErreicht() const {
@@ -154,9 +160,7 @@ private slots:
     void testHeizenZuKaffe_Zufur();
     void testKaffee_ZufuhrZuWartenaufbruehgruppe();
     void testWartenaufbruehgruppeZuPumping_Water();
-    void testPumping_WaterZuPumping_Milk();
     void testPumping_MilkZuZuckerAuswerfen();
-    void testZuckerAuswerfenZuZurueck_Setzen();
     void testZurueck_SetzenZuIdle();
 };
 
@@ -226,20 +230,41 @@ void ti_programmsteuerung_bruehgruppe::testWartenaufbruehgruppeZuPumping_Water()
 
 }
 
-void ti_programmsteuerung_bruehgruppe::testPumping_WaterZuPumping_Milk() {
-
-}
-
 void ti_programmsteuerung_bruehgruppe::testPumping_MilkZuZuckerAuswerfen() {
+    /*
+    milchpumpeAktiv = true;
+    SchaeumerAktiv = true;
+    wasserOffen = true;
+    tropfOffen = true;
+    klappeOffen = false;
+    hoehen.clear();
+    */
+    ps->setCurrentState(Programmsteuerung::CoffeeState::PUMPING_MILK);
 
-}
+    bg->setState(KOCHEN);
 
-void ti_programmsteuerung_bruehgruppe::testZuckerAuswerfenZuZurueck_Setzen() {
+    int anzahlTicks = mKp->getMilchmenge_ml() / 10;
+    for (int i=0; i<anzahlTicks; i++) {ps->tick();}
+
+    QCOMPARE(ps->getCurrentState(), Programmsteuerung::CoffeeState::ZUCKERAUSWERFEN);
+    //QVERIFY(!milchpumpeAktiv);
+    //QVERIFY(!SchaeumerAktiv);
+    //QVERIFY(ZuckerdispenserAktiv);
+
+    QCOMPARE(bg->getState(), ENTLEEREN);
+    //QVERIFY(klappeOffen);
+    //QVERIFY(!wasserOffen);
+    //QVERIFY(!tropfOffen);
+    //QCOMPARE(hoehen[0], 0);
 
 }
 
 void ti_programmsteuerung_bruehgruppe::testZurueck_SetzenZuIdle() {
-
+    ps->setCurrentState(Programmsteuerung::CoffeeState::ZURUECK_SETZEN);
+    bg->setState(WARTEN);
+    ps->tick();
+    QCOMPARE(ps->getCurrentState(), Programmsteuerung::CoffeeState::IDLE);
+    QVERIFY(!ps->isBusy());
 }
 
 QTEST_APPLESS_MAIN(ti_programmsteuerung_bruehgruppe)

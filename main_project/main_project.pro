@@ -11,7 +11,8 @@ SUBDIRS += \
     ../unittest_display \
     #../unittest_zahlungseinheit \
     ../unittest_koordinator \
-    ../unittest_fuellstandsmessung
+    ../unittest_fuellstandsmessung \
+    ../unittest_motorsteuerung
 
 
 
