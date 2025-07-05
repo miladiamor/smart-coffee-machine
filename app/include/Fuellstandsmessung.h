@@ -24,4 +24,9 @@ public:
     Ressourcen* getRessourcen() const;
 
     bool hatGenug(Tankwaage* tank, int mengeEinheit, float faktor = 1.0f) const;
+
+    Tankwaage* getWasserTank() const { return wasser; }
+    Tankwaage* getMilchTank() const { return milch; }
+    Tankwaage* getKaffeeTank() const { return kaffee; }
+    Tankwaage* getZuckerTank() const { return zucker; }
 };

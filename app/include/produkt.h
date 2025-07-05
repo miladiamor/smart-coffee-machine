@@ -10,6 +10,7 @@ private:
     int anzahl;
 
 public:
+    Produkt();  //Konstruktor für Unittests
     Produkt(std::string name, float preis, int anzahl);
 
     std::string getName() const;

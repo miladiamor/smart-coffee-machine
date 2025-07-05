@@ -5,15 +5,13 @@
 
 class MuenzAuswerfer {
 public:
-    // Wirft den angegebenen Geldbetrag aus ( als Rückgeld bei Abbruch oder Zahlung)
+    MuenzAuswerfer(); // Standardkonstruktor fÃ¼r Unit-Tests
+
+    // Wirft den angegebenen Geldbetrag aus (als RÃ¼ckgeld bei Abbruch oder Zahlung)
     void auswerfen(float betrag);
 
-    // Wirft eine einzelne Münze aus ( bei ungültiger Eingabe)
+    // Wirft eine einzelne MÃ¼nze aus (bei ungÃ¼ltiger Eingabe)
     void auswerfenMuenze(float wert);
 };
 
 #endif
-
-
-
-

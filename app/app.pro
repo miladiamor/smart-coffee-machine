@@ -27,6 +27,7 @@ SOURCES += \
     src/Heizelemente.cpp \
     src/Heizregler.cpp \
     src/Koordinator.cpp \
+    src/MuenzEingabeSensor.cpp \
     src/MuenzAuswerfer.cpp \
     src/Muenzenschieber.cpp \
     src/Muenzroehre.cpp \
@@ -56,6 +57,7 @@ SOURCES += \
 
 # The header files (e.g. *.h)
 HEADERS += \
+    include/Zahlungseinheit.h \
     include/ausgabeeinheit.h \
     include/bruehgruppe.h \
     include/clock.h \
@@ -73,7 +75,6 @@ HEADERS += \
     include/Muenzenschieber.h \
     include/muenzroehre.h \
     include/muenzroehrenspeicher.h \
-    include/muenzsensor.h \
     include/produkt.h \
     include/Programmsteuerung.h \
     include/Pumpe.h \
@@ -84,7 +85,6 @@ HEADERS += \
     include/Tankwaage.h \
     include/Temperatursensor.h \
     include/ventil.h \
-    include/zahlungseinheit.h \
     include/Zuckerdispenser.h \
     include/MuenzEingabeSensor.h
 

@@ -43,7 +43,7 @@ public:
 
     void tick();
 
-    KoordinatorZustand getZustand() const {
+    KoordinatorZustand getCurrentState() const {
         return zustand;
     }
 };
