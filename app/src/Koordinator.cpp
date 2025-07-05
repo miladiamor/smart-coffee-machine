@@ -99,6 +99,7 @@ void Koordinator::tick() {
 
     case KoordinatorZustand::WARTEN_AUF_FERTIG:
         if (programmsteuerung->istFertig()) { // mock
+             zeigeBild(":/images/done.png");
             zustand = KoordinatorZustand::FERTIG;
         }
         break;
