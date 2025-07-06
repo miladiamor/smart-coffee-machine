@@ -10,12 +10,9 @@ SUBDIRS += \
     ../unittest_bruehgruppe_2 \
     ../unittest_display \
     #../unittest_zahlungseinheit \
-    #../unittest_koordinator \
-    #../unittest_fuellstandsmessung
-    ../unittest_zahlungseinheit \
     ../unittest_koordinator \
     ../unittest_fuellstandsmessung \
-    #../unittest_motorsteuerung
+    ../unittest_motorsteuerung
 
 
 

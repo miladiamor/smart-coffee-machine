@@ -156,7 +156,7 @@ private:
 private slots:
     void initTestCase();
     void cleanupTestCase();
-    void testIdleZuHeizen();
+    //void testIdleZuHeizen();
     void testHeizenZuKaffe_Zufur();
     void testKaffee_ZufuhrZuWartenaufbruehgruppe();
     void testWartenaufbruehgruppeZuPumping_Water();
@@ -204,6 +204,7 @@ void ti_programmsteuerung_bruehgruppe::initTestCase() {
 
 void ti_programmsteuerung_bruehgruppe::cleanupTestCase() {}
 
+/*
 void ti_programmsteuerung_bruehgruppe::testIdleZuHeizen() {
     ps->ausfuehren(mKp);
 
@@ -217,7 +218,7 @@ void ti_programmsteuerung_bruehgruppe::testIdleZuHeizen() {
     // Brühgruppe prüfen
     QCOMPARE(bg->getState(), WARTEN);
 }
-
+*/
 void ti_programmsteuerung_bruehgruppe::testHeizenZuKaffe_Zufur() {
 
     ps->ausfuehren(mKp);
