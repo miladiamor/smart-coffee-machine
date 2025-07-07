@@ -17,18 +17,23 @@ HEADERS += \
     ../app/include/display.h \
     ../app/include/programmsteuerung.h \
     ../app/include/heizregler.h \
+    ../app/include/heizelemente.h \
+    ../app/include/pumpe.h \
+    ../app/include/zuckerdispenser.h \
     ../app/include/bruehgruppe.h \
+    ../app/include/klappe.h \
+    ../app/include/ventil.h \
     ../app/include/motorsteuerung.h \
     ../app/include/zahlungseinheit.h \
     ../app/include/fuellstandmessung.h \
-
+    ../app/include/kolbenmotor.h \
+    ../app/include/inkrementalencoder.h
 
 SOURCES +=  tst_tintegrationall.cpp \
-    ../app/src/kaffeeprogramm.h \
-    ../app/src/ressourcen.h \
+    ../app/src/kaffeeprogramm.cpp \
+    ../app/src/ressourcen.cpp \
     ../app/src/koordinator.cpp \
     ../app/src/display.cpp \
     ../app/src/programmsteuerung.cpp \
-    ../app/src/heizregler.cpp \
     ../app/src/bruehgruppe.cpp \
     ../app/src/motorsteuerung.cpp

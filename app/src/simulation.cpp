@@ -1,12 +1,7 @@
 #include "simulation.h"
 #include <cmath>
 
-Simulation::Simulation() :
-    motorPosition_mm(0),
-    kaffeerestbehaelter_fuellstand_g(0),
-    kaffeebehaelter_g(0),
-    bruehkammerInhalt_g(0),
-    kaffeehoehe_mm(0){}
+Simulation::Simulation() {}
 
 void Simulation::setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter) {
     this->kaffeerestbehaelter = kaffeerestbehaelter;
@@ -36,7 +31,7 @@ void Simulation::setSchaeumer(Schaeumer *schaeumer) {
 #define MOTORGESCHWINDIGKEIT_MM_PRO_TICK 0.1
 
 void Simulation::tick(){
-
+    /*
     // Kaffeezufuhr && Kaffeepulverbehältersimulation
     const float kaffee_g_pro_s = 5.7;
     const float hoeheKaffeepulver_mm_pro_g = 0.33;
@@ -46,7 +41,7 @@ void Simulation::tick(){
         kaffeehoehe_mm += kaffee_g_pro_frame * hoeheKaffeepulver_mm_pro_g;
         kaffeebehaelter_g -= kaffee_g_pro_frame;
     }
-
+    */
     /*
     // Motorsimulation & Kaffeerestbehälter
     const float kaffeerest_g_pro_mm = 0.315;

@@ -46,7 +46,7 @@ int Kaffeeprogramm::getWassermenge_ml() const { return 30; }
 
 // === MOCK Zahlungseinheit ===
 Zahlungseinheit::Zahlungseinheit() {}
-bool Zahlungseinheit::versucheZahlung(Produkt*) { return versucheZahlungReturn; }
+bool Zahlungseinheit::versucheZahlung(float preis) { return versucheZahlungReturn; }
 
 // === MOCK Fuellstandsmessung ===
 Fuellstandsmessung::Fuellstandsmessung() {}

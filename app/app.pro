@@ -39,7 +39,7 @@ SOURCES += \
     src/Schaeumer.cpp \
     src/Tankwaage.cpp \
     src/Temperatursensor.cpp \
-    #src/Zahlungseinheit.cpp \
+    src/Zahlungseinheit.cpp \
     src/Zuckerdispenser.cpp \
     src/bruehgruppe.cpp \
     src/clock.cpp \
