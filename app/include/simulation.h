@@ -39,7 +39,7 @@ public slots:
 private:
     //Aktoren Brühgruppe
     Kolbenmotor *kolbenmotor;
-    Ventil *tropfstopfVentil, *kaffeezufuhrVentil;
+    Ventil *tropfstopfVentil, *kaffeezufuhrVentil, *wasserzufuhrVentil;
     Klappe *entleerklappe;
 
     //Sensoren Brühgruppe
@@ -62,11 +62,14 @@ private:
         *zuckerbehaelter;
 
     // Temperaturen
-    float wassertemperatur_cel, milchtemperatur_cel;
+    float wasserrohrtemperatur_cel, milchrohrtemperatur_cel;
+    // Tasseinhalt
+    float kaffeeTassenInhalt;
+
     // Motor
     float motorPosition_mm;
     // Tankfüllstände
-    float kaffeerestbehaelter_fuellstand_g, kaffeebehaelter_g;
+    float kaffeerestbehaelter_fuellstand_g, kaffeebehaelter_g, wasserbehaelter_g;
     // Brühgruppefüllstand
-    float bruehkammerInhalt_g, kaffeehoehe_mm;
+    float bruehkammerKaffeinhalt_g;
 };

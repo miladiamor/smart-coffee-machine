@@ -11,6 +11,8 @@ CONFIG += c++17
 INCLUDEPATH += $$PWD/../app/include
 
 HEADERS += \
+    ../app/include/kaffeeprogramm.h \
+    ../app/include/ressourcen.h \
     ../app/include/koordinator.h \
     ../app/include/display.h \
     ../app/include/programmsteuerung.h \
@@ -22,6 +24,8 @@ HEADERS += \
 
 
 SOURCES +=  tst_tintegrationall.cpp \
+    ../app/src/kaffeeprogramm.h \
+    ../app/src/ressourcen.h \
     ../app/src/koordinator.cpp \
     ../app/src/display.cpp \
     ../app/src/programmsteuerung.cpp \
