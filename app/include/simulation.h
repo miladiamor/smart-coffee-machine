@@ -65,11 +65,13 @@ private:
     float wasserrohrtemperatur_cel, milchrohrtemperatur_cel;
     // Tasseinhalt
     float kaffeeTassenInhalt;
+    float kaffeeInTasse;
 
     // Motor
     float motorPosition_mm;
     // Tankfüllstände
     float kaffeerestbehaelter_fuellstand_g, kaffeebehaelter_g, wasserbehaelter_g;
     // Brühgruppefüllstand
-    float bruehkammerKaffeinhalt_g;
+    float bruehkammerKaffeeinhalt_g;
+    float kaffeehoehe_mm;
 };

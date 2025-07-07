@@ -113,6 +113,7 @@ bool Heizregler::getEingeschaltet() {
     } else if (this == globalMilchHeizer){
         return milchheizerAktiv;
     }
+    return false;
 }
 
 bool Heizregler::istTemperaturErreicht() const {
