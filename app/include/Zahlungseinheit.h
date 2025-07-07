@@ -17,7 +17,7 @@ private:
     ZahlungsState state = ZAHLUNG_IDLE;   // aktueller Zustand
     bool zahlungAktiv = false;            // ob Zahlung laeuft
     float gesamterEinwurf = 0.0f;         // bisher eingeworfener Betrag
-
+    float preis;
     Muenzroehrenspeicher* roehren;
     MuenzEingabeSensor* eingabe;
     MuenzAuswerfer* auswerfer;

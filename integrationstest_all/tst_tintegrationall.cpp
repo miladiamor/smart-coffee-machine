@@ -48,6 +48,17 @@ bool klappeOffen = {};
 void Klappe::oeffnen() {klappeOffen = true;}
 void Klappe::schliessen() {klappeOffen = false;}
 
+// Mockups für die Motorsteuerung (Motor und InkE)
+Kolbenmotor::motorStatus globalMotorStatus = Kolbenmotor::motorStatus::Aus;
+Kolbenmotor::Kolbenmotor(QObject *parent) : QObject{parent} {}
+void Kolbenmotor::runterfahren() {globalMotorStatus = Kolbenmotor::motorStatus::runterfahren;}
+void Kolbenmotor::hochfahren() {globalMotorStatus = Kolbenmotor::motorStatus::hochfahren;}
+void Kolbenmotor::stoppen() {globalMotorStatus = Kolbenmotor::motorStatus::Aus;}
+
+float globalStampferPos = 25.0;
+Inkrementalencoder::Inkrementalencoder() {}
+float Inkrementalencoder::getPosition_mm() {return globalStampferPos;}
+
 // Mockup für die Pumpe
 bool wasserpumpeAktiv = false;
 bool milchpumpeAktiv = false;
@@ -149,9 +160,12 @@ private:
     Pumpe *mWasserpumpe, *mMilchpumpe;
     Heizregler *mHeizregler;
     Schaeumer *mSchaeumer;
+    Zuckerdispenser *mZuckerdispenser;
 
-    Kolbenmotor *stampfer;
-    Inkrementalencoder *inkrementalencoder;
+    Kolbenmotor *mStampfer;
+    Inkrementalencoder *mInkrementalencoder;
+    Klappe *mEntleer;
+
 private slots:
     void initTestCase();
     void cleanupTestCase();
@@ -163,21 +177,74 @@ tintegrationall::tintegrationall() {}
 tintegrationall::~tintegrationall() {}
 
 void tintegrationall::initTestCase() {
+    //zu testende Module initialisieren
     display = new Display();
     koordinator = new Koordinator();
     programmsteuerung = new Programmsteuerung();
     bruehgruppe = new Bruehgruppe();
     motorsteuerung = new Motorsteuerung();
 
-    Fuellstandsmessung mFuellstandmessung;
+    // Komponenten für Koordinator setzen
+    mFuellstandmessung = new Fuellstandsmessung();
+    mZahlungseinheit = new Zahlungseinheit();
+    koordinator->setzeFuellstandsmessung(mFuellstandmessung);
+    koordinator->setzeZahlungseinheit(mZahlungseinheit);
+    koordinator->setzeDisplay(display);
+    koordinator->setzeProgrammsteuerung(programmsteuerung);
+
+    // Komponenten für Programmsteuerung setzen
+    globalWasserpumpe = new Pumpe();
+    globalMilchpumpe = new Pumpe();
+    globalWasserHeizer = new Heizregler();
+    globalMilchHeizer = new Heizregler();
+    mZuckerdispenser = new Zuckerdispenser();
+
+    programmsteuerung->setWasserpumpe(globalWasserpumpe);
+    programmsteuerung->setMilchpumpe(globalMilchpumpe);
+    programmsteuerung->setWasserHeizer(globalWasserHeizer);
+    programmsteuerung->setMilchHeizer(globalMilchHeizer);
+    programmsteuerung->setBruehgruppe(bruehgruppe);
+    programmsteuerung->setZuckerdispenser(mZuckerdispenser);
+
+    // Komponenten für Brühgrupe und Motorsteuerung setzen
+    globalKaffeezufuhr = new Ventil();
+    globalWasserzufuhr = new Ventil();
+    globalTropfstopf = new Ventil();
+    mEntleer = new Klappe();
+    mInkrementalencoder = new Inkrementalencoder();
+    mStampfer = new Kolbenmotor();
+    motorsteuerung = new Motorsteuerung();
+
+    motorsteuerung->setStampfer(mStampfer);
+    motorsteuerung->setInkrementalencoder(mInkrementalencoder);
+
+    bruehgruppe->setMotorsteuerung(motorsteuerung);
+    bruehgruppe->setWasserzufuhr(globalWasserzufuhr);
+    bruehgruppe->setKaffeezufuhr(globalKaffeezufuhr);
+    bruehgruppe->setTropfstopfventil(globalTropfstopf);
+    bruehgruppe->setEntleerklappe(mEntleer);
 }
 
-void tintegrationall::cleanupTestCase() {}
+void tintegrationall::cleanupTestCase() {
+
+}
 
 void tintegrationall::test_milchkaffee() {
     QPointF pt;
     pt.setX(100);
     pt.setY(100);
+
+    display->acceptTouch(pt);
+
+    for(int i=0; i<=100; i++) {
+        if (globalMotorStatus == Kolbenmotor::motorStatus::runterfahren) {
+            globalStampferPos -= 0.1;
+        } else if (globalMotorStatus == Kolbenmotor::motorStatus::hochfahren) {
+            globalStampferPos += 0.1;
+        }
+        koordinator->tick();
+        programmsteuerung->tick();
+    }
 
 }
 

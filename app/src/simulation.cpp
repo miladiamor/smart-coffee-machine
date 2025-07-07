@@ -8,6 +8,9 @@ Simulation::Simulation() :
     bruehkammerKaffeeinhalt_g(0),
     kaffeehoehe_mm(0){}
 
+//Simulation::Simulation() {}
+
+
 void Simulation::setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter) {
     this->kaffeerestbehaelter = kaffeerestbehaelter;
 }
@@ -48,7 +51,7 @@ void Simulation::setSchaeumer(Schaeumer *schaeumer) {
 #define MOTORGESCHWINDIGKEIT_MM_PRO_TICK 0.1
 
 void Simulation::tick(){
-
+    /*
     // Kaffeezufuhr && Kaffeepulverbehältersimulation
     const float kaffee_g_pro_s = 5.7;
     const float hoeheKaffeepulver_mm_pro_g = 0.33;
@@ -121,7 +124,6 @@ void Simulation::tick(){
     temperatursensor.setTemperatur_Cel(wasserrohrtemperatur_cel);
     temperatursensor.setTemperatur_Cel(milchrohrtemperatur_cel);
 }
-
 
     /*
     // Motorsimulation & Kaffeerestbehälter
