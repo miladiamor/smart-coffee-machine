@@ -60,7 +60,7 @@ void Simulation::tick(){
         bruehkammerKaffeeinhalt_g += kaffee_g_pro_frame;
         kaffeehoehe_mm += kaffee_g_pro_frame * hoeheKaffeepulver_mm_pro_g;
         kaffeebehaelter_g -= kaffee_g_pro_frame;
-    }
+    }*/
 
     /*if (heizregler && heizregler->getEingeschaltet()) {
         wassertemperatur_cel += HEIZRATE_WASSER_CEL_PRO_S;
