@@ -16,10 +16,6 @@ void Simulation::setKolbenmotor(Kolbenmotor *kolbenmotor){
     this->kolbenmotor = kolbenmotor;
 }
 
-void Simulation::setBruehgruppe(Bruehgruppe *bruehgruppe){
-    this->bruehgruppe = bruehgruppe;
-}
-
 void Simulation::setInkrementalencoder(Inkrementalencoder *inkrementalencoder){
     this->inkrementalencoder = inkrementalencoder;
 }
@@ -37,15 +33,15 @@ void Simulation::setSchaeumer(Schaeumer *schaeumer) {
 }
 
 // Motorgeschwindigkeit definieren
-#define MOTORGESCHWINDIGKEIT_MM_PRO_S 20
+#define MOTORGESCHWINDIGKEIT_MM_PRO_TICK 0.1
 
-void Simulation::update(){
+void Simulation::tick(){
 
     // Kaffeezufuhr && Kaffeepulverbehältersimulation
     const float kaffee_g_pro_s = 5.7;
     const float hoeheKaffeepulver_mm_pro_g = 0.33;
     const float kaffee_g_pro_frame = kaffee_g_pro_s * 0.001;
-    if (inkrementalencoder->getPosition_mm() == MAX_MOTOR_HEIGHT_MM && bruehgruppe->getState() == KAFFEEZUFUHR) {
+    if (inkrementalencoder->getPosition_mm() == MAX_MOTOR_HEIGHT_MM) {
         bruehkammerInhalt_g += kaffee_g_pro_frame;
         kaffeehoehe_mm += kaffee_g_pro_frame * hoeheKaffeepulver_mm_pro_g;
         kaffeebehaelter_g -= kaffee_g_pro_frame;

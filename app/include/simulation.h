@@ -34,27 +34,32 @@ public:
 
 
 public slots:
-    void update();
+    void tick();
 
 private:
-    //Aktoren
+    //Aktoren Brühgruppe
     Kolbenmotor *kolbenmotor;
-    Bruehgruppe *bruehgruppe;
-    Heizelemente *heizelemente;
-    Heizregler *heizregler;
+    Ventil *tropfstopfVentil, *kaffeezufuhrVentil;
+    Klappe *entleerklappe;
+
+    //Sensoren Brühgruppe
+    Inkrementalencoder *inkrementalencoder;
+
+    // Aktoren Programmsteuerung
     Zuckerdispenser *zuckerdispenser;
     Schaeumer *schaeumer;
     Pumpe *wasserpumpe;
     Pumpe *milchpumpe;
 
-
-
-    //Sensoren
-    Inkrementalencoder *inkrementalencoder;
-    Tankwaage *kaffeerestbehaelter;
+    // Sensoren Programmsteuerung
+    Heizelemente *heizelemente;
     Temperatursensor temperatursensor;
 
-
+    //Sensoren Füllstandmessung
+    Tankwaage *kaffeerestbehaelter,
+        *wasserbehaelter, *kaffeebehaelter,
+        *milchbehaelter,
+        *zuckerbehaelter;
 
     // Temperaturen
     float wassertemperatur_cel, milchtemperatur_cel;

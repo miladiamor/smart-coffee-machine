@@ -114,7 +114,7 @@ void Koordinator::tick() {
             }
         }
 
-        if (zahlungseinheit->versucheZahlung(kaffeeprogramm->getProdukt())) { // mock
+        if (zahlungseinheit->versucheZahlung(5.0)) { // mock
             zustand = KoordinatorZustand::AUSFUEHREN;
         }
         break;

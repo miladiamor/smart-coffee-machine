@@ -21,7 +21,6 @@ private:
     Muenzroehrenspeicher* roehren;
     MuenzEingabeSensor* eingabe;
     MuenzAuswerfer* auswerfer;
-    Produkt* produkt;
 
 public:
     Zahlungseinheit();  // Standardkonstruktor fuer Unittests
@@ -29,7 +28,7 @@ public:
                     MuenzEingabeSensor* eingabe,
                     MuenzAuswerfer* auswerfer);
 
-    bool versucheZahlung(Produkt* produkt);  // Startet Zahlung
+    bool versucheZahlung(float preis);  // Startet Zahlung
     void zahlungAbbrechen();                 // Bricht Zahlung ab
     void tick();                             // Zustandsbasierte Ausfuehrung
 };
