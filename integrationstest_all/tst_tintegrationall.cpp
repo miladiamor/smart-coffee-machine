@@ -166,6 +166,8 @@ private:
     Inkrementalencoder *mInkrementalencoder;
     Klappe *mEntleer;
 
+    void tickAll();
+
 private slots:
     void initTestCase();
     void cleanupTestCase();
@@ -229,6 +231,12 @@ void tintegrationall::cleanupTestCase() {
 
 }
 
+void tintegrationall::tickAll() {
+    koordinator->tick();
+    programmsteuerung->tick();
+    motorsteuerung->tick();
+}
+
 void tintegrationall::test_milchkaffee() {
     QPointF pt;
     pt.setX(100);
@@ -236,16 +244,29 @@ void tintegrationall::test_milchkaffee() {
 
     display->acceptTouch(pt);
 
+    tickAll();
+    QCOMPARE(KoordinatorZustand::ZUCKERWAHL, koordinator->getCurrentState());
+
+    pt = QPointF(50.0, 50.0);
+    display->acceptTouch(pt);
+    tickAll();
+    QCOMPARE(KoordinatorZustand::BEZAHLEN, koordinator->getCurrentState());
+    tickAll();
+    QCOMPARE(KoordinatorZustand::AUSFUEHREN, koordinator->getCurrentState());
+    tickAll();
+    QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::HEIZEN);
+    QCOMPARE(KoordinatorZustand::WARTEN_AUF_FERTIG, koordinator->getCurrentState());
+
+    /*
     for(int i=0; i<=100; i++) {
         if (globalMotorStatus == Kolbenmotor::motorStatus::runterfahren) {
             globalStampferPos -= 0.1;
         } else if (globalMotorStatus == Kolbenmotor::motorStatus::hochfahren) {
             globalStampferPos += 0.1;
         }
-        koordinator->tick();
-        programmsteuerung->tick();
+        tickAll();
     }
-
+    */
 }
 
 QTEST_APPLESS_MAIN(tintegrationall)

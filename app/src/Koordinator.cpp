@@ -85,6 +85,7 @@ void Koordinator::tick() {
             bool genugKaffee = fuellstandsmessung->hatGenug(fuellstandsmessung->getKaffeeTank(), kaffeeprogramm->getKaffeemenge_g(), 1.0f);
 
             if (genugWasser && genugMilch && genugKaffee) {
+                //zahlungseinheit->versucheZahlung(5)
                 zustand = KoordinatorZustand::BEZAHLEN;
             } else {
                 zeigeBild(":/images/not_enough.png");
@@ -119,7 +120,7 @@ void Koordinator::tick() {
         }
         break;
     }
-    ;
+
 
     case KoordinatorZustand::AUSFUEHREN:
         zeigeBild(":/images/brewing.png");

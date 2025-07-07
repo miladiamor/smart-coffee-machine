@@ -131,6 +131,7 @@ void tkoordinator::testZuckerwahlZuBezahlen() {
     int prevDisplayCalled = displayCalled;
 
     forcedTouch = QPointF(100, 100); // simulate user confirming sugar choice
+
     sut->tick();
 
     QVERIFY(displayCalled > prevDisplayCalled); // display updated on sugar selection

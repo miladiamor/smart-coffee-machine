@@ -13,6 +13,7 @@ QPointF Display::getLastTouch() {
     return this->lastTouch;
 }
 void Display::displayScreen(const QImage &img) {
+    lastTouch = QPointF(0.0, 0.0);
     emit updateDisplay(img);
 }
 
