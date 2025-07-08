@@ -66,6 +66,45 @@ int main(int argc, char *argv[])
     Zahlungseinheit zahlungseinheit;
     Zuckerdispenser zuckerdispenser;
 
+    // Komponenten
+    programmsteuerung.setMilchschaeumer(&schaeumer);
+    programmsteuerung.setBruehgruppe(&bruehgruppe);
+    programmsteuerung.setWasserpumpe(&pumpe);
+    programmsteuerung.setMilchpumpe(&pumpe);
+    programmsteuerung.setWasserHeizer(&heizregler);
+    programmsteuerung.setMilchHeizer(&heizregler);
+    programmsteuerung.setZuckerdispenser(&zuckerdispenser);
+
+    motorsteuerung.setStampfer(&kolbenmotor);
+    motorsteuerung.setInkrementalencoder(&inkrementalencoder);
+    motorsteuerung.setBruehgruppe(&bruehgruppe);
+
+    bruehgruppe.setKaffeeprogramm(&kaffeeprogramm);
+    bruehgruppe.setMotorsteuerung(&motorsteuerung);
+    bruehgruppe.setWasserzufuhr(&ventil);
+    bruehgruppe.setKaffeezufuhr(&ventil);
+    bruehgruppe.setTropfstopfventil(&ventil);
+    bruehgruppe.setEntleerklappe(&klappe);
+
+    koordinator.setzeDisplay(&display);
+    koordinator.setzeProgrammsteuerung(&programmsteuerung);
+    koordinator.setzeZahlungseinheit(&zahlungseinheit);
+    koordinator.setzeFuellstandsmessung(&fuellstandsmessung);
+
+    inkrementalencoder.setStampfer(&kolbenmotor);
+
+    kaffeeprogramm.setBenoetigteRessourcen(ressourcen);
+
+    simulation.setKaffeerestbehaelter(&tankwaage);
+    simulation.setKolbenmotor(&kolbenmotor);
+    simulation.setBruehgruppe(&bruehgruppe);
+    simulation.setInkrementalencoder(&inkrementalencoder);
+    simulation.setWasserPumpe(&pumpe);
+    simulation.setMilchPumpe(&pumpe);
+    simulation.setSchaeumer(&schaeumer);
+
+    zahlungseinheit.setDisplay(&display);
+
     QObject::connect(&mw, &MainWindow::sentTouch,
                      &display, &Display::acceptTouch,
                     Qt::DirectConnection);

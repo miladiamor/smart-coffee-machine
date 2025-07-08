@@ -117,6 +117,14 @@ void Simulation::tick(){
         kaffeeTassenInhalt_g += milchMenge;
         milchbehaelter->setGewicht(milchbehaelter_g);
     }
+
+    //Zucker
+    if (zuckerdispenser->istAktiv()) {
+        float zuckermenge = 0.5f;
+        kaffeeTassenInhalt_g += zuckermenge;
+        zuckerbehaelter_g -= zuckermenge;
+        if (zuckerbehaelter) zuckerbehaelter->setGewicht(zuckerbehaelter_g);
+    }
 }
 
 
