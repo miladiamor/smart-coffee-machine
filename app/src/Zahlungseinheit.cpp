@@ -8,15 +8,23 @@ Zahlungseinheit::Zahlungseinheit() {
     auswerfer = nullptr;
     gesamterEinwurf = 0.0f;
     zahlungAktiv = false;
+    zahlungErfolgreich = false;
+
 }
 
 // Konstruktor mit Abhaengigkeiten
 Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* speicherVerwaltung,
                                  MuenzEingabeSensor* sensor,
                                  MuenzAuswerfer* auswerfer)
-    : zahlungAktiv(false), gesamterEinwurf(0.0f),
+    : zahlungAktiv(false),
+    zahlungErfolgreich(false),
+    gesamterEinwurf(0.0f),
+    preis(0.0f),
     speicherVerwaltung(speicherVerwaltung),
-    sensor(sensor), auswerfer(auswerfer) {}
+    sensor(sensor),
+    auswerfer(auswerfer),
+    display(nullptr)
+{}
 
 bool Zahlungseinheit::getZahlungErfolgreich()
 {
@@ -31,6 +39,10 @@ void Zahlungseinheit::versucheZahlung(float preis) {
         zahlungAktiv = true;
     }
 }
+void Zahlungseinheit::setTestZahlungAktiv(bool aktiv) {
+    zahlungAktiv = aktiv;
+}
+
 
 // Fuehrt einen Tick aus: verarbeitet eine Muenze
 void Zahlungseinheit::tick() {

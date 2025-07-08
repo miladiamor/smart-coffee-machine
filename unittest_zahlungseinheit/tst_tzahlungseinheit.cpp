@@ -1,205 +1,159 @@
 #include <QtTest>
 #include <QObject>
-#include <QPointF>
 
 #include "Zahlungseinheit.h"
-#include "Produkt.h"
-#include "Muenzroehre.h"
-#include "Muenzenschieber.h"
-#include "Muenzroehrenspeicher.h"
 #include "MuenzEingabeSensor.h"
+#include "Muenzroehrenspeicher.h"
 #include "MuenzAuswerfer.h"
-
-
+#include "display.h"
 // === GLOBALE FLAGS FÜR TEST-VERIFIKATION ===
-float lastEingeworfeneMuenze = 0.0f;
-bool wurdeMuenzeAusgeworfen = false;
-bool wurdeBetragAusgeworfen = false;
-float zuletztAusgeworfenerBetrag = 0.0f;
-float zuletztAusgeworfeneMuenze = 0.0f;
+int displayCalled = 0;
+QString lastDisplayedText;
 
-float zuletztEingefuegteMuenze = 0.0f;
-bool muenzeWurdeAkzeptiert = true;
+bool muenzeGueltigReturn = true;
+float eingeworfeneMuenzeReturn = 1.0f;
 
-int produktDekrementiert = 0;
-float letzterPreis = 0.0f;
+bool fuegeMuenzeEinReturn = true;
+bool geldAuswerfenCalled = false;
+float geldAuswerfenAmount = 0.0f;
 
-// === MOCK MuenzAuswerfer ===
-void MuenzAuswerfer::auswerfen(float betrag) {
-    wurdeBetragAusgeworfen = true;
-    zuletztAusgeworfenerBetrag = betrag;
+// === MOCK Display ===
+Display::Display(QObject *parent) : QObject{parent} {}
+
+Display::~Display() {}
+
+void Display::displayText(QString text) {
+    displayCalled++;             // Track number of calls
+    lastDisplayedText = text;    // Capture displayed text for validation
 }
-
-void MuenzAuswerfer::auswerfenMuenze(float wert) {
-    wurdeMuenzeAusgeworfen = true;
-    zuletztAusgeworfeneMuenze = wert;
+void Display::acceptTouch(QPointF &) {
 }
-
-
-
 
 // === MOCK MuenzEingabeSensor ===
-float gemockteMuenze = 0.0f;
-
-//MuenzEingabeSensor::MuenzEingabeSensor() {}
-
-float MuenzEingabeSensor::getEingeworfeneMuenze() {
-    return gemockteMuenze;
-}
-
+MuenzEingabeSensor::MuenzEingabeSensor() {}
 bool MuenzEingabeSensor::getMuenzeGueltig() {
-    // Im echten Code würde hier geprüft, ob der Wert zu den erlaubten gehört.
-    // Im Test: Immer gültig oder nach Bedarf anpassbar.
-    return true;
+    return muenzeGueltigReturn;
 }
-
-// Hilfsfunktion zur Steuerung des Mockverhaltens im Test
-void MuenzEingabeSensor::simuliereMuenze(float wert) {
-    gemockteMuenze = wert;
+float MuenzEingabeSensor::getEingeworfeneMuenze() {
+    return eingeworfeneMuenzeReturn;
 }
-
-
-
-
-// === MOCK Muenzenschieber ===
-Muenzroehre* zuletztGeschobenesRohr = nullptr;
-
-Muenzenschieber::Muenzenschieber() {}
-
-void Muenzenschieber::schiebeMuenzeInRoehre(Muenzroehre* muenzroehre) {
-    // Wir merken uns nur, welche Röhre zuletzt benutzt wurde
-    zuletztGeschobenesRohr = muenzroehre;
+void MuenzEingabeSensor::setEingeworfeneMuenze(float) {
 }
-
-
-
-
-
-// === MOCK Muenzroehre ===
-float mockRohrWert = 0.0f;
-int mockKapazitaet = 10;
-int mockAnzahl = 0;
-int mockErhoeheAnzahlCount = 0;
-
-Muenzroehre::Muenzroehre(float wert, int kapazitaet) {
-    mockRohrWert = wert;
-    mockKapazitaet = kapazitaet;
-    mockAnzahl = 0;
-    mockErhoeheAnzahlCount = 0;
-}
-
-bool Muenzroehre::istVoll() const {
-    return mockAnzahl >= mockKapazitaet;
-}
-
-void Muenzroehre::leeren() {
-    mockAnzahl = 0;
-}
-
-int Muenzroehre::getAktuelleAnzahl() const {
-    return mockAnzahl;
-}
-
-int Muenzroehre::getKapazitaet() const {
-    return mockKapazitaet;
-}
-
-float Muenzroehre::getWert() const {
-    return mockRohrWert;
-}
-
-void Muenzroehre::erhoeheAnzahl() {
-    mockAnzahl++;
-    mockErhoeheAnzahlCount++;
-}
-
-
-
-
 
 
 // === MOCK Muenzroehrenspeicher ===
-
-
-
-Muenzroehrenspeicher::Muenzroehrenspeicher(
-    Muenzroehre*, Muenzroehre*, Muenzroehre*,
-    Muenzroehre*, Muenzroehre*,
-    Muenzenschieber*, MuenzAuswerfer*) {}
-
 Muenzroehrenspeicher::Muenzroehrenspeicher() {}
 
-bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
-    zuletztEingefuegteMuenze = wert;
-    return muenzeWurdeAkzeptiert;
+bool Muenzroehrenspeicher::fuegeMuenzeEin(float) {
+    return fuegeMuenzeEinReturn; // controlled dynamically in tests
+}
+void Muenzroehrenspeicher::geldAuswerfen(float betrag) {
+    geldAuswerfenCalled = true;     // track that change was returned
+    geldAuswerfenAmount = betrag;   // capture returned amount for verification
+}
+void Muenzroehrenspeicher::muenzeAuswerfen(float) {}
+void Muenzroehrenspeicher::tick() {}
+
+
+// === MOCK MuenzAuswerfer ===
+MuenzAuswerfer::MuenzAuswerfer() {}
+void MuenzAuswerfer::auswerfenMuenze(Muenzroehre *) {}
+
+// === Test Implementation ===
+class tzahlungseinheit : public QObject {
+    Q_OBJECT
+
+private slots:
+    void initTestCase() {}
+    void cleanupTestCase() {}
+    void init();
+    void cleanup();
+    void testStartPayment();
+    void testOverpaymentReturnsChange();
+    void testDisplayUpdatesCorrectly();
+
+private:
+    Zahlungseinheit* sut;          // System Under Test
+    Display* mockDisplay;
+    MuenzEingabeSensor* mockSensor;
+    Muenzroehrenspeicher* mockSpeicher;
+    MuenzAuswerfer* mockAuswerfer;
+};
+void tzahlungseinheit::init() {
+    mockDisplay = new Display();
+    mockSensor = new MuenzEingabeSensor();
+    mockSpeicher = new Muenzroehrenspeicher();
+    mockAuswerfer = new MuenzAuswerfer();
+
+    sut = new Zahlungseinheit(mockSpeicher, mockSensor, mockAuswerfer);
+    sut->setDisplay(mockDisplay);
+
+}
+void tzahlungseinheit::cleanup() {
+    displayCalled = 0;
+    lastDisplayedText = "";
+    muenzeGueltigReturn = true;
+    eingeworfeneMuenzeReturn = 1.0f;
+    fuegeMuenzeEinReturn = true;
+    geldAuswerfenCalled = false;
+    geldAuswerfenAmount = 0.0f;
+}
+void tzahlungseinheit::testStartPayment() {
+
+    QVERIFY(!sut->getZahlungErfolgreich());
+
+    float preis = 1.5f;
+    sut->versucheZahlung(preis);
+
+    QVERIFY(!sut->getZahlungErfolgreich());
+
+}
+void tzahlungseinheit::testOverpaymentReturnsChange() {
+    // Arrange
+    sut->versucheZahlung(1.0f); // Start payment with 1.0€
+
+    muenzeGueltigReturn = true;         // Simulate valid coin
+    eingeworfeneMuenzeReturn = 2.0f;    // Insert 2.0€ coin
+    fuegeMuenzeEinReturn = true;        // Coin accepted
+
+    int prevDisplayCalled = displayCalled;
+
+    //  Simulate payment system ready to process inserted coin
+   sut->setTestZahlungAktiv(false);
+
+    // Act
+    sut->tick();
+
+    // Assert
+    QVERIFY(sut->getZahlungErfolgreich());             // Payment should complete
+    QVERIFY(geldAuswerfenCalled);                      // Change should be returned
+    QCOMPARE(geldAuswerfenAmount, 1.0f);               // Correct change returned
+   QVERIFY(displayCalled == prevDisplayCalled + 1);
 }
 
-float Muenzroehrenspeicher::gesamtWert() const {
-    return mockGesamtwert;
-}
+void tzahlungseinheit::testDisplayUpdatesCorrectly() {
+    // Arrange
+    sut->versucheZahlung(1.5f); // Start payment with 1.5€
 
-void Muenzroehrenspeicher::leeren() {
-    mockRoehrenspeicherLeerCalled = true;
-}
+    muenzeGueltigReturn = true;         // Simulate valid coin
+    eingeworfeneMuenzeReturn = 1.0f;    // Insert 1.0€ coin
+    fuegeMuenzeEinReturn = true;        // Coin accepted
 
+    int prevDisplayCalled = displayCalled;
 
+    // Simulate payment system ready to process inserted coin
+    sut->setTestZahlungAktiv(false);
 
+    // Act
+    sut->tick();
 
-// === MOCK Produkt ===
-float mockProduktPreis = 1.0f;
-int mockProduktAnzahl = 1;
-bool mockDekrementAufgerufen = false;
-std::string mockProduktName = "MockProdukt";
-
-Produkt::Produkt(std::string name, float preis, int anzahl) {
-    mockProduktName = name;
-    mockProduktPreis = preis;
-    mockProduktAnzahl = anzahl;
-    mockDekrementAufgerufen = false;
-}
-
-std::string Produkt::getName() const {
-    return mockProduktName;
-}
-
-float Produkt::getPreis() const {
-    return mockProduktPreis;
-}
-
-int Produkt::getAnzahl() const {
-    return mockProduktAnzahl;
-}
-
-void Produkt::dekrementiereAnzahl() {
-    mockDekrementAufgerufen = true;
-    if (mockProduktAnzahl > 0)
-        mockProduktAnzahl--;
+    // Assert
+    QVERIFY(displayCalled > prevDisplayCalled);                  // Display should be updated
+    QCOMPARE(lastDisplayedText, QString("Zu bezahlen: 0.50 €")); // Correct remaining amount displayed
+    QVERIFY(!sut->getZahlungErfolgreich());                     // Payment should not yet be complete
 }
 
 
 
-
-
-// === MOCK Zahlungseinheit ===
-bool mockZahlungGestartet = false;
-Produkt* zuletztUebergebenesProdukt = nullptr;
-
-Zahlungseinheit::Zahlungseinheit() {}
-
-Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher*, MuenzEingabeSensor*, MuenzAuswerfer*) {}
-
-bool Zahlungseinheit::versucheZahlung(Produkt* produkt) {
-    mockZahlungGestartet = true;
-    zuletztUebergebenesProdukt = produkt;
-    return true; // Immer erfolgreich im Mock
-}
-
-void Zahlungseinheit::zahlungAbbrechen() {
-    // Keine Aktion im Mock – kann erweitert werden
-}
-
-void Zahlungseinheit::tick() {
-    // Keine Logik im Mock – Steuerung erfolgt über globale Flags
-}
-
+QTEST_APPLESS_MAIN(tzahlungseinheit)
 #include "tst_tzahlungseinheit.moc"
