@@ -23,8 +23,8 @@ Display::Display(QObject *parent) : QObject{parent} {}
 Display::~Display() {}
 
 void Display::displayText(QString text) {
-    displayCalled++;             // Track number of calls
-    lastDisplayedText = text;    // Capture displayed text for validation
+    displayCalled++;
+    lastDisplayedText = text;
 }
 void Display::acceptTouch(QPointF &) {
 }
@@ -45,11 +45,11 @@ void MuenzEingabeSensor::setEingeworfeneMuenze(float) {
 Muenzroehrenspeicher::Muenzroehrenspeicher() {}
 
 bool Muenzroehrenspeicher::fuegeMuenzeEin(float) {
-    return fuegeMuenzeEinReturn; // controlled dynamically in tests
+    return fuegeMuenzeEinReturn;
 }
 void Muenzroehrenspeicher::geldAuswerfen(float betrag) {
-    geldAuswerfenCalled = true;     // track that change was returned
-    geldAuswerfenAmount = betrag;   // capture returned amount for verification
+    geldAuswerfenCalled = true;
+    geldAuswerfenAmount = betrag;
 }
 void Muenzroehrenspeicher::muenzeAuswerfen(float) {}
 void Muenzroehrenspeicher::tick() {}

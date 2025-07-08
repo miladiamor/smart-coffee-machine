@@ -27,8 +27,8 @@ public:
                          Muenzenschieber* schieber, MuenzAuswerfer* auswerfer);
 
     bool fuegeMuenzeEin(float wert);
-    void muenzeAuswerfen(float wert);
-    void geldAuswerfen(float betrag); // wirft mehrere Münzen aus
+    void muenzeAuswerfen(float wert); // wirft eine einzelne muenze enes bestimmten wertes aus
+    void geldAuswerfen(float betrag); // wirft Geldbetrag als Rueckgeld mit passenden muenzen aus
     void tick();
 };
 
