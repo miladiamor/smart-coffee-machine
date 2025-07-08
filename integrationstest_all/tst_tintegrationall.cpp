@@ -31,18 +31,22 @@ bool Muenzroehre::istVoll() const {return false;}
 int Muenzroehre::getAnzahl() const {return 10;}
 int globalAufrufeErhoeheAnzahl = 0;
 int globalAufrufeReduziereAnzahl = 0;
+Muenzroehre *globalMuenzroehre = nullptr;
 void Muenzroehre::erhoeheAnzahl() {globalAufrufeErhoeheAnzahl++;}
 void Muenzroehre::reduziereAnzahl() {globalAufrufeReduziereAnzahl--;}
 
 MuenzEingabeSensor::MuenzEingabeSensor() {}
+MuenzEingabeSensor *globalMuenzEingabeSensor = nullptr;
 float MuenzEingabeSensor::getEingeworfeneMuenze() {return 1.0;}
 bool MuenzEingabeSensor::getMuenzeGueltig() {return true;}
 
 MuenzAuswerfer::MuenzAuswerfer() {}
 int globalAnzahlMuenze = 10;
+MuenzEingabeSensor *globalMuenzAuswerfer = nullptr;
 void MuenzAuswerfer::auswerfenMuenze(Muenzroehre *aktiveRoehre) {globalAnzahlMuenze--;}
 
 Muenzenschieber::Muenzenschieber() {}
+Muenzenschieber *globalMuenzschieber = nullptr;
 void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre) {globalAnzahlMuenze++;}
 
 //MockUps Ventile und Klappen für die Bruehgruppe
@@ -157,11 +161,6 @@ void Schaeumer::aufschaeumenStarten() {SchaeumerAktiv++;}
 void Schaeumer::aufschaeumenStoppen() {SchaeumerAktiv--;}
 bool Schaeumer::getEingeschaltet() {return SchaeumerAktiv;}
 
-// MOCK Zahlungseinheit
-Zahlungseinheit::Zahlungseinheit() {}
-void Zahlungseinheit::versucheZahlung(float preis) {}
-bool Zahlungseinheit::getZahlungErfolgreich() {return true;}
-
 // MOCK Fuellstandsmessung
 bool hatGenugReturn = true;
 Fuellstandsmessung::Fuellstandsmessung() {}
@@ -184,8 +183,8 @@ private:
 
     Fuellstandsmessung *mFuellstandmessung;
 
-    Zahlungseinheit *mZahlungseinheit;
-    Muenzroehrenspeicher *mMuenzroehre;
+    Zahlungseinheit *zahlungseinheit;
+    Muenzroehrenspeicher *muenzroehrenspeicher;
 
     Pumpe *mWasserpumpe, *mMilchpumpe;
     Heizregler *mHeizregler;
@@ -215,12 +214,18 @@ void tintegrationall::initTestCase() {
     programmsteuerung = new Programmsteuerung();
     bruehgruppe = new Bruehgruppe();
     motorsteuerung = new Motorsteuerung();
+    zahlungseinheit = new Zahlungseinheit();
+    muenzroehrenspeicher = new Muenzroehrenspeicher();
+
+    // Komponenten für Zahlugnseinheit/Muenzroehrenspeicher
+    globalMuenzEingabeSensor = new MuenzEingabeSensor();
+    globalMuenzschieber = new Muenzenschieber();
+    globalMuenzroehre = new Muenzroehre();
 
     // Komponenten für Koordinator setzen
     mFuellstandmessung = new Fuellstandsmessung();
-    mZahlungseinheit = new Zahlungseinheit();
     koordinator->setzeFuellstandsmessung(mFuellstandmessung);
-    koordinator->setzeZahlungseinheit(mZahlungseinheit);
+    koordinator->setzeZahlungseinheit(zahlungseinheit);
     koordinator->setzeDisplay(display);
     koordinator->setzeProgrammsteuerung(programmsteuerung);
 
