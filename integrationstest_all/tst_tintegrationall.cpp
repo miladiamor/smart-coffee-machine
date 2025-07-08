@@ -297,28 +297,33 @@ void tintegrationall::test_milchkaffee() {
     // pumping milk zu zuckerauswerfen bzw. triggert Zuckerauswerfen x
     for (int i = 0; i < 15; ++i) tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::ZUCKERAUSWERFEN);
-    QCOMPARE(bruehgruppe->getState())
+    QCOMPARE(bruehgruppe->getState(), ENTLEEREN);
     QVERIFY(!milchpumpeAktiv);
     QVERIFY(!SchaeumerAktiv);
     QVERIFY(ZuckerdispenserAktiv);
+    QVERIFY(!wasserOffen);
+    QVERIFY(!tropfOffen);
+    QVERIFY(klappeOffen);
+    QCOMPARE(globalMotorStatus, Kolbenmotor::motorStatus::runterfahren);
 
-    // ende IDLE x
+    // programsteuerung zuckerauswerfen zu ZURUECKSETZEN
     for (int i = 0; i < 5; ++i) tickAll();
     tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::ZURUECK_SETZEN);
     QVERIFY(!programmsteuerung->isBusy());
     QVERIFY(!ZuckerdispenserAktiv);
 
-    /*
-    for(int i=0; i<=100; i++) {
-        if (globalMotorStatus == Kolbenmotor::motorStatus::runterfahren) {
-            globalStampferPos -= 0.1;
-        } else if (globalMotorStatus == Kolbenmotor::motorStatus::hochfahren) {
-            globalStampferPos += 0.1;
-        }
-        tickAll();
-    }
-    */
+    // Brühgruppe ENTLEEREN zu WARTEN
+    globalStampferPos = 0; tickAll();
+    QCOMPARE(bruehgruppe->getState(), ZURUECKSETZEN);
+    QVERIFY(!klappeOffen);
+    globalStampferPos = MAX_MOTOR_HEIGHT_MM; tickAll();
+    QCOMPARE(bruehgruppe->getState(), WARTEN);
+
+    // programmsteuerung ZURUECKSETZEN zu IDLE
+    tickAll();
+    QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::IDLE);
+    QVERIFY(!programmsteuerung->isBusy());
 }
 
 QTEST_APPLESS_MAIN(tintegrationall)
