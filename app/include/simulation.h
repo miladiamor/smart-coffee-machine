@@ -37,7 +37,8 @@ public:
     void setMilchPumpe (Pumpe *pumpe);
     void setSchaeumer (Schaeumer *schaeumer);
     void setMuenzEingabeSensor(MuenzEingabeSensor *muenzeingabesensor);
-
+    void setWasserTemperatursensor(Temperatursensor *sensor);
+    void setMilchTemperatursensor(Temperatursensor *sensor);
     void setMuenze_EUR(float muenze_EUR);
 
 public slots:

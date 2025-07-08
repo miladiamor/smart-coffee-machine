@@ -70,6 +70,16 @@ void Simulation::setMuenzEingabeSensor(MuenzEingabeSensor *muenzeingabesensor)
     this->muenzSensor = muenzeingabesensor;
 }
 
+void Simulation::setWasserTemperatursensor(Temperatursensor *sensor)
+{
+    this->wasserTemperatursensor = sensor;
+}
+
+void Simulation::setMilchTemperatursensor(Temperatursensor *sensor)
+{
+    this->milchTemperatursensor = sensor;
+}
+
 void Simulation::setMuenze_EUR(float muenze_EUR) {
     this->muenze_EUR = muenze_EUR;
 }
