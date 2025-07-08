@@ -29,6 +29,8 @@ public:
     void setMilchbehaelter(Tankwaage *milchbehaelter);
     void setZuckerbehaelter(Tankwaage *zuckerBehaelter);
     void setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter);
+    void setMilchheizer(Heizelemente *milchHeizer);
+    void setWasserheizer(Heizelemente *wasserHeizer);
     void setKolbenmotor(Kolbenmotor *kolbenmotor);
     void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);
     void setWasserPumpe(Pumpe *pumpe);

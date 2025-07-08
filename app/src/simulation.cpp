@@ -28,13 +28,21 @@ void Simulation::setZuckerbehaelter(Tankwaage *zuckerBehaelter)
     this->zuckerbehaelter = zuckerBehaelter;
 }
 
-
-
 //Simulation::Simulation() {}
 
 
 void Simulation::setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter) {
     this->kaffeerestbehaelter = kaffeerestbehaelter;
+}
+
+void Simulation::setMilchheizer(Heizelemente *milchHeizer)
+{
+    this->milchHeizer = milchHeizer;
+}
+
+void Simulation::setWasserheizer(Heizelemente *wasserHeizer)
+{
+    this->wasserHeizer = wasserHeizer;
 }
 
 void Simulation::setKolbenmotor(Kolbenmotor *kolbenmotor){

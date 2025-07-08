@@ -13,6 +13,16 @@ bool Heizregler::istTemperaturErreicht() const {
     return (aktuelleTemperatur_Cel >= zieltemperatur_Cel);
 }
 
+void Heizregler::setHeizelement(Heizelemente *heizelement)
+{
+    this->heizen = heizelement;
+}
+
+void Heizregler::setTemperatursensor(Temperatursensor *temperatursensor)
+{
+    this->sensor = temperatursensor;
+}
+
 bool Heizregler::getEingeschaltet() {
     return eingeschaltet;
 }
