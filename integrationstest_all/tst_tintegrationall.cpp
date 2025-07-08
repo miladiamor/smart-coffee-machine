@@ -302,6 +302,7 @@ void tintegrationall::test_milchkaffee() {
     // pumping milk zu zuckerauswerfen bzw. triggert Zuckerauswerfen x
     for (int i = 0; i < 15; ++i) tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::ZUCKERAUSWERFEN);
+    //KOCHEN zu ENTLEEREN
     QCOMPARE(bruehgruppe->getState(), ENTLEEREN);
     QVERIFY(!milchpumpeAktiv);
     QVERIFY(!SchaeumerAktiv);
@@ -318,13 +319,15 @@ void tintegrationall::test_milchkaffee() {
     QVERIFY(programmsteuerung->isBusy());
     QVERIFY(!ZuckerdispenserAktiv);
 
-    // Brühgruppe ENTLEEREN zu WARTEN
+    // Brühgruppe ENTLEEREN zu ZURUECKSETZEN
     globalStampferPos = 0; tickAll();
     QCOMPARE(bruehgruppe->getState(), ZURUECKSETZEN);
     QVERIFY(!klappeOffen);
     QCOMPARE(Kolbenmotor::motorStatus::hochfahren, globalMotorStatus);
+
+    // ZURUECKSETZTEN ZU WARTEN
     globalStampferPos = 20; tickAll();
-    qDebug() << "stampfhoehe motor: " << motorsteuerung->getStampfhoehe_mm();
+    QCOMPARE(globalMotorStatus, Kolbenmotor::motorStatus::Aus);
     QCOMPARE(WARTEN, bruehgruppe->getState());
 
     // programmsteuerung ZURUECKSETZEN zu IDLE

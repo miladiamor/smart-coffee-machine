@@ -60,6 +60,7 @@ void Bruehgruppe::trigger(BruehEvent event) {
         if (event == MOTORABGESCHLOSSEN) {
             state = WARTEN;
         }
+        break;
     }
 }
 

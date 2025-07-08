@@ -1,5 +1,6 @@
 #include "motorsteuerung.h"
-
+#include <cmath>
+#include <QDebug>
 /*
 Motorsteuerung::Motorsteuerung(QObject *parent)
     : QObject{parent}
@@ -19,12 +20,15 @@ void Motorsteuerung::stampferAusfahren(float stampfhoehe_mm){
 }
 
 void Motorsteuerung::tick() {
+    qDebug() << "Eingeschaltet in motorsteuerung: " << eingeschaltet;
     if (eingeschaltet) {
         position_mm = inkrementalencoder->getPosition_mm();
-        if ((position_mm >= stampfhoehe_mm - 0.25) && (position_mm <= stampfhoehe_mm + 0.25)) {
+        qDebug() << "stampfhoehe in motorsteuerung: " << stampfhoehe_mm;
+        qDebug() << "position in motorsteuerung: " << position_mm;
+        if (std::abs(stampfhoehe_mm - position_mm) <= 0.2) {
             stampfer->stoppen();
-            bruehgruppe->trigger(MOTORABGESCHLOSSEN);
             eingeschaltet = false;
+            bruehgruppe->trigger(MOTORABGESCHLOSSEN);
         }
     }
 }

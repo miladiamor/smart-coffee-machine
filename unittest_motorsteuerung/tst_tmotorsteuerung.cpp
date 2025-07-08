@@ -81,8 +81,8 @@ void tmotorsteuerung::test_hochfahren() {
 }
 
 void tmotorsteuerung::test_stoppenWennErreicht() {
-    ms->stampferAusfahren(7);
-    pos = 7;
+    ms->stampferAusfahren(20);
+    pos = 20;
     ms->tick();
     QVERIFY(!runter);
     QVERIFY(!hoch);
