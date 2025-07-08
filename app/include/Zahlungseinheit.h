@@ -23,6 +23,9 @@ public:
 
     void getzahnlungErfolgreicht();
     bool getZahlungErfolgreich();
+
+    bool getZahlungErfolgreich();
+
     void versucheZahlung(float preis);  // Startet Zahlung
     void zahlungAbbrechen();                 // Bricht Zahlung ab
     void tick();                             // Zustandsbasierte Ausfuehrung
