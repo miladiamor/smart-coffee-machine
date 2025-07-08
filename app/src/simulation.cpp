@@ -84,6 +84,13 @@ void Simulation::tick(){
             float wasserMenge = PUMP_WASSER_G_PRO_S * 0.001f;
             bruehkammerKaffeeinhalt_g += wasserMenge;
             wasserbehaelter_g -= wasserMenge;
+
+            if (tropfstopfVentil && tropfstopfVentil->get_ist_offen()) {
+                float kaffeeAnteil = wasserMenge * KAFFEE_WASSERANTEIL;
+                kaffeeTassenInhalt += kaffeeAnteil;
+            } else {
+                bruehkammerKaffeeinhalt_g += wasserMenge;
+            }
         }
     }
 
