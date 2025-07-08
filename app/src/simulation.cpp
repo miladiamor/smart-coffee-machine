@@ -46,25 +46,50 @@ void Simulation::setSchaeumer(Schaeumer *schaeumer) {
 #define MILCH_KUEHLRATE_CEL_PRO_TICK  0.0003f
 
 // Motorgeschwindigkeit definieren
+#define MOTOR_MAX_HEIGHT_MM 25
 #define MOTORGESCHWINDIGKEIT_MM_PRO_TICK 0.1
+// Kaffeezufuhur
+#define KAFFEEZUFUHR_G_PRO_TICK 0.1
+// Entleern
+#define BEHAELTER_MAX_FUELLSTAND_G 10000
 
 void Simulation::tick(){
-    /*
-    // Kaffeezufuhr && Kaffeepulverbehältersimulation
-    if (inkrementalencoder->getPosition_mm() == MAX_MOTOR_HEIGHT_MM) {
-        bruehkammerKaffeeinhalt_g += kaffee_g_pro_frame;
-        kaffeehoehe_mm += kaffee_g_pro_frame * hoeheKaffeepulver_mm_pro_g;
-        kaffeebehaelter_g -= kaffee_g_pro_frame;
-    }*/
+    // Motor hoch/runterfahren
+    Kolbenmotor::motorStatus mtStatus = kolbenmotor->getStatus();
+    if (mtStatus != Kolbenmotor::motorStatus::Aus) {
+        if (mtStatus == Kolbenmotor::motorStatus::runterfahren && motorPosition_mm > 0) {
+            motorPosition_mm -= MOTORGESCHWINDIGKEIT_MM_PRO_TICK;
+            if (motorPosition_mm < 0) {motorPosition_mm = 0;}
+        } else if (mtStatus == Kolbenmotor::motorStatus::hochfahren && motorPosition_mm < MOTOR_MAX_HEIGHT_MM) {
+            motorPosition_mm += MOTORGESCHWINDIGKEIT_MM_PRO_TICK;
+            if (motorPosition_mm > MOTOR_MAX_HEIGHT_MM) {motorPosition_mm = MOTOR_MAX_HEIGHT_MM;}
+        }
+        inkrementalencoder->setPosition(motorPosition_mm);
+    }
+
+    // kaffee entleeren
+    if ((motorPosition_mm == 0) && (bruehkammerKaffeeinhalt_g > 0)) {
+        if (entleerklappe->get_ist_offen()) {
+            kaffeerestbehaelter_g += bruehkammerKaffeeinhalt_g;
+            if (kaffeerestbehaelter_g > BEHAELTER_MAX_FUELLSTAND_G) {
+                qDebug() << "Simulation: Kaffeerestbehaelter überfüllt";
+            }
+            kaffeerestbehaelter->setGewicht(kaffeerestbehaelter_g);
+        } else {
+            qDebug() << "Simulation: Entleerklappe blockt beim Entleeren!";
+        }
+    }
 
     // Wasservorwärmung
     if (wasserHeizer->istEingeschaltet()) {
             wasserrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
+            temperatursensor.setTemperatur_Cel(wasserrohrtemperatur_cel);
         }
 
     // Milchvorwärmung
     if (milchHeizer->istEingeschaltet()) {
         milchrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
+        temperatursensor.setTemperatur_Cel(milchrohrtemperatur_cel);
     }
 
     // Während des Offeneventils fließt das Wasser in der BG
@@ -90,30 +115,8 @@ void Simulation::tick(){
         }
         kaffeeTassenInhalt_g += milchMenge;
     }
-
-    // TemperaturSensor aktualisieren
-    temperatursensor.setTemperatur_Cel(wasserrohrtemperatur_cel);
-    temperatursensor.setTemperatur_Cel(milchrohrtemperatur_cel);
 }
 
-    /*
-    // Motorsimulation & Kaffeerestbehälter
-    const float kaffeerest_g_pro_mm = 0.315;
-    const float bewegung_pro_frame = MOTORGESCHWINDIGKEIT_MM_PRO_S * std::pow(10, -3);
-    if (kolbenmotor->getStatus() != Kolbenmotor::motorStatus::Aus) {
-        if (kolbenmotor->getStatus() == Kolbenmotor::motorStatus::runterfahren && motorPosition_mm < 20) {
-            motorPosition_mm += bewegung_pro_frame;
-            // Füllstand der Restbehälters
-            // füllt sich wenn die Entleerklappe offen ist
-            if (){
-                kaffeerestbehaelter_fuellstand_g += kaffeerest_g_pro_mm * bewegung_pro_frame;
-            }
-        } else if (kolbenmotor->getStatus() == Kolbenmotor::motorStatus::hochfahren && motorPosition_mm > 0) {
-            motorPosition_mm -= bewegung_pro_frame;
-        }
-    }
-
-    */
 
 
 
