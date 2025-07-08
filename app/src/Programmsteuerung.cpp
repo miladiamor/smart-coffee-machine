@@ -75,6 +75,8 @@ Programmsteuerung::~Programmsteuerung(){}
     }
 
     void Programmsteuerung::tick(){
+        temperaturregler_milch->tick();
+        temperaturregler_wasser->tick();
         if (!busy){
            return;
         }
@@ -82,6 +84,8 @@ Programmsteuerung::~Programmsteuerung(){}
         switch (coffeeState) {
         case CoffeeState::IDLE:
             if (busy == true) {
+                qDebug() << "Temperaturregeln gestartet; wasserkochhitze: " << currentProgramm->getWasserKochhitze_Cel();
+                qDebug() << "Temperaturregeln gestartet; milchkochhitze: " << currentProgramm->getMilchKochhitze_Cel();
                 temperaturregler_wasser->temperaturRegeln(currentProgramm->getWasserKochhitze_Cel());// Wassererhitzer starten
                 temperaturregler_milch->temperaturRegeln(currentProgramm->getMilchKochhitze_Cel());// Millcherhitzer starten
                 coffeeState = CoffeeState::HEIZEN;

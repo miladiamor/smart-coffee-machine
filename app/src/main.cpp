@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     Bruehgruppe bruehgruppe;
-    Clock clock(10);
+    Clock clock(100);
     Display display;
     Tankwaage wasserbehaelter(5000), kaffeebehaelter(5000), milchbehaelter(5000), kaffeerestbehaelter(0), zuckerbehaelter(500);
     Fuellstandsmessung fuellstandsmessung;
@@ -114,6 +114,8 @@ int main(int argc, char *argv[])
     simulation.setMilchheizer(&milchHeizer);
     simulation.setWasserheizer(&wasserHeizer);
     simulation.setMuenzEingabeSensor(&muenzEingabeSensor);
+    simulation.setWasserTemperatursensor(&wasserTemperatursensor);
+    simulation.setMilchTemperatursensor(&milchTemperatursensor);
 
     mw.setSimulation(&simulation);
 
@@ -170,10 +172,12 @@ int main(int argc, char *argv[])
     QObject::connect(&clock, &Clock::update,
                      &milchRegler, &Heizregler::tick,
                      Qt::DirectConnection);
+
     */
     QObject::connect(&clock, &Clock::update,
                      &motorsteuerung, &Motorsteuerung::tick,
                      Qt::DirectConnection);
+
     mw.show();
 
     return app.exec();

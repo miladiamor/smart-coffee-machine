@@ -91,8 +91,8 @@ void Simulation::setMuenze_EUR(float muenze_EUR) {
 // Wasser wird in der Kaffee gemwandelt
 #define MILCH_MAXTEMP_CEL             65.0f
 #define MILCH_STARTTEMP_CEL           25.0f
-#define MILCH_HEIZRATE_CEL_PRO_TICK   0.0005f
-#define MILCH_KUEHLRATE_CEL_PRO_TICK  0.0003f
+#define MILCH_HEIZRATE_CEL_PRO_TICK   0.5f
+#define MILCH_KUEHLRATE_CEL_PRO_TICK  0.5f
 
 // Motorgeschwindigkeit definieren
 #define MOTOR_MAX_HEIGHT_MM 25
@@ -139,12 +139,14 @@ void Simulation::tick(){
     // Wasservorwärmung
     if (wasserHeizer->istEingeschaltet()) {
         wasserrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
+        qDebug() << "Wassertemperatur: " << wasserrohrtemperatur_cel;
         wasserTemperatursensor->setTemperatur_Cel(wasserrohrtemperatur_cel);
         }
 
     // Milchvorwärmung
     if (milchHeizer->istEingeschaltet()) {
         milchrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
+        qDebug() << "Milchrohrtemperatur: " << milchrohrtemperatur_cel;
         milchTemperatursensor->setTemperatur_Cel(milchrohrtemperatur_cel);
     }
 

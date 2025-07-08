@@ -4,7 +4,8 @@
 
 #include <QObject>
 
-class Heizregler : public QObject{
+class Heizregler : public QObject
+{
     Q_OBJECT
 
     public:
