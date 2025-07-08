@@ -111,7 +111,7 @@ void Koordinator::tick() {
                     break;
                 }
             }
-            zahlungseinheit->versucheZahlung(5);
+            zahlungseinheit->versucheZahlung(5.0);
             zustand = KoordinatorZustand::BEZAHLEN;
         }
         break;

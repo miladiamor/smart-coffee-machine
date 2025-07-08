@@ -20,11 +20,11 @@ void Motorsteuerung::stampferAusfahren(float stampfhoehe_mm){
 }
 
 void Motorsteuerung::tick() {
-    qDebug() << "Eingeschaltet in motorsteuerung: " << eingeschaltet;
+    //qDebug() << "Eingeschaltet in motorsteuerung: " << eingeschaltet;
     if (eingeschaltet) {
         position_mm = inkrementalencoder->getPosition_mm();
-        qDebug() << "stampfhoehe in motorsteuerung: " << stampfhoehe_mm;
-        qDebug() << "position in motorsteuerung: " << position_mm;
+        //qDebug() << "stampfhoehe in motorsteuerung: " << stampfhoehe_mm;
+        //qDebug() << "position in motorsteuerung: " << position_mm;
         if (std::abs(stampfhoehe_mm - position_mm) <= 0.2) {
             stampfer->stoppen();
             eingeschaltet = false;
