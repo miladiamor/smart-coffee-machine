@@ -43,7 +43,6 @@ void MainWindow::updateWindow(const QImage &img) {
 void MainWindow::updateWindowText(QString text){
     ui->touchDisplayLabel->clear();
     ui->touchDisplayLabel->setText(text);
-    qDebug() << "Aufgerufen3";
 }
 
 /*

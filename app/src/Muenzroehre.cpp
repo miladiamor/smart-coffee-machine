@@ -5,7 +5,7 @@ Muenzroehre::Muenzroehre()
 
 // Gibt true zurueck, wenn Rohr voll ist
 bool Muenzroehre::istVoll() const {
-    return aktuelleAnzahl;
+    return (aktuelleAnzahl == 20);
 }
 
 // Gibt aktuelle Anzahl der Muenzen zurueck

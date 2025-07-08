@@ -86,7 +86,8 @@ Programmsteuerung::~Programmsteuerung(){}
                 temperaturregler_milch->temperaturRegeln(currentProgramm->getMilchKochhitze_Cel());// Millcherhitzer starten
                 coffeeState = CoffeeState::HEIZEN;
             }
-                break;
+            qDebug() << "PS: IDLE";
+            break;
 
         case CoffeeState::HEIZEN:
             if (temperaturregler_wasser->istTemperaturErreicht() && temperaturregler_milch->istTemperaturErreicht()){
@@ -94,6 +95,7 @@ Programmsteuerung::~Programmsteuerung(){}
                 coffeeState = CoffeeState::KAFFEE_ZUFUHR;
                 tickCounter = 0;
             }
+            qDebug() << "PS: HEIZEN";
             break;
 
         case CoffeeState::KAFFEE_ZUFUHR:
@@ -101,6 +103,7 @@ Programmsteuerung::~Programmsteuerung(){}
                 bruehgruppe->trigger(ZUFUHRABGESCHLOSSEN);
                 coffeeState = CoffeeState::WARTENAUFBRUEHGRUPPE;
             }
+            qDebug() << "PS: KAFFEEZUFUHR";
             break;
 
         case CoffeeState::WARTENAUFBRUEHGRUPPE:
@@ -109,6 +112,7 @@ Programmsteuerung::~Programmsteuerung(){}
                 wasserpumpe->pumpeStarten();
                 tickCounter = 0;
             }
+            qDebug() << "PS: WAB";
             break;
 
         case CoffeeState::PUMPING_WATER:
@@ -120,6 +124,7 @@ Programmsteuerung::~Programmsteuerung(){}
                 coffeeState = CoffeeState::PUMPING_MILK;
                 tickCounter = 0;
             }
+            qDebug() << "PS: PUMPIN_WATER";
             break;
         case CoffeeState::PUMPING_MILK:
             // prüfen ob Milch fertig gepumpt
@@ -131,6 +136,7 @@ Programmsteuerung::~Programmsteuerung(){}
                 coffeeState = CoffeeState::ZUCKERAUSWERFEN;
                 tickCounter = 0;
             }
+            qDebug() << "PS: PUMPING_MILK";
             break;
 
         case CoffeeState::ZUCKERAUSWERFEN:
@@ -138,6 +144,7 @@ Programmsteuerung::~Programmsteuerung(){}
                 zucker->ausschalten();
                 coffeeState = CoffeeState::ZURUECK_SETZEN;
             }
+            qDebug() << "PS: ZUCKERAUSWERFWEN";
             break;
 
         case CoffeeState::ZURUECK_SETZEN:
@@ -145,6 +152,7 @@ Programmsteuerung::~Programmsteuerung(){}
                 coffeeState = CoffeeState::IDLE;
                 busy = false;
             }
+            qDebug() << "PS: ZURUECK_SETZEEN";
             break;
 
         default:

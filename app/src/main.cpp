@@ -37,14 +37,14 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     Bruehgruppe bruehgruppe;
-    Clock clock(2);
+    Clock clock(10);
     Display display;
     Tankwaage wasserbehaelter(5000), kaffeebehaelter(5000), milchbehaelter(5000), kaffeerestbehaelter(0), zuckerbehaelter(500);
     Fuellstandsmessung fuellstandsmessung;
     Ressourcen ressourcen;
     Heizelemente wasserHeizer, milchHeizer;
     Heizregler wasserRegler, milchRegler;
-    Temperatursensor wasserTemperatursensor, milchtemperatursensor;
+    Temperatursensor wasserTemperatursensor, milchTemperatursensor;
     Inkrementalencoder inkrementalencoder;
     Klappe klappe;
     Kolbenmotor kolbenmotor;
@@ -60,7 +60,6 @@ int main(int argc, char *argv[])
     Pumpe pumpe;
     Schaeumer schaeumer;
     Simulation simulation;
-    Temperatursensor temperatursensor;
     Ventil ventil;
     Zahlungseinheit zahlungseinheit;
     Zuckerdispenser zuckerdispenser;
@@ -84,7 +83,7 @@ int main(int argc, char *argv[])
     wasserRegler.setHeizelement(&wasserHeizer);
     milchRegler.setHeizelement(&milchHeizer);
     wasserRegler.setTemperatursensor(&wasserTemperatursensor);
-    milchRegler.setTemperatursensor(&milchtemperatursensor);
+    milchRegler.setTemperatursensor(&milchTemperatursensor);
 
     motorsteuerung.setStampfer(&kolbenmotor);
     motorsteuerung.setInkrementalencoder(&inkrementalencoder);
@@ -162,6 +161,18 @@ int main(int argc, char *argv[])
 
     QObject::connect(&clock, &Clock::update,
                      &simulation, &Simulation::tick,
+                     Qt::DirectConnection);
+
+    QObject::connect(&clock, &Clock::update,
+                     &wasserRegler, &Heizregler::tick,
+                     Qt::DirectConnection);
+    /*
+    QObject::connect(&clock, &Clock::update,
+                     &milchRegler, &Heizregler::tick,
+                     Qt::DirectConnection);
+    */
+    QObject::connect(&clock, &Clock::update,
+                     &motorsteuerung, &Motorsteuerung::tick,
                      Qt::DirectConnection);
     mw.show();
 

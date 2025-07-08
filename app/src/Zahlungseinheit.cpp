@@ -35,10 +35,13 @@ bool Zahlungseinheit::getZahlungErfolgreich()
 // Initialisiert die Zahlung fuer ein Produkt
 void Zahlungseinheit::versucheZahlung(float preis) {
     if (!zahlungAktiv) {
-        qDebug() << "Zahlung aktiv!";
         gesamterEinwurf = preis;
         this->preis = preis;
         zahlungAktiv = true;
+        QString ausgabe = QStringLiteral("Zu bezahlen: %1 EUR").arg(gesamterEinwurf, 0, 'f', 2);
+        qDebug() << "DEBUG: ausgabe " << ausgabe;
+        display->displayText(ausgabe);
+        qDebug() << "Zahlung aktiv!";
     }
 }
 void Zahlungseinheit::setTestZahlungAktiv(bool aktiv) {
@@ -69,7 +72,7 @@ void Zahlungseinheit::tick() {
         if (!speicherVerwaltung->fuegeMuenzeEin(eingeworfeneMuenze)) {zahlungAktiv = false; return;}
         gesamterEinwurf -= eingeworfeneMuenze;
         qDebug() << "Rest: " << gesamterEinwurf;
-        if (gesamterEinwurf == 0) {
+        if ((gesamterEinwurf >= -0.005f) && (gesamterEinwurf <= 0.005f)) {
             zahlungErfolgreich = true;
             zahlungAktiv = false;
             qDebug() << "Zahlung erfolgreich";
@@ -83,7 +86,7 @@ void Zahlungseinheit::tick() {
             return;
         }
 
-        QString ausgabe = QStringLiteral("Zu bezahlen: %1 EUR").arg(gesamterEinwurf, 'f', 2);
+        QString ausgabe = QStringLiteral("Zu bezahlen: %1 EUR").arg(gesamterEinwurf, 0, 'f', 2);
         qDebug() << "Ausgabe: " << ausgabe;
         display->displayText(ausgabe);
     }

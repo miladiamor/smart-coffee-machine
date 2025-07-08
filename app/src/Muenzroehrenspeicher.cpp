@@ -58,7 +58,6 @@ void Muenzroehrenspeicher::setsensor(MuenzEingabeSensor *sensor)
 
 // Gibt false zurueck, wenn Muenze ungueltig oder Zielrohr voll ist.
 bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
-
     Muenzroehre* ziel = nullptr;
     if (wert == 2.0f) ziel = roehre2Euro;
     else if (wert == 1.0f) ziel = roehre1Euro;

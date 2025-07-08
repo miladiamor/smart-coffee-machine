@@ -129,13 +129,13 @@ void Simulation::tick(){
     // Wasservorwärmung
     if (wasserHeizer->istEingeschaltet()) {
         wasserrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
-        temperatursensor.setTemperatur_Cel(wasserrohrtemperatur_cel);
+        wasserTemperatursensor.setTemperatur_Cel(wasserrohrtemperatur_cel);
         }
 
     // Milchvorwärmung
     if (milchHeizer->istEingeschaltet()) {
         milchrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
-        temperatursensor.setTemperatur_Cel(milchrohrtemperatur_cel);
+        milchTemperatursensor.setTemperatur_Cel(milchrohrtemperatur_cel);
     }
 
     // Während des Offeneventils fließt das Wasser in den Kaffee

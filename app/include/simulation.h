@@ -60,7 +60,7 @@ private:
     Pumpe *milchpumpe;
 
     // Sensoren Programmsteuerung
-    Temperatursensor temperatursensor;
+    Temperatursensor *milchTemperatursensor, *wasserTemperatursensor;
 
     //Sensoren Füllstandmessung
     Tankwaage *kaffeerestbehaelter,
