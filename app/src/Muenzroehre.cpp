@@ -26,11 +26,6 @@ int Muenzroehre::getAktuelleAnzahl() const {
     return aktuelleAnzahl;
 }
 
-// Gibt Kapazitaet des Rohrs zurueck
-int Muenzroehre::getKapazitaet() const {
-    return kapazitaet;
-}
-
 // Gibt Wert der Muenze zurueck, die in dieses Rohr gehoert
 float Muenzroehre::getWert() const {
     return wert;

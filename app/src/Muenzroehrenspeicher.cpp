@@ -18,34 +18,8 @@ Muenzroehrenspeicher::Muenzroehrenspeicher(Muenzroehre* r2, Muenzroehre* r1, Mue
 
 // Gibt false zurueck, wenn Muenze ungueltig oder Zielrohr voll ist.
 bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
-    Muenzroehre* ziel = nullptr;
-
-    // Passende Röhre je nach Muenzwert auswaehlen
-    if (wert == 2.0f) ziel = roehre2Euro;
-    else if (wert == 1.0f) ziel = roehre1Euro;
-    else if (wert == 0.5f) ziel = roehre50Cent;
-    else if (wert == 0.2f) ziel = roehre20Cent;
-    else if (wert == 0.1f) ziel = roehre10Cent;
-    else {
-        // Ungueltiger Muenzwert wird direkt wieder ausgeworfen
-        if (auswerfer) auswerfer->auswerfenMuenze(wert);
-        return false;
-    }
-
-    // Wenn das Zielrohr nicht existiert oder voll ist dann Muenze auswerfen
-    if (!ziel || ziel->istVoll()) {
-        if (auswerfer) auswerfer->auswerfenMuenze(wert);
-        return false;
-    }
-
-    // Gueltige Muenze in Roehre schieben
-    if (schieber) schieber->schiebeMuenzeInRoehre(ziel);
     return true;
 }
 
 void Muenzroehrenspeicher::tick() {
-    if (!sensor->getMuenzeGueltig()) {
-        return;
-    }
-
 }
