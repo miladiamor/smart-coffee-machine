@@ -1,4 +1,5 @@
 #include "muenzroehrenspeicher.h"
+#include <QDebug>
 
 // Konstruktor fuer Unittests
 Muenzroehrenspeicher::Muenzroehrenspeicher()
@@ -59,7 +60,6 @@ void Muenzroehrenspeicher::setsensor(MuenzEingabeSensor *sensor)
 bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
 
     Muenzroehre* ziel = nullptr;
-
     if (wert == 2.0f) ziel = roehre2Euro;
     else if (wert == 1.0f) ziel = roehre1Euro;
     else if (wert == 0.5f) ziel = roehre50Cent;
@@ -68,15 +68,11 @@ bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
     else {
         return false;
     }
-
     if (ziel->istVoll()) {
         auswerfer->auswerfenMuenze(ziel);
-        ziel->reduziereAnzahl();
         return false;
     }
-
     schieber->schiebeMuenzeInRoehre(ziel);
-    ziel->erhoeheAnzahl();
     return true;
 }
 

@@ -96,6 +96,8 @@ void Simulation::tick(){
     //Muenzsensor
     if (muenze_EUR != 0.0) {
         this->muenzSensor->setEingeworfeneMuenze(muenze_EUR);
+        qDebug() << "Muenze eingeworfen: " << muenze_EUR;
+        muenze_EUR = 0.0;
     }
 
     // Motor hoch/runterfahren

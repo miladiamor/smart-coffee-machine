@@ -9,6 +9,7 @@ private:
     int restkaffee_g = 0;
 
 public:
+    Ressourcen() = default;
     void setWassermenge_ml(int ml);
     void setMilchmenge_ml(int ml);
     void setKaffeemenge_g(int g);

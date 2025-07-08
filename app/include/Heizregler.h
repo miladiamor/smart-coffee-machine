@@ -21,6 +21,7 @@ class Heizregler : public QObject{
 
         void setHeizelement(Heizelemente *heizelement);
         void setTemperatursensor(Temperatursensor *temperatursensor);
+
     public slots:
         void tick();
 

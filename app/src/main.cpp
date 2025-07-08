@@ -41,10 +41,11 @@ int main(int argc, char *argv[])
     Display display;
     Tankwaage wasserbehaelter(5000), kaffeebehaelter(5000), milchbehaelter(5000), kaffeerestbehaelter(0), zuckerbehaelter(500);
     Fuellstandsmessung fuellstandsmessung;
+    Ressourcen ressourcen;
     Heizelemente wasserHeizer, milchHeizer;
     Heizregler wasserRegler, milchRegler;
+    Temperatursensor wasserTemperatursensor, milchtemperatursensor;
     Inkrementalencoder inkrementalencoder;
-    Kaffeeprogramm kaffeeprogramm;
     Klappe klappe;
     Kolbenmotor kolbenmotor;
     Koordinator koordinator;
@@ -57,7 +58,6 @@ int main(int argc, char *argv[])
     Muenzroehrenspeicher muenzroehrenspeicher;
     Programmsteuerung programmsteuerung;
     Pumpe pumpe;
-    Ressourcen ressourcen;
     Schaeumer schaeumer;
     Simulation simulation;
     Temperatursensor temperatursensor;
@@ -65,7 +65,14 @@ int main(int argc, char *argv[])
     Zahlungseinheit zahlungseinheit;
     Zuckerdispenser zuckerdispenser;
 
-    // Komponenten
+    // Fuellstandmessung
+    fuellstandsmessung.setKaffeeTank(&kaffeebehaelter);
+    fuellstandsmessung.setMilchTank(&milchbehaelter);
+    fuellstandsmessung.setWasserTank(&wasserbehaelter);
+    fuellstandsmessung.setRessourcen(&ressourcen);
+    fuellstandsmessung.setZuckerTank(&zuckerbehaelter);
+
+    // Programmsteuerung Komponenten
     programmsteuerung.setMilchschaeumer(&schaeumer);
     programmsteuerung.setBruehgruppe(&bruehgruppe);
     programmsteuerung.setWasserpumpe(&pumpe);
@@ -74,12 +81,16 @@ int main(int argc, char *argv[])
     programmsteuerung.setMilchHeizer(&milchRegler);
     programmsteuerung.setZuckerdispenser(&zuckerdispenser);
 
+    wasserRegler.setHeizelement(&wasserHeizer);
+    milchRegler.setHeizelement(&milchHeizer);
+    wasserRegler.setTemperatursensor(&wasserTemperatursensor);
+    milchRegler.setTemperatursensor(&milchtemperatursensor);
 
     motorsteuerung.setStampfer(&kolbenmotor);
     motorsteuerung.setInkrementalencoder(&inkrementalencoder);
     motorsteuerung.setBruehgruppe(&bruehgruppe);
+    inkrementalencoder.setStampfer(&kolbenmotor);
 
-    bruehgruppe.setKaffeeprogramm(&kaffeeprogramm);
     bruehgruppe.setMotorsteuerung(&motorsteuerung);
     bruehgruppe.setWasserzufuhr(&ventil);
     bruehgruppe.setKaffeezufuhr(&ventil);
@@ -90,10 +101,6 @@ int main(int argc, char *argv[])
     koordinator.setzeProgrammsteuerung(&programmsteuerung);
     koordinator.setzeZahlungseinheit(&zahlungseinheit);
     koordinator.setzeFuellstandsmessung(&fuellstandsmessung);
-
-    inkrementalencoder.setStampfer(&kolbenmotor);
-
-    kaffeeprogramm.setBenoetigteRessourcen(ressourcen);
 
     simulation.setKaffeerestbehaelter(&kaffeerestbehaelter);
     simulation.setWasserbehaelter(&wasserbehaelter);
@@ -107,8 +114,9 @@ int main(int argc, char *argv[])
     simulation.setSchaeumer(&schaeumer);
     simulation.setMilchheizer(&milchHeizer);
     simulation.setWasserheizer(&wasserHeizer);
+    simulation.setMuenzEingabeSensor(&muenzEingabeSensor);
 
-    zahlungseinheit.setDisplay(&display);
+    mw.setSimulation(&simulation);
 
     muenzroehrenspeicher.setroehre2Euro(&muenzroehre);
     muenzroehrenspeicher.setroehre1Euro(&muenzroehre);
@@ -118,6 +126,8 @@ int main(int argc, char *argv[])
     muenzroehrenspeicher.setschieber(&muenzenschieber);
     muenzroehrenspeicher.setauswerfer(&muenzAuswerfer);
     muenzroehrenspeicher.setsensor(&muenzEingabeSensor);
+
+    muenzenschieber.setMuenzSensor(&muenzEingabeSensor);
 
     zahlungseinheit.setDisplay(&display);
     zahlungseinheit.setMuenzroehrenspeicher(&muenzroehrenspeicher);
@@ -133,9 +143,11 @@ int main(int argc, char *argv[])
                     &mw, &MainWindow::updateWindow,
                      Qt::DirectConnection);
 
+    QObject::connect(&display, &Display::updateText,
+                     &mw, &MainWindow::updateWindowText,
+                     Qt::DirectConnection);
 
     //CLOCK
-
     QObject::connect(&clock, &Clock::update,
                      &koordinator, &Koordinator::tick,
                      Qt::DirectConnection);
@@ -148,6 +160,9 @@ int main(int argc, char *argv[])
                      &programmsteuerung, &Programmsteuerung::tick,
                      Qt::DirectConnection);
 
+    QObject::connect(&clock, &Clock::update,
+                     &simulation, &Simulation::tick,
+                     Qt::DirectConnection);
     mw.show();
 
     return app.exec();

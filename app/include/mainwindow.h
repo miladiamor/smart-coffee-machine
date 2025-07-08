@@ -43,6 +43,8 @@ private slots:
 
     void on_pushButton_2_released();
 
+    void on_pushButton_clicked();
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 

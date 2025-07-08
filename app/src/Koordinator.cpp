@@ -44,8 +44,8 @@ void Koordinator::tick() {
 
         if (lastTouch != QPointF(0, 0)) {
             qDebug() << lastTouch.x() << ", " << lastTouch.y();
-            int width = 400;
-            int height = 400;
+            int width = 300;
+            int height = 300;
 
             Ressourcen res;
             kaffeeprogramm = new Kaffeeprogramm(res);
@@ -91,6 +91,7 @@ void Koordinator::tick() {
         zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/sugar.png");
 
         if (lastTouch != QPointF(0, 0)) {
+            qDebug() << lastTouch.x() << ", " << lastTouch.y();
             int width = 300;
             mitZucker = lastTouch.x() < width / 2;//casimir fragen
             kaffeeprogramm->setMitZucker(mitZucker);
@@ -99,7 +100,7 @@ void Koordinator::tick() {
                 bool genugZucker = fuellstandsmessung->hatGenug(
                     fuellstandsmessung->getZuckerTank(),
                     5,
-                    5.0f
+                    1.0
                     );
 
                 if (!genugZucker) {
@@ -110,15 +111,14 @@ void Koordinator::tick() {
                     break;
                 }
             }
-            zahlungseinheit->versucheZahlung(5.0);
+            zahlungseinheit->versucheZahlung(5.0f);
+            qDebug() << "Zahlung betreten";
             zustand = KoordinatorZustand::BEZAHLEN;
         }
         break;
     }
 
     case KoordinatorZustand::BEZAHLEN: {
-        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/brewing.png");
-
         if (zahlungseinheit->getZahlungErfolgreich()) { // mock
             zustand = KoordinatorZustand::AUSFUEHREN;
         }

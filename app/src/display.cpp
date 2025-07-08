@@ -1,5 +1,6 @@
 #include "display.h"
 #include <QString>
+#include <QDebug>
 
 Display::Display(QObject *parent)
     : QObject{parent}
@@ -20,6 +21,7 @@ void Display::displayScreen(const QImage &img) {
 }
 
 void Display::displayText(QString text) {
+    qDebug() << "Aufgerufen2";
     emit updateText(text);
 }
 

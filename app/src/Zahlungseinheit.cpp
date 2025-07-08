@@ -35,6 +35,7 @@ bool Zahlungseinheit::getZahlungErfolgreich()
 // Initialisiert die Zahlung fuer ein Produkt
 void Zahlungseinheit::versucheZahlung(float preis) {
     if (!zahlungAktiv) {
+        qDebug() << "Zahlung aktiv!";
         gesamterEinwurf = preis;
         this->preis = preis;
         zahlungAktiv = true;
@@ -63,25 +64,29 @@ void Zahlungseinheit::setMuenzAuswerfer(MuenzAuswerfer *muenzauswerfer)
 // Fuehrt einen Tick aus: verarbeitet eine Muenze
 void Zahlungseinheit::tick() {
     if (!zahlungAktiv) {return;}
-    if (!sensor->getMuenzeGueltig()) {return;}
+    if (sensor->getMuenzeGueltig()) {
+        float eingeworfeneMuenze = sensor->getEingeworfeneMuenze();
+        if (!speicherVerwaltung->fuegeMuenzeEin(eingeworfeneMuenze)) {zahlungAktiv = false; return;}
+        gesamterEinwurf -= eingeworfeneMuenze;
+        qDebug() << "Rest: " << gesamterEinwurf;
+        if (gesamterEinwurf == 0) {
+            zahlungErfolgreich = true;
+            zahlungAktiv = false;
+            qDebug() << "Zahlung erfolgreich";
+            return;
+        } else if (gesamterEinwurf < 0) {
+            float rueckgeld = std::abs(gesamterEinwurf);
+            speicherVerwaltung->geldAuswerfen(rueckgeld);
+            zahlungErfolgreich = true;
+            zahlungAktiv = false;
+            qDebug() << "Zahlung erfolgreich mit rückgeld";
+            return;
+        }
 
-    float eingeworfeneMuenze = sensor->getEingeworfeneMuenze();
-    if (!speicherVerwaltung->fuegeMuenzeEin(eingeworfeneMuenze)) {zahlungAktiv = false; return;}
-
-    gesamterEinwurf -= eingeworfeneMuenze;
-    if (gesamterEinwurf == 0) {
-        zahlungErfolgreich = true;
-        zahlungAktiv = false;
-        return;
-    } else if (gesamterEinwurf < 0) {
-        float rueckgeld = std::abs(gesamterEinwurf);
-        speicherVerwaltung->geldAuswerfen(rueckgeld);
-        zahlungErfolgreich = true;
-        zahlungAktiv = false;
+        QString ausgabe = QStringLiteral("Zu bezahlen: %1 EUR").arg(gesamterEinwurf, 'f', 2);
+        qDebug() << "Ausgabe: " << ausgabe;
+        display->displayText(ausgabe);
     }
-
-    QString ausgabe = QStringLiteral("Zu bezahlen: %1 EUR").arg(gesamterEinwurf, 'f', 2);
-    display->displayText(ausgabe);
 }
 
 void Zahlungseinheit::setDisplay(Display *display) {

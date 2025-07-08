@@ -43,6 +43,7 @@ void MainWindow::updateWindow(const QImage &img) {
 void MainWindow::updateWindowText(QString text){
     ui->touchDisplayLabel->clear();
     ui->touchDisplayLabel->setText(text);
+    qDebug() << "Aufgerufen3";
 }
 
 /*
@@ -77,6 +78,12 @@ void MainWindow::setSimulation(Simulation *sim) {
 
 void MainWindow::on_pushButton_2_released()
 {
-    sim->setMuenze_EUR(1.0);
+    sim->setMuenze_EUR(1.0f);
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    sim->setMuenze_EUR(2.0f);
 }
 

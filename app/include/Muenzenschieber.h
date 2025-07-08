@@ -12,6 +12,7 @@ private:
 public:
     Muenzenschieber();
     void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre);
+    void setMuenzSensor(MuenzEingabeSensor * sensor);
 };
 
 #endif

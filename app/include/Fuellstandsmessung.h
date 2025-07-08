@@ -29,6 +29,7 @@ public:
     void setMilchTank(Tankwaage *Tank);
     void setKaffeeTank(Tankwaage *Tank);
     void setRessourcen(Ressourcen *Tank);
+    void setZuckerTank(Tankwaage *Tank);
 
     Tankwaage* getWasserTank() const { return wasser; }
     Tankwaage* getMilchTank() const { return milch; }
