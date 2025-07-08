@@ -259,6 +259,41 @@ void tintegrationall::test_milchkaffee() {
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::HEIZEN);
     QCOMPARE(KoordinatorZustand::WARTEN_AUF_FERTIG, koordinator->getCurrentState());
 
+    // HEIZEN zu Kaffezufuhr bzw triggert Kaffeezufuhr
+    tickAll();
+    QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::KAFFEE_ZUFUHR);
+    // hier prüfe ich, dass das Ventil offen sein muss
+    QVERIFY(kaffeeOffen);
+
+    // Kaffeezufuhr zu Wartenaufbruehgruppee bzw triggert wartenaufbruehgruppe
+    for (int i = 0; i < 30; ++i) tickAll();
+    QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::WARTENAUFBRUEHGRUPPE);
+    QCOMPARE(bruehgruppe->getState(), STAMPFEN);
+
+    // setzen wir KOCHEN Zustand in der BG
+    bruehgruppe->setState(KOCHEN);
+    tickAll();
+    QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::PUMPING_WATER);
+    QVERIFY(wasserpumpeAktiv);
+
+    // Pumping water zu pumping milk bzw. triggert Pumping milk
+    for (int i = 0; i < 15; ++i) tickAll();
+    QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::PUMPING_MILK);
+    QVERIFY(milchpumpeAktiv);
+    QVERIFY(SchaeumerAktiv > 0);
+
+    // pumping milk zu zuckerauswerfen bzw. triggert Zuckerauswerfen
+    for (int i = 0; i < 20; ++i) tickAll();
+    QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::ZUCKERAUSWERFEN);
+    QVERIFY(ZuckerdispenserAktiv);
+
+    // ende IDLE
+    for (int i = 0; i < 10; ++i) tickAll();
+    bruehgruppe->setState(WARTEN);
+    tickAll();
+    QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::IDLE);
+    QVERIFY(!programmsteuerung->isBusy());
+
     /*
     for(int i=0; i<=100; i++) {
         if (globalMotorStatus == Kolbenmotor::motorStatus::runterfahren) {
