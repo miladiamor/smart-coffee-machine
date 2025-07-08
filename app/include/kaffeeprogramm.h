@@ -41,6 +41,6 @@ private:
     int milchKochhitze_Cel;
     bool mitZucker;
     bool milchZuerst;
-    bool stampfHoehe_mm;
+    float stampfHoehe_mm;
     Produkt* produkt;
 };

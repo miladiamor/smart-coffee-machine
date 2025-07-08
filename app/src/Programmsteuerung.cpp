@@ -70,6 +70,10 @@ Programmsteuerung::~Programmsteuerung(){}
 
     }
 
+    Kaffeeprogramm *Programmsteuerung::getKaffeeprogramm() {
+        return this->currentProgramm;
+    }
+
     void Programmsteuerung::tick(){
         if (!busy){
            return;

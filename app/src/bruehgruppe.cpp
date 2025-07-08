@@ -14,6 +14,10 @@ Bruehgruppe::~Bruehgruppe(){
 }
 */
 
+Kaffeeprogramm *Bruehgruppe::getKaffeeprogramm() {
+    return this->kaffeeprogramm;
+}
+
 void Bruehgruppe::trigger(BruehEvent event) {
     switch(state){
     case WARTEN:

@@ -57,6 +57,7 @@ public:
     void setWasserpumpe(Pumpe* pumpe);
     void setMilchpumpe(Pumpe* pumpe);
     void setZuckerdispenser(Zuckerdispenser* dispenser);
+    Kaffeeprogramm *getKaffeeprogramm();
     void ausfuehren(Kaffeeprogramm *programm);
     void setCurrentState(CoffeeState state);
     bool isBusy() const;

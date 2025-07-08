@@ -24,6 +24,7 @@ Kaffeeprogramm::Kaffeeprogramm(Ressourcen benoetigteRessourcen)
     milchKochhitze_Cel(0),
     mitZucker(false),
     milchZuerst(false),
+    stampfHoehe_mm(0),
     produkt(nullptr)
 {}
 

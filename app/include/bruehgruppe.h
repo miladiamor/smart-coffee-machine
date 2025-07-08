@@ -28,6 +28,7 @@ public:
     void setKaffeezufuhr(Ventil *kaffeeezufuhr);
     void setEntleerklappe(Klappe *entleerklappe);
 
+    Kaffeeprogramm *getKaffeeprogramm();
     // fürs testen
     void setState(BruehState state);
 private:

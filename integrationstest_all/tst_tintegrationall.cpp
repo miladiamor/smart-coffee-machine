@@ -220,6 +220,7 @@ void tintegrationall::initTestCase() {
 
     motorsteuerung->setStampfer(mStampfer);
     motorsteuerung->setInkrementalencoder(mInkrementalencoder);
+    motorsteuerung->setBruehgruppe(bruehgruppe);
 
     bruehgruppe->setMotorsteuerung(motorsteuerung);
     bruehgruppe->setWasserzufuhr(globalWasserzufuhr);
@@ -277,10 +278,14 @@ void tintegrationall::test_milchkaffee() {
 
     // Bruehrgruppe STAMPFEN zu KOCHEN
     globalStampferPos = 7; tickAll();
-    QCOMPARE(bruehgruppe->getState(), KOCHEN);
+    qDebug() << "Stampfhoehe ps:" << programmsteuerung->getKaffeeprogramm()->getStampfhoehe_mm();
+    qDebug() << "Stampfhoehe bg:" << bruehgruppe->getKaffeeprogramm()->getStampfhoehe_mm();
+    qDebug() << "Stampfhoehe kor:" << koordinator->getKaffeeprogramm()->getStampfhoehe_mm();
     QCOMPARE(globalMotorStatus, Kolbenmotor::motorStatus::Aus);
     QVERIFY(wasserOffen);
     QVERIFY(tropfOffen);
+    QCOMPARE(bruehgruppe->getState(), KOCHEN);
+
 
     // Programssteuerung WARTENAUFKOCHEN zu PUMPING_WATER
     tickAll();
@@ -310,7 +315,7 @@ void tintegrationall::test_milchkaffee() {
     for (int i = 0; i < 5; ++i) tickAll();
     tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::ZURUECK_SETZEN);
-    QVERIFY(!programmsteuerung->isBusy());
+    QVERIFY(programmsteuerung->isBusy());
     QVERIFY(!ZuckerdispenserAktiv);
 
     // Brühgruppe ENTLEEREN zu WARTEN

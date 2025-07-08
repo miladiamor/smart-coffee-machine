@@ -33,6 +33,10 @@ void Koordinator::kaffeeprogrammEinstellen(float km_g, float mm_g, float wm_g, f
     kaffeeprogramm->setStampfhoehe_mm(sh_mm);
 }
 
+Kaffeeprogramm *Koordinator::getKaffeeprogramm() {
+    return this->kaffeeprogramm;
+}
+
 void Koordinator::tick() {
     lastTouch = display->getLastTouch(); // mock
 

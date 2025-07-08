@@ -31,6 +31,7 @@ bool Programmsteuerung::istFertig() const { return true; }
 void Programmsteuerung::tick() {}
 
 // === MOCK Kaffeeprogramm ===
+bool setterAufgerufen = false;
 Kaffeeprogramm::Kaffeeprogramm(Ressourcen) {}
 void Kaffeeprogramm::setKaffeemenge_g(int) {}
 void Kaffeeprogramm::setMilchmenge_ml(int) {}
@@ -38,7 +39,7 @@ void Kaffeeprogramm::setWassermenge_ml(int) {}
 void Kaffeeprogramm::setWasserKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMilchKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMitZucker(bool) {}
-void Kaffeeprogramm::setStampfhoehe_mm(float) {}
+void Kaffeeprogramm::setStampfhoehe_mm(float) {setterAufgerufen = true;}
 Produkt* Kaffeeprogramm::getProdukt() const { return nullptr; }
 int Kaffeeprogramm::getKaffeemenge_g() const { return 10; }
 int Kaffeeprogramm::getMilchmenge_ml() const { return 20; }
@@ -115,6 +116,7 @@ void tkoordinator::testWartenZuZuckerwahl() {
 
     QVERIFY(displayCalled > prevDisplayCalled); // display updated on selection screen
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::ZUCKERWAHL);
+    QVERIFY(setterAufgerufen);
 }
 
 

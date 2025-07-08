@@ -41,6 +41,7 @@ public:
     void setzeZahlungseinheit(Zahlungseinheit* z);
     void setzeFuellstandsmessung(Fuellstandsmessung* f);
 
+    Kaffeeprogramm *getKaffeeprogramm();
     void tick();
 
     KoordinatorZustand getCurrentState() const {

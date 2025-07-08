@@ -41,6 +41,7 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
     void test_hochfahren();
+    void test_stoppenWennErreicht();
 };
 
 tmotorsteuerung::tmotorsteuerung() {}
@@ -79,6 +80,13 @@ void tmotorsteuerung::test_hochfahren() {
     QCOMPARE(pos, 7.0);
 }
 
+void tmotorsteuerung::test_stoppenWennErreicht() {
+    ms->stampferAusfahren(7);
+    pos = 7;
+    ms->tick();
+    QVERIFY(!runter);
+    QVERIFY(!hoch);
+}
 
 QTEST_APPLESS_MAIN(tmotorsteuerung)
 
