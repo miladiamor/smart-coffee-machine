@@ -40,7 +40,13 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 
 void MainWindow::updateWindow(const QImage &img) {
     QPixmap pm = QPixmap::fromImage(img).scaled(ui->touchDisplayLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    ui->touchDisplayLabel->clear();
     ui->touchDisplayLabel->setPixmap(pm);
+}
+
+void MainWindow::updateWindowText(QString text){
+    ui->touchDisplayLabel->clear();
+    ui->touchDisplayLabel->setText(text);
 }
 
 /*

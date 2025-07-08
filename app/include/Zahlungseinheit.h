@@ -3,6 +3,7 @@
 #include "Muenzroehrenspeicher.h"
 #include "MuenzEingabeSensor.h"
 #include "MuenzAuswerfer.h"
+#include "display.h"
 
 class Zahlungseinheit {
 private:
@@ -10,26 +11,21 @@ private:
     bool zahlungErfolgreich;        // ob Zahlung laeuft
     float gesamterEinwurf;         // bisher eingeworfener Betrag
     float preis;
-    Muenzroehrenspeicher* roehren;
-    MuenzEingabeSensor* eingabe;
+    Muenzroehrenspeicher* speicherVerwaltung;
+    MuenzEingabeSensor* sensor;
     MuenzAuswerfer* auswerfer;
-
+    Display *display;
 public:
     Zahlungseinheit();  // Standardkonstruktor fuer Unittests
-    Zahlungseinheit(Muenzroehrenspeicher* roehren,
-                    MuenzEingabeSensor* eingabe,
+    Zahlungseinheit(Muenzroehrenspeicher* speicherVerwaltung,
+                    MuenzEingabeSensor* sensor,
                     MuenzAuswerfer* auswerfer);
-
-
-    bool getZahlungErfolgreich();
-
-
-    void getzahnlungErfolgreicht();
-    bool getZahlungErfolgreich();
 
     bool getZahlungErfolgreich();
 
     void versucheZahlung(float preis);  // Startet Zahlung
     void zahlungAbbrechen();                 // Bricht Zahlung ab
     void tick();                             // Zustandsbasierte Ausfuehrung
+
+    void setDisplay(Display *display);
 };

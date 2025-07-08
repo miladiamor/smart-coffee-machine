@@ -26,16 +26,16 @@ bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
     else if (wert == 0.2f) ziel = roehre20Cent;
     else if (wert == 0.1f) ziel = roehre10Cent;
     else {
-        if (auswerfer) auswerfer->auswerfenMuenze(wert);
         return false;
     }
 
-    if (!ziel || ziel->istVoll()) {
-        if (auswerfer) auswerfer->auswerfenMuenze(wert);
+    if (ziel->istVoll()) {
+        auswerfer->auswerfenMuenze(ziel);
+        ziel->reduziereAnzahl();
         return false;
     }
 
-    if (schieber) schieber->schiebeMuenzeInRoehre(ziel);
+    schieber->schiebeMuenzeInRoehre(ziel);
     ziel->erhoeheAnzahl();
     return true;
 }
@@ -52,8 +52,8 @@ void Muenzroehrenspeicher::muenzeAuswerfen(float wert) {
     else return;
 
     if (quelle->getAktuelleAnzahl() > 0 ) {
-        quelle->verringereAnzahl();
-        auswerfer->auswerfenMuenze(wert);
+        auswerfer->auswerfenMuenze(quelle);
+        quelle->reduziereAnzahl();
     }
 }
 
@@ -71,14 +71,10 @@ void Muenzroehrenspeicher::geldAuswerfen(float betrag) {
         else if (wert == 0.2f) quelle = roehre20Cent;
         else if (wert == 0.1f) quelle = roehre10Cent;
 
-        while (betrag >= wert - 0.001f && quelle && quelle->getAktuelleAnzahl() > 0) {
+        while (betrag >= wert && quelle->getAktuelleAnzahl() > 0) {
             betrag -= wert;
             muenzeAuswerfen(wert);
+            quelle->reduziereAnzahl();
         }
     }
-    return true;
-}
-
-void Muenzroehrenspeicher::tick() {
-
 }

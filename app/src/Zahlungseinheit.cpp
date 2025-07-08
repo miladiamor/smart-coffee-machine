@@ -1,38 +1,56 @@
 #include "Zahlungseinheit.h"
+#include <cmath>
 
 // Konstruktor ohne Parameter fuer Unittests
 Zahlungseinheit::Zahlungseinheit() {
-    roehren = nullptr;
-    eingabe = nullptr;
+    sensor = nullptr;
+    speicherVerwaltung = nullptr;
     auswerfer = nullptr;
     gesamterEinwurf = 0.0f;
     zahlungAktiv = false;
 }
 
 // Konstruktor mit Abhaengigkeiten
-Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* roehren,
-                                 MuenzEingabeSensor* eingabe,
+Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* speicherVerwaltung,
+                                 MuenzEingabeSensor* sensor,
                                  MuenzAuswerfer* auswerfer)
     : zahlungAktiv(false), gesamterEinwurf(0.0f),
-    roehren(roehren),
-    eingabe(eingabe), auswerfer(auswerfer) {}
+    speicherVerwaltung(speicherVerwaltung),
+    sensor(sensor), auswerfer(auswerfer) {}
 
 // Initialisiert die Zahlung fuer ein Produkt
-//bool Zahlungseinheit::versucheZahlung() {
-
-
-//    return true;
-//}
+void Zahlungseinheit::versucheZahlung(float preis) {
+    if (!zahlungAktiv) {
+        gesamterEinwurf = preis;
+        this->preis = preis;
+        zahlungAktiv = true;
+    }
+}
 
 // Fuehrt einen Tick aus: verarbeitet eine Muenze
 void Zahlungseinheit::tick() {
-   // if (!zahlungAktiv || state != ZAHLUNG_LAEUFT)
-     //   return;
-}
+    if (zahlungAktiv) {return;}
+    if (!sensor->getMuenzeGueltig()) {return;}
 
-// Bricht den Zahlungsvorgang ab und gibt Geld zurueck
-void Zahlungseinheit::zahlungAbbrechen() {
-    if (zahlungAktiv) {
+    float eingeworfeneMuenze = sensor->getEingeworfeneMuenze();
+    if (!speicherVerwaltung->fuegeMuenzeEin(eingeworfeneMuenze)) {zahlungAktiv = false; return;}
 
+    gesamterEinwurf -= eingeworfeneMuenze;
+    if (gesamterEinwurf == 0) {
+        zahlungErfolgreich = true;
+        zahlungAktiv = false;
+        return;
+    } else if (gesamterEinwurf < 0) {
+        float rueckgeld = std::abs(gesamterEinwurf);
+        speicherVerwaltung->geldAuswerfen(rueckgeld);
+        zahlungErfolgreich = true;
+        zahlungAktiv = false;
     }
+
+    display->displayText(QStringLiteral("Zu bezahlen: %1 €").arg(gesamterEinwurf, 0, 'f', 2));
 }
+
+void Zahlungseinheit::setDisplay(Display *display) {
+    this->display = display;
+}
+

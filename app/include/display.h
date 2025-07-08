@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QPointF>
 #include <QImage>
+#include <QString>
 
 class Display : public QObject
 {
@@ -14,9 +15,11 @@ public:
 
     QPointF getLastTouch();
     void displayScreen(const QImage &img);
+    void displayText(QString text);
 
 signals:
     void updateDisplay(const QImage &img);
+    void updateText(QString text);
 
 public slots:
     void acceptTouch(QPointF &lastTouch);
