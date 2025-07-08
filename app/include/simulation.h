@@ -24,6 +24,10 @@ class Simulation : public QObject
 public:
     Simulation();
 
+    void setKaffeebehaelter(Tankwaage *kaffeebehaelter);
+    void setWasserbehaelter(Tankwaage *wasserbehaelter);
+    void setMilchbehaelter(Tankwaage *milchbehaelter);
+    void setZuckerbehaelter(Tankwaage *zuckerBehaelter);
     void setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter);
     void setKolbenmotor(Kolbenmotor *kolbenmotor);
     void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);

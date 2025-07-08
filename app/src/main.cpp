@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
     Bruehgruppe bruehgruppe;
     Clock clock(2);
     Display display;
+    Tankwaage wasserbehaelter(), kaffeebehaelter(5000), milchbehaelter(5000), kaffeerestbehaelter(0), zuckerbehaelter(500);
     Fuellstandsmessung fuellstandsmessung;
     Heizelemente heizelemente;
     Heizregler heizregler;
@@ -59,7 +60,6 @@ int main(int argc, char *argv[])
     Ressourcen ressourcen;
     Schaeumer schaeumer;
     Simulation simulation;
-    Tankwaage tankwaage(0.0f);
     Temperatursensor temperatursensor;
     Ventil ventil;
     Zahlungseinheit zahlungseinheit;
@@ -94,7 +94,8 @@ int main(int argc, char *argv[])
 
     kaffeeprogramm.setBenoetigteRessourcen(ressourcen);
 
-    simulation.setKaffeerestbehaelter(&tankwaage);
+    simulation.setKaffeerestbehaelter(&kaffeerestbehaelter);
+    simulation.
     simulation.setKolbenmotor(&kolbenmotor);
     simulation.setInkrementalencoder(&inkrementalencoder);
     simulation.setWasserPumpe(&pumpe);

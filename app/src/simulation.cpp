@@ -8,6 +8,28 @@ Simulation::Simulation() :
     kaffeebehaelter_g(0),
     bruehkammerKaffeeinhalt_g(0){}
 
+void Simulation::setKaffeebehaelter(Tankwaage *kaffeebehaelter)
+{
+    this->kaffeebehaelter = kaffeebehaelter;
+}
+
+void Simulation::setWasserbehaelter(Tankwaage *wasserbehaelter)
+{
+    this->wasserbehaelter = wasserbehaelter;
+}
+
+void Simulation::setMilchbehaelter(Tankwaage *milchbehaelter)
+{
+    this->milchbehaelter = milchbehaelter;
+}
+
+void Simulation::setZuckerbehaelter(Tankwaage *zuckerBehaelter)
+{
+    this->zuckerbehaelter = zuckerBehaelter;
+}
+
+
+
 //Simulation::Simulation() {}
 
 
