@@ -162,11 +162,11 @@ int main(int argc, char *argv[])
     QObject::connect(&clock, &Clock::update,
                      &simulation, &Simulation::tick,
                      Qt::DirectConnection);
-
+    /*
     QObject::connect(&clock, &Clock::update,
                      &wasserRegler, &Heizregler::tick,
                      Qt::DirectConnection);
-    /*
+
     QObject::connect(&clock, &Clock::update,
                      &milchRegler, &Heizregler::tick,
                      Qt::DirectConnection);

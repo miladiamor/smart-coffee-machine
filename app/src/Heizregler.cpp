@@ -1,10 +1,10 @@
 #include "Heizregler.h"
+#include "qdebug.h"
 
 void Heizregler::temperaturRegeln(int zieltemperatur_Cel) {
     if(!eingeschaltet && zieltemperatur_Cel > aktuelleTemperatur_Cel){
     this->zieltemperatur_Cel = zieltemperatur_Cel;
     this->eingeschaltet = true;
-    //if (heizen) heizen->einschalten();
     this->heizen->einschalten();
     }
 }
@@ -29,11 +29,14 @@ bool Heizregler::getEingeschaltet() {
 
 void Heizregler::tick(){
     if (eingeschaltet){
+        qDebug() << "1";
         if (istTemperaturErreicht()){
             eingeschaltet = false;
+             qDebug() << "2";
             heizen->ausschalten();
+              qDebug() << "3";
         } else{
-            aktuelleTemperatur_Cel++;
+            heizen->einschalten();
         }
     }
 }
