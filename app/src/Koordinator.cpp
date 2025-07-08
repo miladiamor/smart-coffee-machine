@@ -24,6 +24,15 @@ void Koordinator::zeigeBild(const QString& pfad) {
     }
 }
 
+void Koordinator::kaffeeprogrammEinstellen(float km_g, float mm_g, float wm_g, float wkh_cel, float mkh_cel, float sh_mm){
+    kaffeeprogramm->setKaffeemenge_g(km_g);
+    kaffeeprogramm->setMilchmenge_ml(mm_g);
+    kaffeeprogramm->setWassermenge_ml(wm_g);
+    kaffeeprogramm->setWasserKochhitze_Cel(wkh_cel);
+    kaffeeprogramm->setMilchKochhitze_Cel(mkh_cel);
+    kaffeeprogramm->setstampfHoehe_mm(sh_mm);
+}
+
 void Koordinator::tick() {
     if (!display || !programmsteuerung || !zahlungseinheit || !fuellstandsmessung) {
         return;
@@ -43,29 +52,13 @@ void Koordinator::tick() {
             kaffeeprogramm = new Kaffeeprogramm(res);
 
             if (lastTouch.x() < width / 2 && lastTouch.y() < height / 2) {
-                kaffeeprogramm->setKaffeemenge_g(15);
-                kaffeeprogramm->setMilchmenge_ml(150);
-                kaffeeprogramm->setWassermenge_ml(50);
-                kaffeeprogramm->setWasserKochhitze_Cel(90);
-                kaffeeprogramm->setMilchKochhitze_Cel(65);
+                kaffeeprogrammEinstellen(15, 150, 50, 90, 65, 7);
             } else if (lastTouch.x() >= width / 2 && lastTouch.y() < height / 2) {
-                kaffeeprogramm->setKaffeemenge_g(18);
-                kaffeeprogramm->setMilchmenge_ml(0);
-                kaffeeprogramm->setWassermenge_ml(150);
-                kaffeeprogramm->setWasserKochhitze_Cel(92);
-                kaffeeprogramm->setMilchKochhitze_Cel(0);
+                kaffeeprogrammEinstellen(18, 0, 150, 92, 0, 6);
             } else if (lastTouch.x() < width / 2 && lastTouch.y() >= height / 2) {
-                kaffeeprogramm->setKaffeemenge_g(12);
-                kaffeeprogramm->setMilchmenge_ml(170);
-                kaffeeprogramm->setWassermenge_ml(40);
-                kaffeeprogramm->setWasserKochhitze_Cel(88);
-                kaffeeprogramm->setMilchKochhitze_Cel(60);
+                kaffeeprogrammEinstellen(12, 170, 40, 88, 60, 7);
             } else {
-                kaffeeprogramm->setKaffeemenge_g(14);
-                kaffeeprogramm->setMilchmenge_ml(120);
-                kaffeeprogramm->setWassermenge_ml(60);
-                kaffeeprogramm->setWasserKochhitze_Cel(90);
-                kaffeeprogramm->setMilchKochhitze_Cel(65);
+                kaffeeprogrammEinstellen(14, 120, 60, 90, 65, 6);
             }
 
             bool genugWasser = fuellstandsmessung->hatGenug(

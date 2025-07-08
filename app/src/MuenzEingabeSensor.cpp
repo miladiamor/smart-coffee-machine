@@ -23,7 +23,3 @@ bool MuenzEingabeSensor::getMuenzeGueltig() {
     return muenzeGueltig;
 }
 
-// Diese wird speziell fuer Unittests verwendet um eine Muenze zu simulieren
-void MuenzEingabeSensor::simuliereMuenze(float wert) {
-    setEingeworfeneMuenze(wert);
-}

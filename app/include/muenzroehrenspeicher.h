@@ -4,6 +4,7 @@
 #include "Muenzroehre.h"
 #include "Muenzenschieber.h"
 #include "MuenzAuswerfer.h"
+#include "MuenzEingabeSensor.h"
 
 class Muenzroehrenspeicher {
 private:
@@ -15,7 +16,7 @@ private:
 
     Muenzenschieber* schieber;
     MuenzAuswerfer* auswerfer;
-
+    MuenzEingabeSensor *sensor;
 public:
     // Standardkonstruktor fuer Unittests
     Muenzroehrenspeicher();
@@ -28,6 +29,7 @@ public:
     bool fuegeMuenzeEin(float wert);
     void muenzeAuswerfen(float wert);
     void geldAuswerfen(float betrag); // wirft mehrere Münzen aus
+    void tick();
 };
 
 #endif

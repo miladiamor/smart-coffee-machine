@@ -28,7 +28,7 @@ bool Zahlungseinheit::versucheZahlung(float preis) {
 
 // Fuehrt einen Tick aus: verarbeitet eine Muenze
 void Zahlungseinheit::tick() {
-    if (!zahlungAktiv || state != ZAHLUNG_LAEUFT)
+    if (!zahlungAktiv)
         return;
 
     float muenzwert = eingabe->getEingeworfeneMuenze();

@@ -43,3 +43,9 @@ bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
     return true;
 }
 
+void Muenzroehrenspeicher::tick() {
+    if (!sensor->getMuenzeGueltig()) {
+        return;
+    }
+
+}
