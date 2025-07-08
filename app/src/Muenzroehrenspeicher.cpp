@@ -43,28 +43,3 @@ bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
     return true;
 }
 
-
-// Gibt den gesamten Geldwert im Speicher zurueck
-// Wenn ein Rohr nicht existiert dann gibt 0.0f zurück
-float Muenzroehrenspeicher::gesamtWert() const {
-    if (!roehre2Euro || !roehre1Euro || !roehre50Cent || !roehre20Cent || !roehre10Cent)
-        return 0.0f;
-
-    // Wert berechnen: Anzahl * Muenzwert
-    return 2.0f * roehre2Euro->getAktuelleAnzahl() +
-           1.0f * roehre1Euro->getAktuelleAnzahl() +
-           0.5f * roehre50Cent->getAktuelleAnzahl() +
-           0.2f * roehre20Cent->getAktuelleAnzahl() +
-           0.1f * roehre10Cent->getAktuelleAnzahl();
-}
-
-
-//  Leert alle Roehren im Speicher
-// Setzt Anzahl aller Münzen auf 0
-void Muenzroehrenspeicher::leeren() {
-    if (roehre2Euro) roehre2Euro->leeren();
-    if (roehre1Euro) roehre1Euro->leeren();
-    if (roehre50Cent) roehre50Cent->leeren();
-    if (roehre20Cent) roehre20Cent->leeren();
-    if (roehre10Cent) roehre10Cent->leeren();
-}

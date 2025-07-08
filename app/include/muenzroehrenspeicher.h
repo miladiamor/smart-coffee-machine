@@ -26,8 +26,8 @@ public:
                          Muenzenschieber* schieber, MuenzAuswerfer* auswerfer);
 
     bool fuegeMuenzeEin(float wert);
-    float gesamtWert() const;
-    void leeren();
+    void muenzeAuswerfen(float wert);
+    void geldAuswerfen(float betrag); // wirft mehrere Münzen aus
 };
 
 #endif

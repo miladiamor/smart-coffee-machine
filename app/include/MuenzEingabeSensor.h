@@ -12,9 +12,6 @@ public:
     void setEingeworfeneMuenze(float eingeworfeneMuenze);
     float getEingeworfeneMuenze();
     bool getMuenzeGueltig();
-
-    // Diese wird speziell fuer Unittests verwendet um eine Muenze zu simulieren
-    void simuliereMuenze(float wert);
 };
 
 #endif

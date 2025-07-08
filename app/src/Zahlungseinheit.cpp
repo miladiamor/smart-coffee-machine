@@ -6,7 +6,6 @@ Zahlungseinheit::Zahlungseinheit() {
     eingabe = nullptr;
     auswerfer = nullptr;
     gesamterEinwurf = 0.0f;
-    state = ZAHLUNG_IDLE;
     zahlungAktiv = false;
 }
 
@@ -14,7 +13,7 @@ Zahlungseinheit::Zahlungseinheit() {
 Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* roehren,
                                  MuenzEingabeSensor* eingabe,
                                  MuenzAuswerfer* auswerfer)
-    : state(ZAHLUNG_IDLE), zahlungAktiv(false), gesamterEinwurf(0.0f),
+    : zahlungAktiv(false), gesamterEinwurf(0.0f),
     roehren(roehren),
     eingabe(eingabe), auswerfer(auswerfer) {}
 
@@ -22,7 +21,6 @@ Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* roehren,
 bool Zahlungseinheit::versucheZahlung(float preis) {
     this->preis = preis;
     gesamterEinwurf = 0.0f;
-    state = ZAHLUNG_LAEUFT;
     zahlungAktiv = true;
 
     return true;

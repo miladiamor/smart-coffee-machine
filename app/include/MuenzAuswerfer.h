@@ -2,16 +2,16 @@
 #define MUENZAUSWERFER_H
 
 #include <iostream>
+#include "muenzroehre.h"
 
 class MuenzAuswerfer {
+private:
+    Muenzroehre *aktiveRoehre;
 public:
     MuenzAuswerfer(); // Standardkonstruktor für Unit-Tests
 
-    // Wirft den angegebenen Geldbetrag aus (als Rückgeld bei Abbruch oder Zahlung)
-    void auswerfen(float betrag);
-
     // Wirft eine einzelne Münze aus (bei ungültiger Eingabe)
-    void auswerfenMuenze(float wert);
+    void auswerfenMuenze(float aktiveRoehre);
 };
 
 #endif
