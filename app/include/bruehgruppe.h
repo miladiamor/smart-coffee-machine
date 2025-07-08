@@ -29,8 +29,10 @@ public:
     void setEntleerklappe(Klappe *entleerklappe);
 
     Kaffeeprogramm *getKaffeeprogramm();
+
     // fürs testen
     void setState(BruehState state);
+
 private:
     BruehState state = WARTEN;
     Ventil *tropfstopfventil, *wasserzufuhr, *kaffeezufuhr;

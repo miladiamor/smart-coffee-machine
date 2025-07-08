@@ -66,7 +66,6 @@ int main(int argc, char *argv[])
     Zahlungseinheit zahlungseinheit;
     Zuckerdispenser zuckerdispenser;
 
-
     QObject::connect(&mw, &MainWindow::sentTouch,
                      &display, &Display::acceptTouch,
                     Qt::DirectConnection);

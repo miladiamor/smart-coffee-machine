@@ -17,6 +17,33 @@
 #include "ventil.h"
 #include "zahlungseinheit.h"
 #include "Fuellstandsmessung.h"
+// zahlungseinheut
+#include "Zahlungseinheit.h"
+#include "MuenzAuswerfer.h"
+#include "MuenzEingabeSensor.h"
+#include "Muenzenschieber.h"
+#include "muenzroehrenspeicher.h"
+#include "muenzroehre.h"
+
+// MockUps Zahlungseinheit
+Muenzroehre::Muenzroehre() {}
+bool Muenzroehre::istVoll() const {return false;}
+int Muenzroehre::getAnzahl() const {return 10;}
+int globalAufrufeErhoeheAnzahl = 0;
+int globalAufrufeReduziereAnzahl = 0;
+void Muenzroehre::erhoeheAnzahl() {globalAufrufeErhoeheAnzahl++;}
+void Muenzroehre::reduziereAnzahl() {globalAufrufeReduziereAnzahl--;}
+
+MuenzEingabeSensor::MuenzEingabeSensor() {}
+float MuenzEingabeSensor::getEingeworfeneMuenze() {return 1.0;}
+bool MuenzEingabeSensor::getMuenzeGueltig() {return true;}
+
+MuenzAuswerfer::MuenzAuswerfer() {}
+int globalAnzahlMuenze = 10;
+void MuenzAuswerfer::auswerfenMuenze(Muenzroehre *aktiveRoehre) {globalAnzahlMuenze--;}
+
+Muenzenschieber::Muenzenschieber() {}
+void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre) {globalAnzahlMuenze++;}
 
 //MockUps Ventile und Klappen für die Bruehgruppe
 Ventil *globalWasserzufuhr, *globalKaffeezufuhr, *globalTropfstopf;
@@ -156,7 +183,9 @@ private:
     Motorsteuerung *motorsteuerung;
 
     Fuellstandsmessung *mFuellstandmessung;
+
     Zahlungseinheit *mZahlungseinheit;
+    Muenzroehrenspeicher *mMuenzroehre;
 
     Pumpe *mWasserpumpe, *mMilchpumpe;
     Heizregler *mHeizregler;

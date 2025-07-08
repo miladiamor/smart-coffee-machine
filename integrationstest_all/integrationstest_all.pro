@@ -27,7 +27,14 @@ HEADERS += \
     ../app/include/zahlungseinheit.h \
     ../app/include/fuellstandmessung.h \
     ../app/include/kolbenmotor.h \
-    ../app/include/inkrementalencoder.h
+    ../app/include/inkrementalencoder.h \
+    ../app/include/zahlungseinheit.h \
+    ../app/include/muenzroehrenspeicher.h \
+    ../app/include/muenzroehre.h \
+    ../app/include/muenzschieber.h \
+    ../app/include/muenzeingabesensor.h \
+    ../app/include/muenzauswerfer.h \
+    ../app/include/muenzschieber.h \
 
 SOURCES +=  tst_tintegrationall.cpp \
     ../app/src/kaffeeprogramm.cpp \
@@ -36,4 +43,6 @@ SOURCES +=  tst_tintegrationall.cpp \
     ../app/src/display.cpp \
     ../app/src/programmsteuerung.cpp \
     ../app/src/bruehgruppe.cpp \
-    ../app/src/motorsteuerung.cpp
+    ../app/src/motorsteuerung.cpp \
+    ../app/src/zahlungseinheit.cpp \
+    ../app/src/muenzroehrenspeicher.cpp
