@@ -1,5 +1,6 @@
 #include "Zahlungseinheit.h"
 #include <cmath>
+#include <QDebug>
 
 // Konstruktor ohne Parameter fuer Unittests
 Zahlungseinheit::Zahlungseinheit() {
@@ -61,7 +62,7 @@ void Zahlungseinheit::setMuenzAuswerfer(MuenzAuswerfer *muenzauswerfer)
 
 // Fuehrt einen Tick aus: verarbeitet eine Muenze
 void Zahlungseinheit::tick() {
-    if (zahlungAktiv) {return;}
+    if (!zahlungAktiv) {return;}
     if (!sensor->getMuenzeGueltig()) {return;}
 
     float eingeworfeneMuenze = sensor->getEingeworfeneMuenze();
@@ -79,7 +80,8 @@ void Zahlungseinheit::tick() {
         zahlungAktiv = false;
     }
 
-    display->displayText(QStringLiteral("Zu bezahlen: %1 €").arg(gesamterEinwurf, 0, 'f', 2));
+    QString ausgabe = QStringLiteral("Zu bezahlen: %1 EUR").arg(gesamterEinwurf, 'f', 2);
+    display->displayText(ausgabe);
 }
 
 void Zahlungseinheit::setDisplay(Display *display) {

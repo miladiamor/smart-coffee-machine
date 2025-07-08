@@ -313,12 +313,12 @@ void tintegrationall::test_milchkaffee() {
     tickAll();
     QCOMPARE(KoordinatorZustand::BEZAHLEN, koordinator->getCurrentState());
 
-    tickAll();
-    QCOMPARE(spy->count(), 1);
-
-    QVariant arg = spy->takeFirst();
-    QString emitted = qvariant_cast<QString>(arg);
-    qDebug() << "1. Preis: " << emitted;
+    for (int i=0; i<4; i++) {
+        tickAll();
+        QList<QVariant> args = spy->takeFirst();
+        QString emitted = args.at(0).toString();
+        qDebug() << "Preis: " << emitted;
+    }
 
     // programmsteuerung geht in Ausführen über
     tickAll();
