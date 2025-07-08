@@ -9,7 +9,7 @@ private:
 
 public:
     Muenzenschieber();  //  Standardkonstruktor vorhanden
-    void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre);  // ✔ wichtige Methode
+    void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre);
 };
 
 #endif
