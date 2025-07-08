@@ -103,6 +103,7 @@ bool Heizregler::getEingeschaltet() {
     } else if (this == globalMilchHeizer){
         return milchheizerAktiv;
     }
+    return false;
 }
 
 bool Heizregler::istTemperaturErreicht() const {
@@ -253,6 +254,7 @@ void tintegrationall::test_milchkaffee() {
     tickAll();
     QCOMPARE(KoordinatorZustand::BEZAHLEN, koordinator->getCurrentState());
 
+    // programmsteuerung geht in Ausführen über
     tickAll();
     QCOMPARE(KoordinatorZustand::AUSFUEHREN, koordinator->getCurrentState());
     tickAll();
@@ -262,31 +264,42 @@ void tintegrationall::test_milchkaffee() {
     // HEIZEN zu Kaffezufuhr bzw triggert Kaffeezufuhr
     tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::KAFFEE_ZUFUHR);
+    QCOMPARE(bruehgruppe->getState(), KAFFEEZUFUHR);
     // hier prüfe ich, dass das Ventil offen sein muss
     QVERIFY(kaffeeOffen);
 
-    // Kaffeezufuhr zu Wartenaufbruehgruppee bzw triggert wartenaufbruehgruppe
-    for (int i = 0; i < 30; ++i) tickAll();
+    // Kaffeezufuhr zu Wartenaufbruehgruppee bzw triggert wartenaufbruehgruppe x
+    for (int i = 0; i < 50; i++) tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::WARTENAUFBRUEHGRUPPE);
     QCOMPARE(bruehgruppe->getState(), STAMPFEN);
+    QVERIFY(!kaffeeOffen);
+    QCOMPARE(globalMotorStatus, Kolbenmotor::motorStatus::runterfahren);
 
-    // setzen wir KOCHEN Zustand in der BG
+    // Bruehrgruppe STAMPFEN zu KOCHEN
+    globalStampferPos = 7; tickAll();
+    QCOMPARE(bruehgruppe->getState(), KOCHEN);
+    QCOMPARE(globalMotorStatus, Kolbenmotor::motorStatus::Aus);
+    QVERIFY(wasserOffen);
+    QVERIFY(tropfOffen);
+
+
+    // setzen wir KOCHEN Zustand in der BG x
     tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::PUMPING_WATER);
     QVERIFY(wasserpumpeAktiv);
 
-    // Pumping water zu pumping milk bzw. triggert Pumping milk
+    // Pumping water zu pumping milk bzw. triggert Pumping milk x
     for (int i = 0; i < 15; ++i) tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::PUMPING_MILK);
     QVERIFY(milchpumpeAktiv);
     QVERIFY(SchaeumerAktiv > 0);
 
-    // pumping milk zu zuckerauswerfen bzw. triggert Zuckerauswerfen
+    // pumping milk zu zuckerauswerfen bzw. triggert Zuckerauswerfen x
     for (int i = 0; i < 20; ++i) tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::ZUCKERAUSWERFEN);
     QVERIFY(ZuckerdispenserAktiv);
 
-    // ende IDLE
+    // ende IDLE x
     for (int i = 0; i < 10; ++i) tickAll();
     bruehgruppe->setState(WARTEN);
     tickAll();

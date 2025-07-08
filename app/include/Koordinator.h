@@ -32,7 +32,7 @@ private:
     QPointF lastTouch;
 
     void zeigeBild(const QString& pfad);
-
+    void kaffeeprogrammEinstellen(float km_g, float mm_g, float wm_g, float wkh_cel, float mkh_cel, float sh_mm);
 public:
     Koordinator();
 

@@ -92,7 +92,7 @@ void Simulation::tick(){
         temperatursensor.setTemperatur_Cel(milchrohrtemperatur_cel);
     }
 
-    // Während des Offeneventils fließt das Wasser in der BG
+    // Während des Offeneventils fließt das Wasser in den Kaffee
     if (wasserpumpe->get_Aktiv()) {
         if (wasserzufuhrVentil->get_ist_offen() && tropfstopfVentil->get_ist_offen()) {
             float wasserMenge = PUMP_WASSER_G_PRO_TICK * 0.001f;

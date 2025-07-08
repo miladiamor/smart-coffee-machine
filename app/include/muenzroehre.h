@@ -1,5 +1,4 @@
 #pragma once
-
 // Diese Klasse repraesentiert ein passives Muenzrohr (Sensor),
 // das nur die Anzahl der enthaltenen Muenzen verfolgt.
 class Muenzroehre {
