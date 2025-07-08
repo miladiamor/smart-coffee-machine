@@ -23,7 +23,7 @@ void Display::displayText(QString text) {
     emit updateText(text);
 }
 
-void Display::acceptTouch(QPointF &lastTouch){
+void Display::acceptTouch(QPointF lastTouch){
     this->lastTouch = lastTouch;
 }
 

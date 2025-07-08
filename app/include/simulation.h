@@ -15,7 +15,7 @@
 #include "Pumpe.h"
 #include "Schaeumer.h"
 #include "QThread"
-
+#include "MuenzEingabeSensor.h"
 
 
 class Simulation : public QObject
@@ -30,7 +30,9 @@ public:
     void setWasserPumpe(Pumpe *pumpe);
     void setMilchPumpe (Pumpe *pumpe);
     void setSchaeumer (Schaeumer *schaeumer);
+    void setMuenzEingabeSensor(MuenzEingabeSensor *muenzeingabesensor);
 
+    void setMuenze_EUR(float muenze_EUR);
 
 public slots:
     void tick();
@@ -59,6 +61,12 @@ private:
         *wasserbehaelter, *kaffeebehaelter,
         *milchbehaelter,
         *zuckerbehaelter;
+
+    // Sensor Münze
+    MuenzEingabeSensor *muenzSensor;
+
+    //Münze
+    float muenze_EUR;
 
     // Temperaturen
     float wasserrohrtemperatur_cel, milchrohrtemperatur_cel;

@@ -22,7 +22,7 @@ signals:
     void updateText(QString text);
 
 public slots:
-    void acceptTouch(QPointF &lastTouch);
+    void acceptTouch(QPointF lastTouch);
 
 private:
     QPointF lastTouch;

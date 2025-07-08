@@ -9,7 +9,7 @@ class Koordinator;
 #include <QPointF>
 #include <QString>
 class MainWindow;
-#include "display.h"
+#include "simulation.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,8 +23,9 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void setSimulation(Simulation *sim);
 signals:
-    void sentTouch(QPointF &lastTouch);
+    void sentTouch(QPointF lastTouch);
 
 public slots:
     void updateWindow(const QImage &img);
@@ -40,12 +41,14 @@ private slots:
     void on_btnLatteMachiato_clicked();
 */
 
+    void on_pushButton_2_released();
+
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
+    Simulation *sim;
     Ui::MainWindow *ui;
     QProgressBar* cup;
-    Display *display;
 };
 

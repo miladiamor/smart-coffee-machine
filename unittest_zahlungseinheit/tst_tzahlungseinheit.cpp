@@ -26,7 +26,7 @@ void Display::displayText(QString text) {
     displayCalled++;
     lastDisplayedText = text;
 }
-void Display::acceptTouch(QPointF &) {
+void Display::acceptTouch(QPointF ) {
 }
 
 // === MOCK MuenzEingabeSensor ===

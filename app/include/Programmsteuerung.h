@@ -15,9 +15,9 @@ class Kaffeeprogramm;
 class Clock;
 class Pumpe;
 
-class Programmsteuerung : public QObject {
+class Programmsteuerung : public QObject
+{
     Q_OBJECT
-
 public:
     enum class CoffeeState{
         IDLE,

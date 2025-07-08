@@ -11,8 +11,6 @@ class Clock : public QObject
 
 public:
     Clock(int ticks);
-    void start();
-    void stop();
 
 signals:
     void update();
@@ -23,7 +21,6 @@ public slots:
 private:
     int ticks;
     QTimer timer;
-    QTime lastStartTime;
 };
 
 #endif // CLOCK_H

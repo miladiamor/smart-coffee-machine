@@ -2,14 +2,7 @@
 
 Clock::Clock(int ticks) : QObject(nullptr), ticks(ticks) {
     QObject::connect(&timer, &QTimer::timeout, this, &Clock::tick);
-}
-
-void Clock::start(){
-    timer.start();
-}
-
-void Clock::stop(){
-    timer.stop();
+    timer.start(1000 / ticks);
 }
 
 void Clock::tick(){

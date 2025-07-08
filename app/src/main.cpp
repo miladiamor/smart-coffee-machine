@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     Bruehgruppe bruehgruppe;
-    Clock clock(100);
+    Clock clock(2);
     Display display;
     Fuellstandsmessung fuellstandsmessung;
     Heizelemente heizelemente;
@@ -124,6 +124,21 @@ int main(int argc, char *argv[])
 
     QObject::connect(&display, &Display::updateDisplay,
                     &mw, &MainWindow::updateWindow,
+                     Qt::DirectConnection);
+
+
+    //CLOCK
+
+    QObject::connect(&clock, &Clock::update,
+                     &koordinator, &Koordinator::tick,
+                     Qt::DirectConnection);
+
+    QObject::connect(&clock, &Clock::update,
+                     &zahlungseinheit, &Zahlungseinheit::tick,
+                     Qt::DirectConnection);
+
+    QObject::connect(&clock, &Clock::update,
+                     &programmsteuerung, &Programmsteuerung::tick,
                      Qt::DirectConnection);
 
     mw.show();

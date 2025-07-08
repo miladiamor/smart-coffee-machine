@@ -1,6 +1,5 @@
 #include "Koordinator.h"
-
-Koordinator::Koordinator() {}
+#include <QDebug>
 
 void Koordinator::setzeDisplay(Display* d) {
     display = d;
@@ -19,9 +18,9 @@ void Koordinator::setzeFuellstandsmessung(Fuellstandsmessung* f) {
 }
 
 void Koordinator::zeigeBild(const QString& pfad) {
-    if (display) {
-        display->displayScreen(QImage(pfad)); // mock
-    }
+    QImage img;
+    img.load(pfad);
+    display->displayScreen(img); // mock
 }
 
 void Koordinator::kaffeeprogrammEinstellen(float km_g, float mm_g, float wm_g, float wkh_cel, float mkh_cel, float sh_mm){
@@ -39,23 +38,23 @@ Kaffeeprogramm *Koordinator::getKaffeeprogramm() {
 
 void Koordinator::tick() {
     lastTouch = display->getLastTouch(); // mock
-
     switch (zustand) {
     case KoordinatorZustand::WARTEN:
-        zeigeBild(":/images/selection.png");
+        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/selection.png");
 
         if (lastTouch != QPointF(0, 0)) {
+            qDebug() << lastTouch.x() << ", " << lastTouch.y();
             int width = 400;
             int height = 400;
 
             Ressourcen res;
             kaffeeprogramm = new Kaffeeprogramm(res);
 
-            if (lastTouch.x() < width / 2 && lastTouch.y() < height / 2) {
+            if ((lastTouch.x() < width / 2) && (lastTouch.y() < height / 2)) {
                 kaffeeprogrammEinstellen(15, 150, 50, 90, 65, 7);
-            } else if (lastTouch.x() >= width / 2 && lastTouch.y() < height / 2) {
+            } else if ((lastTouch.x() >= width / 2) && (lastTouch.y() < height / 2)) {
                 kaffeeprogrammEinstellen(18, 0, 150, 92, 0, 6);
-            } else if (lastTouch.x() < width / 2 && lastTouch.y() >= height / 2) {
+            } else if ((lastTouch.x() < width / 2) && (lastTouch.y() >= height / 2)) {
                 kaffeeprogrammEinstellen(12, 170, 40, 88, 60, 7);
             } else {
                 kaffeeprogrammEinstellen(14, 120, 60, 90, 65, 6);
@@ -79,7 +78,7 @@ void Koordinator::tick() {
             if (genugWasser && genugMilch && genugKaffee) {
                 zustand = KoordinatorZustand::ZUCKERWAHL;
             } else {
-                zeigeBild(":/images/not_enough.png");
+                zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/not_enough.png");
                 delete kaffeeprogramm;
                 kaffeeprogramm = nullptr;
                 zustand = KoordinatorZustand::WARTEN;
@@ -89,10 +88,10 @@ void Koordinator::tick() {
 
 
     case KoordinatorZustand::ZUCKERWAHL: {
-        zeigeBild(":/images/sugar.png");
+        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/sugar.png");
 
         if (lastTouch != QPointF(0, 0)) {
-            int width = 400;
+            int width = 300;
             mitZucker = lastTouch.x() < width / 2;//casimir fragen
             kaffeeprogramm->setMitZucker(mitZucker);
 
@@ -104,7 +103,7 @@ void Koordinator::tick() {
                     );
 
                 if (!genugZucker) {
-                    zeigeBild(":/images/not_enough.png");
+                    zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/not_enough.png");
                     delete kaffeeprogramm;
                     kaffeeprogramm = nullptr;
                     zustand = KoordinatorZustand::WARTEN;
@@ -118,7 +117,7 @@ void Koordinator::tick() {
     }
 
     case KoordinatorZustand::BEZAHLEN: {
-        zeigeBild(":/images/brewing.png");
+        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/brewing.png");
 
         if (zahlungseinheit->getZahlungErfolgreich()) { // mock
             zustand = KoordinatorZustand::AUSFUEHREN;
@@ -129,20 +128,20 @@ void Koordinator::tick() {
 
 
     case KoordinatorZustand::AUSFUEHREN:
-        zeigeBild(":/images/brewing.png");
+        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/brewing.png");
         programmsteuerung->ausfuehren(kaffeeprogramm); // mock
         zustand = KoordinatorZustand::WARTEN_AUF_FERTIG;
         break;
 
     case KoordinatorZustand::WARTEN_AUF_FERTIG:
         if (programmsteuerung->istFertig()) { // mock
-             zeigeBild(":/images/done.png");
+             zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/done.png");
             zustand = KoordinatorZustand::FERTIG;
         }
         break;
 
     case KoordinatorZustand::FERTIG:
-        zeigeBild(":/images/done.png");
+        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/done.png");
         zustand = KoordinatorZustand::WARTEN;
         break;
     }

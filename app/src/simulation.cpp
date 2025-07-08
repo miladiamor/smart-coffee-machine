@@ -35,6 +35,15 @@ void Simulation::setSchaeumer(Schaeumer *schaeumer) {
     this->schaeumer = schaeumer;
 }
 
+void Simulation::setMuenzEingabeSensor(MuenzEingabeSensor *muenzeingabesensor)
+{
+    this->muenzSensor = muenzeingabesensor;
+}
+
+void Simulation::setMuenze_EUR(float muenze_EUR) {
+    this->muenze_EUR = muenze_EUR;
+}
+
 // Temperatur und Regler
 #define HEIZRATE_WASSER_CEL_PRO_TICK 0.5f  // während der Heizung Temperatur erhöht sich
 #define PUMP_MILCH_G_PRO_TICK          8.0f
@@ -54,6 +63,11 @@ void Simulation::setSchaeumer(Schaeumer *schaeumer) {
 #define BEHAELTER_MAX_FUELLSTAND_G 10000
 
 void Simulation::tick(){
+    //Muenzsensor
+    if (muenze_EUR != 0.0) {
+        this->muenzSensor->setEingeworfeneMuenze(muenze_EUR);
+    }
+
     // Motor hoch/runterfahren
     Kolbenmotor::motorStatus mtStatus = kolbenmotor->getStatus();
     if (mtStatus != Kolbenmotor::motorStatus::Aus) {

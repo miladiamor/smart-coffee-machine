@@ -21,7 +21,7 @@ Display::Display(QObject *parent) : QObject{parent}{}
 Display::~Display() {}
 void Display::displayScreen(const QImage&) { displayCalled++; }
 QPointF Display::getLastTouch() { return forcedTouch; }
-void Display::acceptTouch(QPointF&) {}
+void Display::acceptTouch(QPointF) {}
 
 // === MOCK Programmsteuerung ===
 Programmsteuerung::Programmsteuerung() {}

@@ -3,6 +3,7 @@
 #include <QPointF>
 #include <QString>
 #include <QImage>
+#include <QObject>
 
 #include "Kaffeeprogramm.h"
 #include "Programmsteuerung.h"
@@ -19,7 +20,9 @@ enum class KoordinatorZustand {
     FERTIG
 };
 
-class Koordinator {
+class Koordinator : public QObject
+{
+    Q_OBJECT
 private:
     Kaffeeprogramm* kaffeeprogramm = nullptr;
     Programmsteuerung* programmsteuerung = nullptr;
@@ -34,7 +37,7 @@ private:
     void zeigeBild(const QString& pfad);
     void kaffeeprogrammEinstellen(float km_g, float mm_g, float wm_g, float wkh_cel, float mkh_cel, float sh_mm);
 public:
-    Koordinator();
+    Koordinator(QObject *parent = nullptr)  : QObject{parent} {}
 
     void setzeDisplay(Display* d);
     void setzeProgrammsteuerung(Programmsteuerung* p);
@@ -42,9 +45,11 @@ public:
     void setzeFuellstandsmessung(Fuellstandsmessung* f);
 
     Kaffeeprogramm *getKaffeeprogramm();
-    void tick();
 
     KoordinatorZustand getCurrentState() const {
         return zustand;
     }
+
+public slots:
+    void tick();
 };

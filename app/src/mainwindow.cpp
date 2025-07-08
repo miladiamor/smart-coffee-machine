@@ -1,5 +1,6 @@
 #include <QPixmap>
 #include <QTouchEvent>
+#include <QMouseEvent>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -23,16 +24,11 @@ MainWindow::~MainWindow()
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
     QPointF lastTouch;
-    if (watched == ui->touchDisplayLabel &&
-        (event->type() == QEvent::TouchBegin ||
-         event->type() == QEvent::TouchUpdate ||
-         event->type() == QEvent::TouchEnd))
+    if (watched == ui->touchDisplayLabel && event->type() == QEvent::MouseButtonPress)
     {
-        auto *te = static_cast<QTouchEvent*>(event);
-        if (!te->points().isEmpty()) {
-            lastTouch = te->points().first().position();
-            emit sentTouch(lastTouch);
-        }
+        auto *me = static_cast<QMouseEvent*>(event);
+        lastTouch = me->position();
+        emit sentTouch(lastTouch);
         return true;
     }
     return QMainWindow::eventFilter(watched, event);
@@ -74,3 +70,13 @@ void MainWindow::on_btnLatteMachiato_clicked()
 }
 
 */
+
+void MainWindow::setSimulation(Simulation *sim) {
+    this->sim = sim;
+}
+
+void MainWindow::on_pushButton_2_released()
+{
+    sim->setMuenze_EUR(1.0);
+}
+

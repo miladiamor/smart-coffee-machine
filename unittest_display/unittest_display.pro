@@ -13,5 +13,4 @@ INCLUDEPATH += $$PWD/../app/include
 SOURCES +=  tst_tdisplay.cpp \
     ../app/src/display.cpp
 
-HEADERS += ../app/include/display.h \
-    ../app/include/koordinator.h
+HEADERS += ../app/include/display.h

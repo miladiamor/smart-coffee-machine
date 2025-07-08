@@ -1,11 +1,14 @@
 #pragma once
 
+#include <QObject>
 #include "Muenzroehrenspeicher.h"
 #include "MuenzEingabeSensor.h"
 #include "MuenzAuswerfer.h"
 #include "Display.h"
 
-class Zahlungseinheit {
+class Zahlungseinheit : public QObject
+{
+    Q_OBJECT
 private:
     bool zahlungAktiv = false;
     bool zahlungErfolgreich = false;
