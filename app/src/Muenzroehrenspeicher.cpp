@@ -21,5 +21,6 @@ bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
     return true;
 }
 
+// prüft ob eine Münze am EingabeSensor liegt, wenn gültig pusht er sie in die eintsprechende RÖhre
 void Muenzroehrenspeicher::tick() {
 }
