@@ -9,7 +9,7 @@ Motorsteuerung::Motorsteuerung(QObject *parent)
 void Motorsteuerung::stampferAusfahren(float stampfhoehe_mm){
     this->stampfhoehe_mm = stampfhoehe_mm;
     position_mm = inkrementalencoder->getPosition_mm();
-    if (stampfhoehe_mm == position_mm) {return;}
+    if (stampfhoehe_mm == position_mm) {bruehgruppe->trigger(MOTORABGESCHLOSSEN); return;}
     eingeschaltet = true;
     if (position_mm < stampfhoehe_mm) {
         stampfer->hochfahren();

@@ -55,7 +55,7 @@ void Kolbenmotor::runterfahren() {globalMotorStatus = Kolbenmotor::motorStatus::
 void Kolbenmotor::hochfahren() {globalMotorStatus = Kolbenmotor::motorStatus::hochfahren;}
 void Kolbenmotor::stoppen() {globalMotorStatus = Kolbenmotor::motorStatus::Aus;}
 
-float globalStampferPos = 25.0;
+float globalStampferPos = 20.0;
 Inkrementalencoder::Inkrementalencoder() {}
 float Inkrementalencoder::getPosition_mm() {return globalStampferPos;}
 
@@ -322,8 +322,10 @@ void tintegrationall::test_milchkaffee() {
     globalStampferPos = 0; tickAll();
     QCOMPARE(bruehgruppe->getState(), ZURUECKSETZEN);
     QVERIFY(!klappeOffen);
-    globalStampferPos = MAX_MOTOR_HEIGHT_MM; tickAll();
-    QCOMPARE(bruehgruppe->getState(), WARTEN);
+    QCOMPARE(Kolbenmotor::motorStatus::hochfahren, globalMotorStatus);
+    globalStampferPos = 20; tickAll();
+    qDebug() << "stampfhoehe motor: " << motorsteuerung->getStampfhoehe_mm();
+    QCOMPARE(WARTEN, bruehgruppe->getState());
 
     // programmsteuerung ZURUECKSETZEN zu IDLE
     tickAll();

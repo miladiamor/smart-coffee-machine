@@ -19,6 +19,8 @@ public:
     void setBruehgruppe(Bruehgruppe *bruehgruppe);
     void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);
     void setStampfer(Kolbenmotor *stampfer);
+
+    float getStampfhoehe_mm() {return stampfhoehe_mm;}
 public slots:
     void tick();
 

@@ -1,7 +1,7 @@
 #include <QApplication>
 #include "display.h"
 #include "mainwindow.h"
-
+#include "Koordinator.h"
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -10,6 +10,8 @@ int main(int argc, char *argv[])
 
     Display display;
     MainWindow mw;
+    Koordinator koordiantor;
+
     QObject::connect(&mw, &MainWindow::sentTouch,
                      &display, &Display::acceptTouch,
                     Qt::DirectConnection);

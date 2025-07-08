@@ -51,7 +51,7 @@ void Bruehgruppe::trigger(BruehEvent event) {
         break;
     case ENTLEEREN:
         if (event == MOTORABGESCHLOSSEN) {
-            motorsteuerung->stampferAusfahren(MAX_MOTOR_HEIGHT_MM);
+            motorsteuerung->stampferAusfahren(20);
             entleerklappe->schliessen();
             state = ZURUECKSETZEN;
         }
