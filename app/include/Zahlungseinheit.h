@@ -20,7 +20,8 @@ public:
                     MuenzEingabeSensor* eingabe,
                     MuenzAuswerfer* auswerfer);
 
-    bool versucheZahlung(float preis);  // Startet Zahlung
+    void getzahnlungErfolgreicht();
+    void versucheZahlung(float preis);  // Startet Zahlung
     void zahlungAbbrechen();                 // Bricht Zahlung ab
     void tick();                             // Zustandsbasierte Ausfuehrung
 };

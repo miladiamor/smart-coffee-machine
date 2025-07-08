@@ -9,7 +9,7 @@ private:
 
 public:
     // Konstruktor: Initialisiert Rohr mit Muenzwert und Kapazitaet
-    Muenzroehre(float wert, int kapazitaet);
+    Muenzroehre(int kapazitaet, float wert);
 
     // Standardkonstruktor für Unittests
     Muenzroehre();  // <-- hinzugefügt
