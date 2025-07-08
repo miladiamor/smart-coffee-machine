@@ -7,6 +7,7 @@ SUBDIRS += \
     ../integrationstest_all \
     ../integrationstest_koordinator \
     ../integrationstest_programmsteuerung_bruehgruppe \
+    ../unittest_Heizregler \
     ../unittest_Programmsteuerung_3 \
     ../unittest_bruehgruppe_2 \
     ../unittest_display \
