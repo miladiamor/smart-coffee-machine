@@ -242,15 +242,17 @@ void tintegrationall::test_milchkaffee() {
     pt.setX(100);
     pt.setY(100);
 
+    // milchkaffee wird ausgewählt
     display->acceptTouch(pt);
-
     tickAll();
     QCOMPARE(KoordinatorZustand::ZUCKERWAHL, koordinator->getCurrentState());
 
+    // mit Zucker wählem
     pt = QPointF(50.0, 50.0);
     display->acceptTouch(pt);
     tickAll();
     QCOMPARE(KoordinatorZustand::BEZAHLEN, koordinator->getCurrentState());
+
     tickAll();
     QCOMPARE(KoordinatorZustand::AUSFUEHREN, koordinator->getCurrentState());
     tickAll();
