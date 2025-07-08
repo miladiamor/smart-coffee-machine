@@ -140,6 +140,19 @@ bool hatGenugReturn = true;
 Fuellstandsmessung::Fuellstandsmessung() {}
 bool Fuellstandsmessung::hatGenug(Tankwaage*, int, float) const { return hatGenugReturn; }
 
+Tankwaage::Tankwaage(float gewicht_g) : gewicht_g(gewicht_g) {}
+float Tankwaage::gewichtPruefen() const { return gewicht_g; }
+
+void Ressourcen::setWassermenge_ml(int ml) { wassermenge_ml = ml; }
+void Ressourcen::setMilchmenge_ml(int ml) { milchmenge_ml = ml; }
+void Ressourcen::setKaffeemenge_g(int g) { kaffeemenge_g = g; }
+void Ressourcen::setZuckermenge_TL(short tl) { zuckermenge_TL = tl; }
+
+int Ressourcen::getWassermenge_ml() const { return wassermenge_ml; }
+int Ressourcen::getMilchmenge_ml() const { return milchmenge_ml; }
+int Ressourcen::getKaffeemenge_g() const { return kaffeemenge_g; }
+short Ressourcen::getZuckermenge_TL() const { return zuckermenge_TL; }
+
 class tintegrationall : public QObject
 {
     Q_OBJECT
