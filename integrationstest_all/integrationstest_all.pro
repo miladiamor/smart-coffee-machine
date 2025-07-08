@@ -31,14 +31,15 @@ HEADERS += \
     ../app/include/zahlungseinheit.h \
     ../app/include/muenzroehrenspeicher.h \
     ../app/include/muenzroehre.h \
-    ../app/include/muenzschieber.h \
+    ../app/include/muenzenschieber.h \
     ../app/include/muenzeingabesensor.h \
     ../app/include/muenzauswerfer.h \
     ../app/include/muenzschieber.h \
+    ../app/include/ressourcen.h
 
 SOURCES +=  tst_tintegrationall.cpp \
     ../app/src/kaffeeprogramm.cpp \
-    ../app/src/ressourcen.cpp \
+    #../app/src/ressourcen.cpp \
     ../app/src/koordinator.cpp \
     ../app/src/display.cpp \
     ../app/src/programmsteuerung.cpp \

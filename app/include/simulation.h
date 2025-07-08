@@ -26,7 +26,6 @@ public:
 
     void setKaffeerestbehaelter(Tankwaage *kaffeerestbehaelter);
     void setKolbenmotor(Kolbenmotor *kolbenmotor);
-    void setBruehgruppe(Bruehgruppe *bruehgruppe);
     void setInkrementalencoder(Inkrementalencoder *inkrementalencoder);
     void setWasserPumpe(Pumpe *pumpe);
     void setMilchPumpe (Pumpe *pumpe);

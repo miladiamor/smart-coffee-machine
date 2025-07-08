@@ -24,4 +24,3 @@ bool Zuckerdispenser::istAktiv() const {
     return eingeschaltet;
 }
 
-
