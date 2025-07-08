@@ -5,7 +5,6 @@ class MuenzEingabeSensor {
 private:
     float eingeworfeneMuenze;
     bool muenzeGueltig;
-
 public:
     MuenzEingabeSensor();  // Standardkonstruktor
 

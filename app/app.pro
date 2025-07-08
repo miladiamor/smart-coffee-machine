@@ -32,7 +32,7 @@ SOURCES += \
     src/Muenzenschieber.cpp \
     src/Muenzroehre.cpp \
     src/Muenzroehrenspeicher.cpp \
-    #src/Produkt.cpp \
+    src/Produkt.cpp \
     src/Programmsteuerung.cpp \
     src/Pumpe.cpp \
     src/Ressourcen.cpp \

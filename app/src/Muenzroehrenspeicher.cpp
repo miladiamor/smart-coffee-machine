@@ -17,6 +17,7 @@ Muenzroehrenspeicher::Muenzroehrenspeicher(Muenzroehre* r2, Muenzroehre* r1, Mue
 
 // Gibt false zurueck, wenn Muenze ungueltig oder Zielrohr voll ist.
 bool Muenzroehrenspeicher::fuegeMuenzeEin(float wert) {
+
     Muenzroehre* ziel = nullptr;
 
     if (wert == 2.0f) ziel = roehre2Euro;
@@ -75,4 +76,10 @@ void Muenzroehrenspeicher::geldAuswerfen(float betrag) {
             muenzeAuswerfen(wert);
         }
     }
+    return true;
+}
+
+// prüft ob eine Münze am EingabeSensor liegt, wenn gültig pusht er sie in die eintsprechende RÖhre
+void Muenzroehrenspeicher::tick() {
+
 }
