@@ -1,5 +1,6 @@
 #pragma once
-
+#ifndef MUENZROEHRE_H
+#define MUENZROEHRE_H
 
 // Diese Klasse repraesentiert ein passives Muenzrohr (Sensor),
 // das nur die Anzahl der enthaltenen Muenzen verfolgt.
@@ -21,3 +22,5 @@ public:
     void erhoeheAnzahl();
     void reduziereAnzahl();
 };
+
+#endif

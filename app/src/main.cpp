@@ -105,6 +105,16 @@ int main(int argc, char *argv[])
 
     zahlungseinheit.setDisplay(&display);
 
+    muenzroehrenspeicher.setroehre2Euro(&muenzroehre);
+    muenzroehrenspeicher.setroehre1Euro(&muenzroehre);
+    muenzroehrenspeicher.setroehre50Cent(&muenzroehre);
+    muenzroehrenspeicher.setroehre20Cent(&muenzroehre);
+    muenzroehrenspeicher.setroehre10Cent(&muenzroehre);
+    muenzroehrenspeicher.setschieber(&muenzenschieber);
+    muenzroehrenspeicher.setauswerfer(&muenzAuswerfer);
+    muenzroehrenspeicher.setsensor(&muenzEingabeSensor);
+
+
     QObject::connect(&mw, &MainWindow::sentTouch,
                      &display, &Display::acceptTouch,
                     Qt::DirectConnection);

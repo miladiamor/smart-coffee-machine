@@ -26,6 +26,15 @@ public:
                          Muenzroehre* r20, Muenzroehre* r10,
                          Muenzenschieber* schieber, MuenzAuswerfer* auswerfer);
 
+    void setroehre2Euro(Muenzroehre *roehre2Euro);
+    void setroehre1Euro(Muenzroehre *roehre1Euro);
+    void setroehre50Cent(Muenzroehre *roehre50Cent);
+    void setroehre20Cent(Muenzroehre *roehre20Cent);
+    void setroehre10Cent(Muenzroehre *roehre10Cent);
+    void setschieber(Muenzenschieber *schieber);
+    void setauswerfer(MuenzAuswerfer *auswerfer);
+    void setsensor(MuenzEingabeSensor *sensor);
+
     bool fuegeMuenzeEin(float wert);
     void muenzeAuswerfen(float wert);
     void geldAuswerfen(float betrag); // wirft mehrere Münzen aus

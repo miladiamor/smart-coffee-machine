@@ -24,7 +24,4 @@ bool Zuckerdispenser::istAktiv() const {
     return eingeschaltet;
 }
 
-void Zuckerdispenser::setZuckerdispenser(Zuckerdispenser *zucker)
-{
 
-}

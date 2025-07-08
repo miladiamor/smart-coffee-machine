@@ -1,4 +1,4 @@
-#include "Muenzroehrenspeicher.h"
+#include "muenzroehrenspeicher.h"
 
 // Konstruktor fuer Unittests
 Muenzroehrenspeicher::Muenzroehrenspeicher()
@@ -13,6 +13,46 @@ Muenzroehrenspeicher::Muenzroehrenspeicher(Muenzroehre* r2, Muenzroehre* r1, Mue
     : roehre2Euro(r2), roehre1Euro(r1), roehre50Cent(r50),
     roehre20Cent(r20), roehre10Cent(r10),
     schieber(schieber), auswerfer(auswerfer) {}
+
+void Muenzroehrenspeicher::setroehre2Euro(Muenzroehre *roehre2Euro)
+{
+    this->roehre2Euro = roehre2Euro;
+}
+
+void Muenzroehrenspeicher::setroehre1Euro(Muenzroehre *roehre1Euro)
+{
+    this->roehre1Euro = roehre1Euro;
+}
+
+void Muenzroehrenspeicher::setroehre50Cent(Muenzroehre *roehre50Cent)
+{
+    this->roehre50Cent = roehre50Cent;
+}
+
+void Muenzroehrenspeicher::setroehre20Cent(Muenzroehre *roehre20Cent)
+{
+    this->roehre20Cent = roehre20Cent;
+}
+
+void Muenzroehrenspeicher::setroehre10Cent(Muenzroehre *roehre10Cent)
+{
+    this->roehre10Cent = roehre10Cent;
+}
+
+void Muenzroehrenspeicher::setschieber(Muenzenschieber *schieber)
+{
+    this->schieber = schieber;
+}
+
+void Muenzroehrenspeicher::setauswerfer(MuenzAuswerfer *auswerfer)
+{
+    this->auswerfer = auswerfer;
+}
+
+void Muenzroehrenspeicher::setsensor(MuenzEingabeSensor *sensor)
+{
+    this->sensor = sensor;
+}
 
 
 // Gibt false zurueck, wenn Muenze ungueltig oder Zielrohr voll ist.
