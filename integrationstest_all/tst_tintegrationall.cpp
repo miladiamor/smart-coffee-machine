@@ -271,7 +271,6 @@ void tintegrationall::test_milchkaffee() {
     QCOMPARE(bruehgruppe->getState(), STAMPFEN);
 
     // setzen wir KOCHEN Zustand in der BG
-    bruehgruppe->setState(KOCHEN);
     tickAll();
     QCOMPARE(programmsteuerung->getCurrentState(), Programmsteuerung::CoffeeState::PUMPING_WATER);
     QVERIFY(wasserpumpeAktiv);
