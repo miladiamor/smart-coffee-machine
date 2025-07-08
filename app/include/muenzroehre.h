@@ -1,5 +1,4 @@
 #pragma once
-
 // Diese Klasse repraesentiert ein passives Muenzrohr (Sensor),
 // das nur die Anzahl der enthaltenen Muenzen verfolgt.
 class Muenzroehre {
@@ -9,7 +8,7 @@ private:
 
 public:
     // Konstruktor: Initialisiert Rohr mit Muenzwert und Kapazitaet
-    Muenzroehre(float wert, int kapazitaet);
+    Muenzroehre(int kapazitaet, float wert);
 
     // Standardkonstruktor für Unittests
     Muenzroehre();  // <-- hinzugefügt

@@ -1,7 +1,6 @@
 #ifndef MUENZAUSWERFER_H
 #define MUENZAUSWERFER_H
 
-#include <iostream>
 #include "muenzroehre.h"
 
 class MuenzAuswerfer {
