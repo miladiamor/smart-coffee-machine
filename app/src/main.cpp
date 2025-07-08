@@ -112,6 +112,11 @@ int main(int argc, char *argv[])
     muenzroehrenspeicher.setauswerfer(&muenzAuswerfer);
     muenzroehrenspeicher.setsensor(&muenzEingabeSensor);
 
+    zahlungseinheit.setDisplay(&display);
+    zahlungseinheit.setMuenzroehrenspeicher(&muenzroehrenspeicher);
+    zahlungseinheit.setMuenzEingabeSensor(&muenzEingabeSensor);
+    zahlungseinheit.setMuenzAuswerfer(&muenzAuswerfer);
+
 
     QObject::connect(&mw, &MainWindow::sentTouch,
                      &display, &Display::acceptTouch,
