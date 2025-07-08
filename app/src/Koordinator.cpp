@@ -111,7 +111,7 @@ void Koordinator::tick() {
                     break;
                 }
             }
-
+            zahlungseinheit->versucheZahlung(5);
             zustand = KoordinatorZustand::BEZAHLEN;
         }
         break;
@@ -120,7 +120,7 @@ void Koordinator::tick() {
     case KoordinatorZustand::BEZAHLEN: {
         zeigeBild(":/images/brewing.png");
 
-        if (zahlungseinheit->versucheZahlung(5)) { // mock
+        if (zahlungseinheit->getZahlungErfolgreich()) { // mock
             zustand = KoordinatorZustand::AUSFUEHREN;
         }
         break;
