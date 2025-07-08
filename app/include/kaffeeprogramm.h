@@ -29,7 +29,6 @@ public:
     void setMitZucker(bool mitZucker);
     void setMilchZuerst(bool milchZuerst);
     void setStampfhoehe_mm(float mm);
-    void setProdukt(Produkt* produkt);
     void setBenoetigteRessourcen(Ressourcen r);
 
 private:
