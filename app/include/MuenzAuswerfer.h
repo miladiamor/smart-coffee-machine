@@ -10,7 +10,7 @@ public:
     MuenzAuswerfer(); // Standardkonstruktor für Unit-Tests
 
     // Wirft eine einzelne Münze aus (bei ungültiger Eingabe)
-    void auswerfenMuenze(float aktiveRoehre);
+    void auswerfenMuenze(Muenzroehre *aktiveRoehre);
 };
 
 #endif

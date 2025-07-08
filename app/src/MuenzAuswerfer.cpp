@@ -1,8 +1,10 @@
 #include "MuenzAuswerfer.h"
 
 // Standardkonstruktor für Unit-Tests
-MuenzAuswerfer::MuenzAuswerfer() {}
+MuenzAuswerfer::MuenzAuswerfer()
+    : aktiveRoehre(nullptr)
+{}
 
-void MuenzAuswerfer::auswerfenMuenze(float wert) {
-
+void MuenzAuswerfer::auswerfenMuenze(Muenzroehre *aktiveRoehre) {
+    aktiveRoehre->reduziereAnzahl();
 }
