@@ -19,6 +19,8 @@ class Heizregler : public QObject{
         void temperaturRegeln(int zieltemperatur_Cel);
         bool istTemperaturErreicht() const;
 
+        void setHeizelement(Heizelemente *heizelement);
+        void setTemperatursensor(Temperatursensor *temperatursensor);
     public slots:
         void tick();
 

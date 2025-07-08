@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
     Bruehgruppe bruehgruppe;
     Clock clock(2);
     Display display;
-    Tankwaage wasserbehaelter(), kaffeebehaelter(5000), milchbehaelter(5000), kaffeerestbehaelter(0), zuckerbehaelter(500);
+    Tankwaage wasserbehaelter(5000), kaffeebehaelter(5000), milchbehaelter(5000), kaffeerestbehaelter(0), zuckerbehaelter(500);
     Fuellstandsmessung fuellstandsmessung;
-    Heizelemente heizelemente;
-    Heizregler heizregler;
+    Heizelemente wasserHeizer, milchHeizer;
+    Heizregler wasserRegler, milchRegler;
     Inkrementalencoder inkrementalencoder;
     Kaffeeprogramm kaffeeprogramm;
     Klappe klappe;
@@ -70,9 +70,10 @@ int main(int argc, char *argv[])
     programmsteuerung.setBruehgruppe(&bruehgruppe);
     programmsteuerung.setWasserpumpe(&pumpe);
     programmsteuerung.setMilchpumpe(&pumpe);
-    programmsteuerung.setWasserHeizer(&heizregler);
-    programmsteuerung.setMilchHeizer(&heizregler);
+    programmsteuerung.setWasserHeizer(&wasserRegler);
+    programmsteuerung.setMilchHeizer(&milchRegler);
     programmsteuerung.setZuckerdispenser(&zuckerdispenser);
+
 
     motorsteuerung.setStampfer(&kolbenmotor);
     motorsteuerung.setInkrementalencoder(&inkrementalencoder);
@@ -95,12 +96,17 @@ int main(int argc, char *argv[])
     kaffeeprogramm.setBenoetigteRessourcen(ressourcen);
 
     simulation.setKaffeerestbehaelter(&kaffeerestbehaelter);
-    simulation.
+    simulation.setWasserbehaelter(&wasserbehaelter);
+    simulation.setKaffeebehaelter(&kaffeebehaelter);
+    simulation.setMilchbehaelter(&milchbehaelter);
+    simulation.setZuckerbehaelter(&zuckerbehaelter);
     simulation.setKolbenmotor(&kolbenmotor);
     simulation.setInkrementalencoder(&inkrementalencoder);
     simulation.setWasserPumpe(&pumpe);
     simulation.setMilchPumpe(&pumpe);
     simulation.setSchaeumer(&schaeumer);
+    simulation.setMilchheizer(&milchHeizer);
+    simulation.setWasserheizer(&wasserHeizer);
 
     zahlungseinheit.setDisplay(&display);
 
