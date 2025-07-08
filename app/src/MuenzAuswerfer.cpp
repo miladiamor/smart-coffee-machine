@@ -3,6 +3,6 @@
 // Standardkonstruktor für Unit-Tests
 MuenzAuswerfer::MuenzAuswerfer() {}
 
-void MuenzAuswerfer::auswerfenMuenze(float wert) {
-
+void MuenzAuswerfer::auswerfenMuenze(Muenzroehre *aktiveRoehre) {
+    aktiveRoehre->reduziereAnzahl();
 }

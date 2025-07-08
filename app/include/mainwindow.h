@@ -7,6 +7,7 @@ class Koordinator;
 #include <QImage>
 #include <QTouchEvent>
 #include <QPointF>
+#include <QString>
 class MainWindow;
 #include "display.h"
 
@@ -27,6 +28,7 @@ signals:
 
 public slots:
     void updateWindow(const QImage &img);
+    void updateWindowText(QString text);
 
 private slots:
     /*void on_btnCappucino_clicked();

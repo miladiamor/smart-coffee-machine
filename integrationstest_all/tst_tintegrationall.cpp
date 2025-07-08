@@ -133,7 +133,7 @@ bool Schaeumer::getEingeschaltet() {return SchaeumerAktiv;}
 // MOCK Zahlungseinheit
 bool versucheZahlungReturn = true;
 Zahlungseinheit::Zahlungseinheit() {}
-bool Zahlungseinheit::versucheZahlung(float preis) { return versucheZahlungReturn; }
+void Zahlungseinheit::versucheZahlung(float preis) { return versucheZahlungReturn; }
 
 // MOCK Fuellstandsmessung
 bool hatGenugReturn = true;

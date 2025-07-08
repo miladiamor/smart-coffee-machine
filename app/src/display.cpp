@@ -1,4 +1,5 @@
 #include "display.h"
+#include <QString>
 
 Display::Display(QObject *parent)
     : QObject{parent}
@@ -12,9 +13,14 @@ Display::~Display(){
 QPointF Display::getLastTouch() {
     return this->lastTouch;
 }
+
 void Display::displayScreen(const QImage &img) {
     lastTouch = QPointF(0.0, 0.0);
     emit updateDisplay(img);
+}
+
+void Display::displayText(QString text) {
+    emit updateText(text);
 }
 
 void Display::acceptTouch(QPointF &lastTouch){

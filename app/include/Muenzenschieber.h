@@ -2,14 +2,16 @@
 #define MUENZENSCHIEBER_H
 
 #include "Muenzroehre.h"
+#include "MuenzEingabeSensor.h"
 
 class Muenzenschieber {
 private:
-    Muenzroehre* aktiveMuenzroehre;
+    Muenzroehre *aktiveMuenzroehre;
+    MuenzEingabeSensor *sensor;
 
 public:
     Muenzenschieber();  //  Standardkonstruktor vorhanden
-    void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre);  // ✔ wichtige Methode
+    void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre);
 };
 
 #endif
