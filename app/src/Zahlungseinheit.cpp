@@ -18,6 +18,11 @@ Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* speicherVerwaltung,
     speicherVerwaltung(speicherVerwaltung),
     sensor(sensor), auswerfer(auswerfer) {}
 
+bool Zahlungseinheit::getZahlungErfolgreich()
+{
+    return zahlungErfolgreich;
+}
+
 // Initialisiert die Zahlung fuer ein Produkt
 void Zahlungseinheit::versucheZahlung(float preis) {
     if (!zahlungAktiv) {
@@ -53,4 +58,3 @@ void Zahlungseinheit::tick() {
 void Zahlungseinheit::setDisplay(Display *display) {
     this->display = display;
 }
-

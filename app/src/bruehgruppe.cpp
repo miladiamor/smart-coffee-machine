@@ -25,7 +25,7 @@ void Bruehgruppe::trigger(BruehEvent event) {
     case KAFFEEZUFUHR:
         if (event == ZUFUHRABGESCHLOSSEN) {
             kaffeezufuhr->schliessen();
-            motorsteuerung->stampferAusfahren(kaffeeprogramm->getstampfHoehe_mm());
+            motorsteuerung->stampferAusfahren(kaffeeprogramm->getStampfhoehe_mm());
             state = STAMPFEN;
         }
         break;

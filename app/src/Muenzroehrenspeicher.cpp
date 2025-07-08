@@ -51,7 +51,7 @@ void Muenzroehrenspeicher::muenzeAuswerfen(float wert) {
     else if (wert == 0.1f) quelle = roehre10Cent;
     else return;
 
-    if (quelle->getAktuelleAnzahl() > 0 ) {
+    if (quelle->getAnzahl() > 0 ) {
         auswerfer->auswerfenMuenze(quelle);
         quelle->reduziereAnzahl();
     }
@@ -71,7 +71,7 @@ void Muenzroehrenspeicher::geldAuswerfen(float betrag) {
         else if (wert == 0.2f) quelle = roehre20Cent;
         else if (wert == 0.1f) quelle = roehre10Cent;
 
-        while (betrag >= wert && quelle->getAktuelleAnzahl() > 0) {
+        while (betrag >= wert && quelle->getAnzahl() > 0) {
             betrag -= wert;
             muenzeAuswerfen(wert);
             quelle->reduziereAnzahl();

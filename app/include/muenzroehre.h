@@ -17,7 +17,7 @@ public:
     Muenzroehre();
 
     bool istVoll() const;
-    int getAktuelleAnzahl() const;
+    int getAnzahl() const;
     void erhoeheAnzahl();
     void reduziereAnzahl();
 };

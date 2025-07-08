@@ -12,7 +12,7 @@
 #include "ventil.h"
 
 //MockUps Kaffeeprogramm
-float Kaffeeprogramm::getstampfHoehe_mm() const {return 7.0;}
+float Kaffeeprogramm::getStampfhoehe_mm() const {return 7.0;}
 std::vector<int> abgefragteWasserKochhitzen;
 std::vector<int> abgefragteMilchKochhitzen;
 

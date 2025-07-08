@@ -131,9 +131,9 @@ void Schaeumer::aufschaeumenStoppen() {SchaeumerAktiv--;}
 bool Schaeumer::getEingeschaltet() {return SchaeumerAktiv;}
 
 // MOCK Zahlungseinheit
-bool versucheZahlungReturn = true;
 Zahlungseinheit::Zahlungseinheit() {}
-void Zahlungseinheit::versucheZahlung(float preis) { return versucheZahlungReturn; }
+void Zahlungseinheit::versucheZahlung(float preis) {}
+bool Zahlungseinheit::getZahlungErfolgreich() {return true;}
 
 // MOCK Fuellstandsmessung
 bool hatGenugReturn = true;

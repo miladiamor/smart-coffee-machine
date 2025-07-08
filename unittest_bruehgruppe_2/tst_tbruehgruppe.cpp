@@ -15,7 +15,7 @@ int klappeOffen = 0;
 void Klappe::oeffnen() {klappeOffen++;}
 void Klappe::schliessen() {klappeOffen--;}
 
-float Kaffeeprogramm::getstampfHoehe_mm() const {return 7.0;}
+float Kaffeeprogramm::getStampfhoehe_mm() const {return 7.0;}
 
 std::vector<float> hoehen = {};
 void Motorsteuerung::stampferAusfahren(float stampfHoehe_mm) {hoehen.push_back(stampfHoehe_mm);}

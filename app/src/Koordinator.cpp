@@ -30,14 +30,10 @@ void Koordinator::kaffeeprogrammEinstellen(float km_g, float mm_g, float wm_g, f
     kaffeeprogramm->setWassermenge_ml(wm_g);
     kaffeeprogramm->setWasserKochhitze_Cel(wkh_cel);
     kaffeeprogramm->setMilchKochhitze_Cel(mkh_cel);
-    kaffeeprogramm->setstampfHoehe_mm(sh_mm);
+    kaffeeprogramm->setStampfhoehe_mm(sh_mm);
 }
 
 void Koordinator::tick() {
-    if (!display || !programmsteuerung || !zahlungseinheit || !fuellstandsmessung) {
-        return;
-    }
-
     lastTouch = display->getLastTouch(); // mock
 
     switch (zustand) {

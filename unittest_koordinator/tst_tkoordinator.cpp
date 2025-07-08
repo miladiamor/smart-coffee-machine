@@ -38,6 +38,7 @@ void Kaffeeprogramm::setWassermenge_ml(int) {}
 void Kaffeeprogramm::setWasserKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMilchKochhitze_Cel(int) {}
 void Kaffeeprogramm::setMitZucker(bool) {}
+void Kaffeeprogramm::setStampfhoehe_mm(float) {}
 Produkt* Kaffeeprogramm::getProdukt() const { return nullptr; }
 int Kaffeeprogramm::getKaffeemenge_g() const { return 10; }
 int Kaffeeprogramm::getMilchmenge_ml() const { return 20; }
@@ -47,6 +48,7 @@ int Kaffeeprogramm::getWassermenge_ml() const { return 30; }
 // === MOCK Zahlungseinheit ===
 Zahlungseinheit::Zahlungseinheit() {}
 void Zahlungseinheit::versucheZahlung(float preis) {}
+bool Zahlungseinheit::getZahlungErfolgreich() {return true;}
 
 // === MOCK Fuellstandsmessung ===
 Fuellstandsmessung::Fuellstandsmessung() {}
