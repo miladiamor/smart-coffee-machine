@@ -82,8 +82,8 @@ void Simulation::tick(){
 
     // Wasservorwärmung
     if (wasserHeizer->istEingeschaltet()) {
-            wasserrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
-            temperatursensor.setTemperatur_Cel(wasserrohrtemperatur_cel);
+        wasserrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
+        temperatursensor.setTemperatur_Cel(wasserrohrtemperatur_cel);
         }
 
     // Milchvorwärmung
@@ -98,6 +98,7 @@ void Simulation::tick(){
             float wasserMenge = PUMP_WASSER_G_PRO_TICK * 0.001f;
             wasserbehaelter_g -= wasserMenge;
             kaffeeTassenInhalt_g += wasserMenge;
+            wasserbehaelter->setGewicht(wasserbehaelter_g);
         } else {
             qDebug() << "Fehler: Wasser pumpt aber Ventile geschlossen";
         }
@@ -114,6 +115,7 @@ void Simulation::tick(){
             milchMenge *= 0.9;
         }
         kaffeeTassenInhalt_g += milchMenge;
+        milchbehaelter->setGewicht(milchbehaelter_g);
     }
 }
 
