@@ -2,17 +2,20 @@
 #include <QObject>
 #include <QPointF>
 #include <QImage>
+
 #include "Koordinator.h"
 #include "Display.h"
 #include "Programmsteuerung.h"
 #include "Zahlungseinheit.h"
 #include "Fuellstandsmessung.h"
 #include "Kaffeeprogramm.h"
+#include "Ressourcen.h"
+#include "Tankwaage.h"
+
 
 // === GLOBAL STATE TRACKERS FOR TEST VERIFICATION ===
 bool ausfuehrenCalled = false;
 bool versucheZahlungReturn = true;
-bool hatGenugReturn = true;
 
 // === MOCK Programmsteuerung ===
 Programmsteuerung::Programmsteuerung() {}
@@ -39,9 +42,6 @@ int Kaffeeprogramm::getWassermenge_ml() const { return 30; }
 Zahlungseinheit::Zahlungseinheit() {}
 bool Zahlungseinheit::versucheZahlung(float preis) { return versucheZahlungReturn; }
 
-// === MOCK Fuellstandsmessung ===
-Fuellstandsmessung::Fuellstandsmessung() {}
-bool Fuellstandsmessung::hatGenug(Tankwaage*, int, float) const { return hatGenugReturn; }
 // === Test Implementation ===
 class tkoordinator_display : public QObject {
     Q_OBJECT
@@ -63,7 +63,13 @@ private:
     Display* display;
     Programmsteuerung* mockProg;
     Zahlungseinheit* mockZahlung;
-    Fuellstandsmessung* mockFuell;
+    Tankwaage* wasserTank;
+    Tankwaage* milchTank;
+    Tankwaage* kaffeeTank;
+    Tankwaage* zuckerTank;
+    Ressourcen* ressourcen;
+    Fuellstandsmessung* fuellstand;
+
 };
 
 void tkoordinator_display::init() {
@@ -71,31 +77,44 @@ void tkoordinator_display::init() {
     display = new Display();
     mockProg = new Programmsteuerung();
     mockZahlung = new Zahlungseinheit();
-    mockFuell = new Fuellstandsmessung();
+
+
+    ressourcen = new Ressourcen();
+    wasserTank = new Tankwaage(1000.0f);
+    milchTank = new Tankwaage(1000.0f);
+    kaffeeTank = new Tankwaage(500.0f);
+    zuckerTank = new Tankwaage(200.0f);
+
+    fuellstand = new Fuellstandsmessung(wasserTank, milchTank, kaffeeTank, zuckerTank, ressourcen);
 
     sut->setzeDisplay(display);
     sut->setzeProgrammsteuerung(mockProg);
     sut->setzeZahlungseinheit(mockZahlung);
-    sut->setzeFuellstandsmessung(mockFuell);
+    sut->setzeFuellstandsmessung(fuellstand);
 }
+
 
 void tkoordinator_display::cleanup() {
     ausfuehrenCalled = false;
     versucheZahlungReturn = true;
-    hatGenugReturn = true;
 }
 
 // === TEST CASES WITH DISPLAY VERIFICATION ===
 
 void tkoordinator_display::testWartenZuZuckerwahl() {
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN);
-    hatGenugReturn = true;
+
     QSignalSpy spy(display, &Display::updateDisplay);
     QVERIFY(spy.isValid());
 
-    // Inject touch:
+    // Inject touch to trigger transition
     QPointF simulatedTouch(100, 100);
     display->acceptTouch(simulatedTouch);
+
+    // Before tick, assert resources are sufficient for transition
+    QVERIFY(fuellstand->hatGenug(wasserTank, 50, 1.0f));
+    QVERIFY(fuellstand->hatGenug(milchTank, 150, 1.0f));
+    QVERIFY(fuellstand->hatGenug(kaffeeTank, 15, 1.0f));
 
     sut->tick();
 
@@ -104,23 +123,32 @@ void tkoordinator_display::testWartenZuZuckerwahl() {
 }
 
 
+
 void tkoordinator_display::testZuckerwahlZuBezahlen() {
+    // Bring SUT to ZUCKERWAHL
     while (sut->getCurrentState() != KoordinatorZustand::ZUCKERWAHL) {
         QPointF simulatedTouch(100, 100);
         display->acceptTouch(simulatedTouch);
         sut->tick();
     }
-    hatGenugReturn = true;
+
     QSignalSpy spy(display, &Display::updateDisplay);
     QVERIFY(spy.isValid());
 
+    // Simulate touch to select sugar option
     QPointF simulatedTouch(100, 100);
     display->acceptTouch(simulatedTouch);
+
+
+    QVERIFY(fuellstand->hatGenug(zuckerTank, 5, 1.0f));
+
     sut->tick();
 
     QVERIFY(spy.count() > 0);
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::BEZAHLEN);
 }
+
+
 
 
 void tkoordinator_display::testBezahlenZuAusfuehren() {

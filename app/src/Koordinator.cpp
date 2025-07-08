@@ -40,7 +40,7 @@ void Koordinator::tick() {
             int height = 400;
 
             Ressourcen res;
-            kaffeeprogramm = new Kaffeeprogramm(res); // mock
+            kaffeeprogramm = new Kaffeeprogramm(res);
 
             if (lastTouch.x() < width / 2 && lastTouch.y() < height / 2) {
                 kaffeeprogramm->setKaffeemenge_g(15);
@@ -68,24 +68,23 @@ void Koordinator::tick() {
                 kaffeeprogramm->setMilchKochhitze_Cel(65);
             }
 
-            zustand = KoordinatorZustand::ZUCKERWAHL;
-        }
-        break;
+            bool genugWasser = fuellstandsmessung->hatGenug(
+                fuellstandsmessung->getWasserTank(),
+                kaffeeprogramm->getWassermenge_ml(),
+                1.0f);
 
-    case KoordinatorZustand::ZUCKERWAHL: {
-        zeigeBild(":/images/sugar.png");
+            bool genugMilch = fuellstandsmessung->hatGenug(
+                fuellstandsmessung->getMilchTank(),
+                kaffeeprogramm->getMilchmenge_ml(),
+                1.0f);
 
-        if (lastTouch != QPointF(0, 0)) {
-            int width = 400;
-            mitZucker = lastTouch.x() < width / 2;
-            kaffeeprogramm->setMitZucker(mitZucker); // mock
-
-            bool genugWasser = fuellstandsmessung->hatGenug(fuellstandsmessung->getWasserTank(), kaffeeprogramm->getWassermenge_ml(), 1.0f);
-            bool genugMilch = fuellstandsmessung->hatGenug(fuellstandsmessung->getMilchTank(), kaffeeprogramm->getMilchmenge_ml(), 1.0f);
-            bool genugKaffee = fuellstandsmessung->hatGenug(fuellstandsmessung->getKaffeeTank(), kaffeeprogramm->getKaffeemenge_g(), 1.0f);
+            bool genugKaffee = fuellstandsmessung->hatGenug(
+                fuellstandsmessung->getKaffeeTank(),
+                kaffeeprogramm->getKaffeemenge_g(),
+                1.0f);
 
             if (genugWasser && genugMilch && genugKaffee) {
-                zustand = KoordinatorZustand::BEZAHLEN;
+                zustand = KoordinatorZustand::ZUCKERWAHL;
             } else {
                 zeigeBild(":/images/not_enough.png");
                 delete kaffeeprogramm;
@@ -94,32 +93,47 @@ void Koordinator::tick() {
             }
         }
         break;
-    }
 
+
+    case KoordinatorZustand::ZUCKERWAHL: {
+        zeigeBild(":/images/sugar.png");
+
+        if (lastTouch != QPointF(0, 0)) {
+            int width = 400;
+            mitZucker = lastTouch.x() < width / 2;//casimir fragen
+            kaffeeprogramm->setMitZucker(mitZucker);
+
+            if (mitZucker) {
+                bool genugZucker = fuellstandsmessung->hatGenug(
+                    fuellstandsmessung->getZuckerTank(),
+                    5,
+                    5.0f
+                    );
+
+                if (!genugZucker) {
+                    zeigeBild(":/images/not_enough.png");
+                    delete kaffeeprogramm;
+                    kaffeeprogramm = nullptr;
+                    zustand = KoordinatorZustand::WARTEN;
+                    break;
+                }
+            }
+
+            zustand = KoordinatorZustand::BEZAHLEN;
+        }
+        break;
+    }
 
     case KoordinatorZustand::BEZAHLEN: {
         zeigeBild(":/images/brewing.png");
-
-        if (mitZucker) {
-            bool genugZucker = fuellstandsmessung->hatGenug(
-                fuellstandsmessung->getZuckerTank(),   5.0f
-                );
-
-            if (!genugZucker) {
-                zeigeBild(":/images/not_enough.png");
-                delete kaffeeprogramm;
-                kaffeeprogramm = nullptr;
-                zustand = KoordinatorZustand::WARTEN;
-                break;
-            }
-        }
 
         if (zahlungseinheit->versucheZahlung(5)) { // mock
             zustand = KoordinatorZustand::AUSFUEHREN;
         }
         break;
     }
-    ;
+
+
 
     case KoordinatorZustand::AUSFUEHREN:
         zeigeBild(":/images/brewing.png");
