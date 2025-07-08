@@ -7,9 +7,9 @@ class MuenzAuswerfer {
 private:
     Muenzroehre *aktiveRoehre;
 public:
-    MuenzAuswerfer(); // Standardkonstruktor für Unit-Tests
+    MuenzAuswerfer(); // Standardkonstruktor für Unittest
 
-    // Wirft eine einzelne Münze aus (bei ungültiger Eingabe)
+    // Wirft eine einzelne Münze aus bei ungueltiger Eingabe
     void auswerfenMuenze(Muenzroehre *aktiveRoehre);
 };
 

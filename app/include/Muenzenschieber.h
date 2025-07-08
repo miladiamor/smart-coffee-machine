@@ -10,7 +10,7 @@ private:
     MuenzEingabeSensor *sensor;
 
 public:
-    Muenzenschieber();  //  Standardkonstruktor vorhanden
+    Muenzenschieber();
     void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre);
 };
 

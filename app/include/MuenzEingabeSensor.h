@@ -6,7 +6,7 @@ private:
     float eingeworfeneMuenze;
     bool muenzeGueltig;
 public:
-    MuenzEingabeSensor();  // Standardkonstruktor
+    MuenzEingabeSensor();
 
     void setEingeworfeneMuenze(float eingeworfeneMuenze);
     float getEingeworfeneMuenze();
