@@ -53,6 +53,11 @@ void Zahlungseinheit::setMuenzEingabeSensor(MuenzEingabeSensor *muenzeingabesens
     this->sensor = muenzeingabesensor;
 }
 
+void Zahlungseinheit::setMuenzAuswerfer(MuenzAuswerfer *muenzauswerfer)
+{
+    this->auswerfer = muenzauswerfer;
+}
+
 
 // Fuehrt einen Tick aus: verarbeitet eine Muenze
 void Zahlungseinheit::tick() {

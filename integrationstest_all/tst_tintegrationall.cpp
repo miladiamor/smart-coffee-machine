@@ -42,12 +42,12 @@ bool MuenzEingabeSensor::getMuenzeGueltig() {return true;}
 
 MuenzAuswerfer::MuenzAuswerfer() {}
 int globalAnzahlMuenze = 10;
-MuenzEingabeSensor *globalMuenzAuswerfer = nullptr;
+MuenzAuswerfer *globalMuenzAuswerfer = nullptr;
 void MuenzAuswerfer::auswerfenMuenze(Muenzroehre *aktiveRoehre) {globalAnzahlMuenze--;}
 
 Muenzenschieber::Muenzenschieber() {}
 Muenzenschieber *globalMuenzschieber = nullptr;
-void schiebeMuenzeInRoehre(Muenzroehre* muenzroehre) {globalAnzahlMuenze++;}
+void Muenzenschieber::schiebeMuenzeInRoehre(Muenzroehre* muenzroehre) {globalAnzahlMuenze++;}
 
 //MockUps Ventile und Klappen für die Bruehgruppe
 Ventil *globalWasserzufuhr, *globalKaffeezufuhr, *globalTropfstopf;
@@ -179,6 +179,7 @@ int Ressourcen::getMilchmenge_ml() const { return milchmenge_ml; }
 int Ressourcen::getKaffeemenge_g() const { return kaffeemenge_g; }
 short Ressourcen::getZuckermenge_TL() const { return zuckermenge_TL; }
 
+
 class tintegrationall : public QObject
 {
     Q_OBJECT
@@ -188,6 +189,7 @@ public:
     ~tintegrationall();
 
 private:
+    QSignalSpy *spy;
     Display *display;
     Koordinator *koordinator;
     Programmsteuerung *programmsteuerung;
@@ -230,10 +232,18 @@ void tintegrationall::initTestCase() {
     zahlungseinheit = new Zahlungseinheit();
     muenzroehrenspeicher = new Muenzroehrenspeicher();
 
+    // Signal Spy für display
+    spy = new QSignalSpy(display, &Display::updateText);
+
     // Komponenten für Zahlugnseinheit/Muenzroehrenspeicher
     globalMuenzEingabeSensor = new MuenzEingabeSensor();
     globalMuenzschieber = new Muenzenschieber();
     globalMuenzroehre = new Muenzroehre();
+    globalMuenzAuswerfer = new MuenzAuswerfer();
+    zahlungseinheit->setDisplay(display);
+    zahlungseinheit->setMuenzAuswerfer(globalMuenzAuswerfer);
+    zahlungseinheit->setMuenzEingabeSensor(globalMuenzEingabeSensor);
+    zahlungseinheit->setMuenzroehrenspeicher(muenzroehrenspeicher);
 
     // Komponenten für Koordinator setzen
     mFuellstandmessung = new Fuellstandsmessung();
@@ -284,6 +294,7 @@ void tintegrationall::tickAll() {
     koordinator->tick();
     programmsteuerung->tick();
     motorsteuerung->tick();
+    zahlungseinheit->tick();
 }
 
 void tintegrationall::test_milchkaffee() {
@@ -301,6 +312,13 @@ void tintegrationall::test_milchkaffee() {
     display->acceptTouch(pt);
     tickAll();
     QCOMPARE(KoordinatorZustand::BEZAHLEN, koordinator->getCurrentState());
+
+    tickAll();
+    QCOMPARE(spy->count(), 1);
+
+    QVariant arg = spy->takeFirst();
+    QString emitted = qvariant_cast<QString>(arg);
+    qDebug() << "1. Preis: " << emitted;
 
     // programmsteuerung geht in Ausführen über
     tickAll();

@@ -36,7 +36,6 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    Ausgabeeinheit ausgabeeinheit;
     Bruehgruppe bruehgruppe;
     Clock clock(100);
     Display display;
@@ -97,7 +96,6 @@ int main(int argc, char *argv[])
 
     simulation.setKaffeerestbehaelter(&tankwaage);
     simulation.setKolbenmotor(&kolbenmotor);
-    simulation.setBruehgruppe(&bruehgruppe);
     simulation.setInkrementalencoder(&inkrementalencoder);
     simulation.setWasserPumpe(&pumpe);
     simulation.setMilchPumpe(&pumpe);

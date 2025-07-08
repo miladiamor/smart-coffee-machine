@@ -104,10 +104,6 @@ void Kaffeeprogramm::setStampfhoehe_mm(float mm)
     stampfHoehe_mm = mm;
 }
 
-void Kaffeeprogramm::setProdukt(Produkt* p) {
-    produkt = p;
-}
-
 void Kaffeeprogramm::setBenoetigteRessourcen(Ressourcen r) {
     benoetigteRessourcen = r;
 }
