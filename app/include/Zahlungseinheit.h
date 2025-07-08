@@ -41,4 +41,7 @@ public:
     // Injects the display dependency for feedback
     void setDisplay(Display* display);
     void setTestZahlungAktiv(bool aktiv);
+    void setMuenzroehrenspeicher(Muenzroehrenspeicher *muenzroehrenspeicher);
+    void setMuenzEingabeSensor(MuenzEingabeSensor *muenzeingabesensor);
+    void setMuenzAuswerfer(MuenzAuswerfer *muenzauswerfer);
 };

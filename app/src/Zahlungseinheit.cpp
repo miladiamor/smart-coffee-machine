@@ -43,6 +43,16 @@ void Zahlungseinheit::setTestZahlungAktiv(bool aktiv) {
     zahlungAktiv = aktiv;
 }
 
+void Zahlungseinheit::setMuenzroehrenspeicher(Muenzroehrenspeicher *muenzroehrenspeicher)
+{
+    this->speicherVerwaltung = muenzroehrenspeicher;
+}
+
+void Zahlungseinheit::setMuenzEingabeSensor(MuenzEingabeSensor *muenzeingabesensor)
+{
+    this->sensor = muenzeingabesensor;
+}
+
 
 // Fuehrt einen Tick aus: verarbeitet eine Muenze
 void Zahlungseinheit::tick() {
