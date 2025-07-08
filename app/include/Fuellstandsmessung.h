@@ -25,6 +25,11 @@ public:
 
     bool hatGenug(Tankwaage* tank, int mengeEinheit, float faktor = 1.0f) const;
 
+    void setWasserTank(Tankwaage *Tank);
+    void setMilchTank(Tankwaage *Tank);
+    void setKaffeeTank(Tankwaage *Tank);
+    void setRessourcen(Ressourcen *Tank);
+
     Tankwaage* getWasserTank() const { return wasser; }
     Tankwaage* getMilchTank() const { return milch; }
     Tankwaage* getKaffeeTank() const { return kaffee; }

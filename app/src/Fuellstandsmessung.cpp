@@ -38,3 +38,15 @@ bool Fuellstandsmessung::hatGenug(Tankwaage* tank, int mengeEinheit, float fakto
     float benoetigt_g = mengeEinheit * faktor;
     return tank->gewichtPruefen() >= benoetigt_g;
 }
+
+void Fuellstandsmessung::Fuellstandsmessung::Fuellstandsmessung::setWasserTank(Tankwaage *Tank) {wasser = Tank;}
+
+void Fuellstandsmessung::Fuellstandsmessung::setWasserTank(Tankwaage *Tank) {wasser = Tank;}
+
+void Fuellstandsmessung::setWasserTank(Tankwaage *Tank) {wasser = Tank;}
+
+void Fuellstandsmessung::setMilchTank(Tankwaage *Tank) {milch = Tank;}
+
+void Fuellstandsmessung::setKaffeeTank(Tankwaage *Tank) {kaffee = Tank;}
+
+void Fuellstandsmessung::setRessourcen(Ressourcen *Tank) {ressourcen = Tank;}
