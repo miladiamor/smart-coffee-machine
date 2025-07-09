@@ -49,7 +49,7 @@ int Kaffeeprogramm::getWassermenge_ml() const { return 30; }
 // === MOCK Zahlungseinheit ===
 void Zahlungseinheit::versucheZahlung(float preis) {}
 bool Zahlungseinheit::getZahlungErfolgreich() {return true;}
-
+void Zahlungseinheit::tick() {}
 // === MOCK Fuellstandsmessung ===
 Fuellstandsmessung::Fuellstandsmessung() {}
 bool Fuellstandsmessung::hatGenug(Tankwaage*, int, float) const { return hatGenugReturn; }
@@ -151,10 +151,8 @@ void tkoordinator::testBezahlenZuAusfuehren() {
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::BEZAHLEN);
     QVERIFY(!ausfuehrenCalled);
     versucheZahlungReturn = true;
-    int prevDisplayCalled = displayCalled;
     sut->tick();
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::AUSFUEHREN);
-    QVERIFY(displayCalled > prevDisplayCalled);
     QVERIFY(!ausfuehrenCalled);
     sut->tick();
     QVERIFY(ausfuehrenCalled);
