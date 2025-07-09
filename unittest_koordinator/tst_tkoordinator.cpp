@@ -53,6 +53,7 @@ void Zahlungseinheit::tick() {}
 // === MOCK Fuellstandsmessung ===
 Fuellstandsmessung::Fuellstandsmessung() {}
 bool Fuellstandsmessung::hatGenug(Tankwaage*, int, float) const { return hatGenugReturn; }
+bool Fuellstandsmessung::updateRessourcen() {return true;}
 
 // === Test Implementation ===
 class tkoordinator : public QObject {
