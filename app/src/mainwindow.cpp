@@ -96,6 +96,18 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_5_clicked()
 {
+    sim->setMuenze_EUR(0.20f);
+}
 
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    sim->setMuenze_EUR(0.10f);
+}
+
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    sim->setMuenze_EUR(0.50f);
 }
 
