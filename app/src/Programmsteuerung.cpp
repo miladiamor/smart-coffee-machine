@@ -75,8 +75,6 @@ Programmsteuerung::~Programmsteuerung(){}
     }
 
     void Programmsteuerung::tick(){
-        temperaturregler_milch->tick();
-        temperaturregler_wasser->tick();
         if (!busy){
            return;
         }
