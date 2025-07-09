@@ -84,6 +84,22 @@ void Simulation::setMuenze_EUR(float muenze_EUR) {
     this->muenze_EUR = muenze_EUR;
 }
 
+void Simulation::setTropfstopfVentil(Ventil *v) {
+    this->tropfstopfVentil = v;
+}
+
+void Simulation::setWasserVentil(Ventil *v) {
+    this->wasserzufuhrVentil = v;
+}
+
+void Simulation::setKaffeeVentil(Ventil *v) {
+    this->kaffeezufuhrVentil = v;
+}
+/*
+void Simulation::setMainWindow(MainWindow *mw) {
+    this->mw = mw;
+}
+*/
 // Temperatur und Regler
 #define HEIZRATE_WASSER_CEL_PRO_TICK 0.5f  // während der Heizung Temperatur erhöht sich
 #define PUMP_MILCH_G_PRO_TICK          8.0f
@@ -174,6 +190,11 @@ void Simulation::tick(){
         }
         kaffeeTassenInhalt_g += milchMenge;
         milchbehaelter->setGewicht(milchbehaelter_g);
+        //emit setKaffeeInhalt(kaffeeTassenInhalt_g);
+
+        // Funktionsaufruf statt Signal, da das Projekt bei mehr als
+        //8 Signal-Slot Connections abstürzt
+        //mw->setKaffee(kaffeeTassenInhalt_g);
     }
 
     //Zucker

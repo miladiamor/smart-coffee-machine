@@ -89,7 +89,7 @@
         <x>110</x>
         <y>0</y>
         <width>21</width>
-        <height>31</height>
+        <height>51</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -105,15 +105,28 @@
      <widget class="QProgressBar" name="cup">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>80</y>
-        <width>81</width>
-        <height>111</height>
+        <x>60</x>
+        <y>60</y>
+        <width>111</width>
+        <height>131</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">padding: 10px;
-background-color: white;
+       <string notr="true">/* The cup */
+QProgressBar {
+    /* thin grey rim like a porcelain cup */
+    border: 2px solid #d0d0d0;
+    border-radius: 8px;          /* soft corners */
+    background-color: white;     /* white china */
+    text-align: center;          /* keep “42 %” centered */
+    padding: 1px;                /* ensures brown fill doesn't overlap rim */
+}
+
+/* The coffee */
+QProgressBar::chunk {
+    background-color: #6F4E37;   /* rich coffee-brown */
+    border-radius: 6px;          /* follow cup curvature */
+}
 </string>
       </property>
       <property name="value">

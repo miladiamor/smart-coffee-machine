@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "simulation.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->touchDisplayLabel->installEventFilter(this);
 
     this->cup = findChild<QProgressBar*>("cup");
+    ui->cup->setRange(0, 350);
 }
 
 MainWindow::~MainWindow()
@@ -74,7 +76,12 @@ void MainWindow::on_btnLatteMachiato_clicked()
 void MainWindow::setSimulation(Simulation *sim) {
     this->sim = sim;
 }
-
+/*
+void MainWindow::setKaffee(float kaffee)
+{
+    ui->cup->setValue((int)kaffee);
+}
+*/
 void MainWindow::on_pushButton_2_released()
 {
     sim->setMuenze_EUR(1.0f);
@@ -84,5 +91,11 @@ void MainWindow::on_pushButton_2_released()
 void MainWindow::on_pushButton_clicked()
 {
     sim->setMuenze_EUR(2.0f);
+}
+
+
+void MainWindow::on_pushButton_5_clicked()
+{
+
 }
 

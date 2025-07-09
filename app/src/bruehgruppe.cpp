@@ -1,5 +1,6 @@
 #include "bruehgruppe.h"
 #include "motorsteuerung.h"
+#include "qdebug.h"
 #include <QTimer>
 
 /*
@@ -24,6 +25,7 @@ void Bruehgruppe::trigger(BruehEvent event) {
         if (event == ZUFUHRSTART) {
             kaffeezufuhr->oeffnen();
             state = KAFFEEZUFUHR;
+            qDebug() << "BG: KAFFEEZUFUHR";
         }
         break;
     case KAFFEEZUFUHR:
@@ -31,6 +33,8 @@ void Bruehgruppe::trigger(BruehEvent event) {
             kaffeezufuhr->schliessen();
             motorsteuerung->stampferAusfahren(kaffeeprogramm->getStampfhoehe_mm());
             state = STAMPFEN;
+
+            qDebug() << "BG: STAMPFEN";
         }
         break;
     case STAMPFEN:
@@ -38,6 +42,7 @@ void Bruehgruppe::trigger(BruehEvent event) {
             wasserzufuhr->oeffnen();
             tropfstopfventil->oeffnen();
             state = KOCHEN;
+            qDebug() << "BG: KOCHEN";
         }
         break;
     case KOCHEN:
@@ -47,6 +52,7 @@ void Bruehgruppe::trigger(BruehEvent event) {
             entleerklappe->oeffnen();
             motorsteuerung->stampferAusfahren(0);
             state = ENTLEEREN;
+            qDebug() << "BG: KOCHENAUFGEHOERT";
         }
         break;
     case ENTLEEREN:
@@ -54,10 +60,12 @@ void Bruehgruppe::trigger(BruehEvent event) {
             motorsteuerung->stampferAusfahren(20);
             entleerklappe->schliessen();
             state = ZURUECKSETZEN;
+            qDebug() << "BG: ZURUECKSETZEN";
         }
         break;
     case ZURUECKSETZEN:
         if (event == MOTORABGESCHLOSSEN) {
+            qDebug() << "BG: WARTEN";
             state = WARTEN;
         }
         break;

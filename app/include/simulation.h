@@ -17,7 +17,6 @@
 #include "QThread"
 #include "MuenzEingabeSensor.h"
 
-
 class Simulation : public QObject
 {
     Q_OBJECT
@@ -40,11 +39,21 @@ public:
     void setWasserTemperatursensor(Temperatursensor *sensor);
     void setMilchTemperatursensor(Temperatursensor *sensor);
     void setMuenze_EUR(float muenze_EUR);
+    void setTropfstopfVentil(Ventil *v);
+    void setWasserVentil(Ventil *v);
+    void setKaffeeVentil(Ventil *v);
+    //void setMainWindow(MainWindow *mw);
+
+signals:
+    void setKaffeeInhalt(float kaffee);
 
 public slots:
     void tick();
 
 private:
+    // MainWindow (um Kaffee abzudaten)
+    //MainWindow *mw;
+
     //Aktoren Brühgruppe
     Kolbenmotor *kolbenmotor;
     Ventil *tropfstopfVentil, *kaffeezufuhrVentil, *wasserzufuhrVentil;

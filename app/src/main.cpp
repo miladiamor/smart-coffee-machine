@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
     Pumpe pumpe;
     Schaeumer schaeumer;
     Simulation simulation;
-    Ventil ventil;
+    Ventil tropfstopfVentil, kaffeezufuhrVentil, wasserzufuhrVentil;
     Zahlungseinheit zahlungseinheit;
     Zuckerdispenser zuckerdispenser;
 
@@ -91,9 +91,9 @@ int main(int argc, char *argv[])
     inkrementalencoder.setStampfer(&kolbenmotor);
 
     bruehgruppe.setMotorsteuerung(&motorsteuerung);
-    bruehgruppe.setWasserzufuhr(&ventil);
-    bruehgruppe.setKaffeezufuhr(&ventil);
-    bruehgruppe.setTropfstopfventil(&ventil);
+    bruehgruppe.setWasserzufuhr(&wasserzufuhrVentil);
+    bruehgruppe.setKaffeezufuhr(&kaffeezufuhrVentil);
+    bruehgruppe.setTropfstopfventil(&tropfstopfVentil);
     bruehgruppe.setEntleerklappe(&klappe);
 
     koordinator.setzeDisplay(&display);
@@ -116,6 +116,9 @@ int main(int argc, char *argv[])
     simulation.setMuenzEingabeSensor(&muenzEingabeSensor);
     simulation.setWasserTemperatursensor(&wasserTemperatursensor);
     simulation.setMilchTemperatursensor(&milchTemperatursensor);
+    simulation.setTropfstopfVentil(&tropfstopfVentil);
+    simulation.setWasserVentil(&wasserzufuhrVentil);
+    simulation.setKaffeeVentil(&kaffeezufuhrVentil);
 
     mw.setSimulation(&simulation);
 
@@ -148,6 +151,14 @@ int main(int argc, char *argv[])
                      &mw, &MainWindow::updateWindowText,
                      Qt::DirectConnection);
 
+
+    //Simulation und MainWIndow
+    /*
+    QObject::connect(&simulation, &Simulation::setKaffeeInhalt,
+                     &mw, &MainWindow::setKaffee,
+                     Qt::DirectConnection);
+    */
+
     //CLOCK
     QObject::connect(&clock, &Clock::update,
                      &koordinator, &Koordinator::tick,
@@ -173,10 +184,13 @@ int main(int argc, char *argv[])
                      &milchRegler, &Heizregler::tick,
                      Qt::DirectConnection);
 
-    */
+
     QObject::connect(&clock, &Clock::update,
                      &motorsteuerung, &Motorsteuerung::tick,
                      Qt::DirectConnection);
+    */
+    //mw.setSimulation(&simulation);
+    //simulation.setMainWindow(&mw);
 
     mw.show();
 

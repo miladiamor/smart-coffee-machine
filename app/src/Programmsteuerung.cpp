@@ -89,8 +89,8 @@ Programmsteuerung::~Programmsteuerung(){}
                 temperaturregler_wasser->temperaturRegeln(currentProgramm->getWasserKochhitze_Cel());// Wassererhitzer starten
                 temperaturregler_milch->temperaturRegeln(currentProgramm->getMilchKochhitze_Cel());// Millcherhitzer starten
                 coffeeState = CoffeeState::HEIZEN;
+                qDebug() << "PS: HEIZEN";
             }
-            qDebug() << "PS: IDLE";
             break;
 
         case CoffeeState::HEIZEN:
@@ -98,16 +98,16 @@ Programmsteuerung::~Programmsteuerung(){}
                 bruehgruppe->trigger(ZUFUHRSTART);
                 coffeeState = CoffeeState::KAFFEE_ZUFUHR;
                 tickCounter = 0;
+                 qDebug() << "PS: KAFFEEZUFUHR";
             }
-            qDebug() << "PS: HEIZEN";
             break;
 
         case CoffeeState::KAFFEE_ZUFUHR:
             if (tickCounter >= currentProgramm->getKaffeemenge_g()/0.3) {
                 bruehgruppe->trigger(ZUFUHRABGESCHLOSSEN);
                 coffeeState = CoffeeState::WARTENAUFBRUEHGRUPPE;
+                qDebug() << "PS: WAB";
             }
-            qDebug() << "PS: KAFFEEZUFUHR";
             break;
 
         case CoffeeState::WARTENAUFBRUEHGRUPPE:
@@ -115,8 +115,8 @@ Programmsteuerung::~Programmsteuerung(){}
                 coffeeState = CoffeeState::PUMPING_WATER;
                 wasserpumpe->pumpeStarten();
                 tickCounter = 0;
+                qDebug() << "PS: PUMPIN_WATER";
             }
-            qDebug() << "PS: WAB";
             break;
 
         case CoffeeState::PUMPING_WATER:
@@ -127,8 +127,8 @@ Programmsteuerung::~Programmsteuerung(){}
                 milchschaeumer->aufschaeumenStarten();
                 coffeeState = CoffeeState::PUMPING_MILK;
                 tickCounter = 0;
+                qDebug() << "PS: PUMPING_MILK";
             }
-            qDebug() << "PS: PUMPIN_WATER";
             break;
         case CoffeeState::PUMPING_MILK:
             // prüfen ob Milch fertig gepumpt
@@ -139,24 +139,24 @@ Programmsteuerung::~Programmsteuerung(){}
                 bruehgruppe->trigger(KOCHENAUFGEHOERT);
                 coffeeState = CoffeeState::ZUCKERAUSWERFEN;
                 tickCounter = 0;
+                qDebug() << "PS: ZUCKERAUSWERFWEN";
             }
-            qDebug() << "PS: PUMPING_MILK";
             break;
 
         case CoffeeState::ZUCKERAUSWERFEN:
             if (tickCounter >= currentProgramm->getMitZucker()*5){
                 zucker->ausschalten();
                 coffeeState = CoffeeState::ZURUECK_SETZEN;
+                qDebug() << "PS: ZURUECK_SETZEN";
             }
-            qDebug() << "PS: ZUCKERAUSWERFWEN";
             break;
 
         case CoffeeState::ZURUECK_SETZEN:
             if (bruehgruppe->getState() == WARTEN) {
                 coffeeState = CoffeeState::IDLE;
                 busy = false;
+                qDebug() << "PS: IDLE";
             }
-            qDebug() << "PS: ZURUECK_SETZEEN";
             break;
 
         default:

@@ -9,10 +9,6 @@ void Heizregler::temperaturRegeln(int zieltemperatur_Cel) {
     }
 }
 
-bool Heizregler::istTemperaturErreicht() const {
-    return (aktuelleTemperatur_Cel >= zieltemperatur_Cel);
-}
-
 void Heizregler::setHeizelement(Heizelemente *heizelement)
 {
     this->heizen = heizelement;
@@ -23,18 +19,20 @@ void Heizregler::setTemperatursensor(Temperatursensor *temperatursensor)
     this->sensor = temperatursensor;
 }
 
+bool Heizregler::istTemperaturErreicht() const {
+    return (aktuelleTemperatur_Cel >= zieltemperatur_Cel);
+}
+
 bool Heizregler::getEingeschaltet() {
     return eingeschaltet;
 }
 
 void Heizregler::tick(){
+    aktuelleTemperatur_Cel = sensor->getTemperatur_Cel();
     if (eingeschaltet){
-        qDebug() << "1";
         if (istTemperaturErreicht()){
             eingeschaltet = false;
-             qDebug() << "2";
             heizen->ausschalten();
-              qDebug() << "3";
         } else{
             heizen->einschalten();
         }
