@@ -8,6 +8,7 @@ class Koordinator;
 #include <QTouchEvent>
 #include <QPointF>
 #include <QString>
+class MainWindow;
 #include "simulation.h"
 
 namespace Ui {
@@ -45,7 +46,6 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void on_pushButton_5_clicked();
 
     void on_pushButton_3_clicked();
 

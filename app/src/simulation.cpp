@@ -3,10 +3,13 @@
 #include <QDebug>
 
 Simulation::Simulation() :
+    wasserrohrtemperatur_cel(25),
+    milchrohrtemperatur_cel(25),
     motorPosition_mm(0),
     kaffeerestbehaelter_g(0),
     kaffeebehaelter_g(0),
-    bruehkammerKaffeeinhalt_g(0){}
+    bruehkammerKaffeeinhalt_g(0) {
+}
 
 void Simulation::setKaffeebehaelter(Tankwaage *kaffeebehaelter)
 {
@@ -94,6 +97,11 @@ void Simulation::setWasserVentil(Ventil *v) {
 
 void Simulation::setKaffeeVentil(Ventil *v) {
     this->kaffeezufuhrVentil = v;
+}
+
+void Simulation::setZuckerdispenser(Zuckerdispenser *zuckerdispenser)
+{
+    this->zuckerdispenser = zuckerdispenser;
 }
 /*
 void Simulation::setMainWindow(MainWindow *mw) {

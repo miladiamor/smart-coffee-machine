@@ -42,6 +42,7 @@ public:
     void setTropfstopfVentil(Ventil *v);
     void setWasserVentil(Ventil *v);
     void setKaffeeVentil(Ventil *v);
+    void setZuckerdispenser(Zuckerdispenser *zuckerdispenser);
     //void setMainWindow(MainWindow *mw);
 
 signals:
@@ -82,18 +83,18 @@ private:
     MuenzEingabeSensor *muenzSensor;
 
     //Münze
-    float muenze_EUR;
+    float muenze_EUR = 0.0;
 
     // Temperaturen
-    float wasserrohrtemperatur_cel, milchrohrtemperatur_cel;
+    float wasserrohrtemperatur_cel = 25, milchrohrtemperatur_cel = 25;
     // Tasseinhalt
-    float kaffeeTassenInhalt_g;
-    float milchSchaum_g;
+    float kaffeeTassenInhalt_g = 0;
+    float milchSchaum_g = 0;
 
     // Motor
-    float motorPosition_mm;
+    float motorPosition_mm = MAX_MOTOR_HEIGHT_MM;
     // Tankfüllstände
     float kaffeerestbehaelter_g, kaffeebehaelter_g, wasserbehaelter_g, milchbehaelter_g, zuckerbehaelter_g;
     // Brühgruppefüllstand
-    float bruehkammerKaffeeinhalt_g;
+    float bruehkammerKaffeeinhalt_g = 0;
 };

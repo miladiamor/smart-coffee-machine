@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
     simulation.setTropfstopfVentil(&tropfstopfVentil);
     simulation.setWasserVentil(&wasserzufuhrVentil);
     simulation.setKaffeeVentil(&kaffeezufuhrVentil);
-
+    simulation.setZuckerdispenser(&zuckerdispenser);
     mw.setSimulation(&simulation);
 
     muenzroehrenspeicher.setroehre2Euro(&muenzroehre);
@@ -175,7 +175,7 @@ int main(int argc, char *argv[])
     QObject::connect(&clock, &Clock::update,
                      &simulation, &Simulation::tick,
                      Qt::DirectConnection);
-    /*
+
     QObject::connect(&clock, &Clock::update,
                      &wasserRegler, &Heizregler::tick,
                      Qt::DirectConnection);
@@ -184,11 +184,10 @@ int main(int argc, char *argv[])
                      &milchRegler, &Heizregler::tick,
                      Qt::DirectConnection);
 
-
     QObject::connect(&clock, &Clock::update,
                      &motorsteuerung, &Motorsteuerung::tick,
                      Qt::DirectConnection);
-    */
+
     //mw.setSimulation(&simulation);
     //simulation.setMainWindow(&mw);
 
