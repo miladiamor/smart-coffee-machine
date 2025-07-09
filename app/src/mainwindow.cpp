@@ -49,7 +49,6 @@ void MainWindow::updateWindowText(QString text){
 
 void MainWindow::updateKaffee(int kaffee)
 {
-    qDebug() << "called";
     ui->cup->setValue(kaffee);
 }
 

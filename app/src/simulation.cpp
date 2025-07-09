@@ -5,11 +5,11 @@
 Simulation::Simulation() :
     wasserrohrtemperatur_cel(25),
     milchrohrtemperatur_cel(25),
+    kaffeeTassenInhalt_g(0.0),
     motorPosition_mm(0),
     kaffeerestbehaelter_g(0),
     kaffeebehaelter_g(0),
-    bruehkammerKaffeeinhalt_g(0) {
-}
+    bruehkammerKaffeeinhalt_g(0) {}
 
 void Simulation::setKaffeebehaelter(Tankwaage *kaffeebehaelter)
 {
@@ -163,21 +163,19 @@ void Simulation::tick(){
     // Wasservorwärmung
     if (wasserHeizer->istEingeschaltet()) {
         wasserrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
-        qDebug() << "Wassertemperatur: " << wasserrohrtemperatur_cel;
         wasserTemperatursensor->setTemperatur_Cel(wasserrohrtemperatur_cel);
         }
 
     // Milchvorwärmung
     if (milchHeizer->istEingeschaltet()) {
         milchrohrtemperatur_cel += HEIZRATE_WASSER_CEL_PRO_TICK;
-        qDebug() << "Milchrohrtemperatur: " << milchrohrtemperatur_cel;
         milchTemperatursensor->setTemperatur_Cel(milchrohrtemperatur_cel);
     }
 
     // Während des Offeneventils fließt das Wasser in den Kaffee
     if (wasserpumpe->get_Aktiv()) {
         if (wasserzufuhrVentil->get_ist_offen() && tropfstopfVentil->get_ist_offen()) {
-            float wasserMenge = PUMP_WASSER_G_PRO_TICK * 0.001f;
+            float wasserMenge = PUMP_WASSER_G_PRO_TICK;
             wasserbehaelter_g -= wasserMenge;
             kaffeeTassenInhalt_g += wasserMenge;
             wasserbehaelter->setGewicht(wasserbehaelter_g);
@@ -188,7 +186,7 @@ void Simulation::tick(){
 
     // Milch wird in der Tasse geliefert
     if (milchpumpe->get_Aktiv()) {
-        float milchMenge = PUMP_MILCH_G_PRO_TICK * 0.001f;
+        float milchMenge = PUMP_MILCH_G_PRO_TICK;
         float schaumMenge = 0;
         milchbehaelter_g -= milchMenge;
         if (schaeumer->getEingeschaltet()) {
@@ -205,7 +203,7 @@ void Simulation::tick(){
         //mw->setKaffee(kaffeeTassenInhalt_g);
     }
 
-    emit setKaffeeInhalt((int) kaffeeTassenInhalt_g);
+    emit setKaffeeInhalt((int)kaffeeTassenInhalt_g);
 
     //Zucker
     if (zuckerdispenser->istAktiv()) {
