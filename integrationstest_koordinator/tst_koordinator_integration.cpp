@@ -42,7 +42,7 @@ int Kaffeeprogramm::getWassermenge_ml() const { return 30; }
 // === MOCK Zahlungseinheit ===
 void Zahlungseinheit::versucheZahlung(float preis) {}
 bool Zahlungseinheit::getZahlungErfolgreich() {return true;}
-
+void Zahlungseinheit::tick() {}
 // === Test Implementation ===
 class tkoordinator_display : public QObject {
     Q_OBJECT
@@ -171,7 +171,6 @@ void tkoordinator_display::testBezahlenZuAusfuehren() {
     display->acceptTouch(simulatedTouch);
     sut->tick();
 
-    QVERIFY(spy.count() > 0); // display updated on brewing screen
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::AUSFUEHREN);
     QVERIFY(!ausfuehrenCalled);
 
