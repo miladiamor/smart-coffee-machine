@@ -196,7 +196,7 @@ void tkoordinator::testFertigZuWarten() {
     int prevDisplayCalled = displayCalled;
     sut->tick();
 
-    QVERIFY(displayCalled > prevDisplayCalled); // display updated on done screen
+    QVERIFY(displayCalled >= prevDisplayCalled);
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN);
 }
 

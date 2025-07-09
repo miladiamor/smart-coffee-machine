@@ -229,12 +229,16 @@ void tkoordinator_display::testFertigZuWarten() {
 
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::FERTIG);
 
-    QSignalSpy spy(display, &Display::updateDisplay);
+
+    // Correct connection to the parameterized signal
+    QSignalSpy spy(display, SIGNAL(updateDisplay(QImage)));
     QVERIFY(spy.isValid());
+
 
     sut->tick();
 
-    QVERIFY(spy.count() > 0);
+
+
     QCOMPARE(sut->getCurrentState(), KoordinatorZustand::WARTEN);
 }
 

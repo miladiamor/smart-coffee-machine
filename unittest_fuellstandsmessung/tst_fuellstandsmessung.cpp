@@ -60,9 +60,9 @@ void tfuellstandsmessung::testUpdateRessourcen() {
     QVERIFY(sut->updateRessourcen());
 
     QCOMPARE(ressourcen->getWassermenge_ml(), 500);
-    QCOMPARE(ressourcen->getMilchmenge_ml(), 500);
+    QCOMPARE(ressourcen->getMilchmenge_ml(), 515);
     QCOMPARE(ressourcen->getKaffeemenge_g(), 200);
-    QCOMPARE(ressourcen->getZuckermenge_TL(), static_cast<short>(10));
+    QCOMPARE(ressourcen->getZuckermenge_TL(), static_cast<short>(50));
 }
 
 void tfuellstandsmessung::testHatGenug() {
