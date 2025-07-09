@@ -12,10 +12,3 @@ int Ressourcen::getKaffeemenge_g() const { return kaffeemenge_g; }
 short Ressourcen::getZuckermenge_TL() const { return zuckermenge_TL; }
 int Ressourcen::getRestkaffee_g() const { return restkaffee_g; }
 
-void Ressourcen::reset() {
-    wassermenge_ml = 0;
-    milchmenge_ml = 0;
-    kaffeemenge_g = 0;
-    zuckermenge_TL = 0;
-    restkaffee_g = 0;
-}

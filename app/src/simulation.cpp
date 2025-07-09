@@ -9,7 +9,10 @@ Simulation::Simulation() :
     motorPosition_mm(0),
     kaffeerestbehaelter_g(0),
     kaffeebehaelter_g(0),
-    bruehkammerKaffeeinhalt_g(0) {}
+    bruehkammerKaffeeinhalt_g(0),
+    milchbehaelter_g(5000),
+    wasserbehaelter_g(5000),
+    zuckerbehaelter_g(5000) {}
 
 void Simulation::setKaffeebehaelter(Tankwaage *kaffeebehaelter)
 {
@@ -103,28 +106,17 @@ void Simulation::setZuckerdispenser(Zuckerdispenser *zuckerdispenser)
 {
     this->zuckerdispenser = zuckerdispenser;
 }
+
+void Simulation::setKaffeeTassenInhalt_g(float kaffeeTassenInhalt_g)
+{
+    this->kaffeeTassenInhalt_g = kaffeeTassenInhalt_g;
+}
+
 /*
 void Simulation::setMainWindow(MainWindow *mw) {
     this->mw = mw;
 }
 */
-// Temperatur und Regler
-#define HEIZRATE_WASSER_CEL_PRO_TICK 0.5f  // während der Heizung Temperatur erhöht sich
-#define PUMP_MILCH_G_PRO_TICK          8.0f
-#define PUMP_WASSER_G_PRO_TICK         11.35f
-// Wasser wird in der Kaffee gemwandelt
-#define MILCH_MAXTEMP_CEL             65.0f
-#define MILCH_STARTTEMP_CEL           25.0f
-#define MILCH_HEIZRATE_CEL_PRO_TICK   0.5f
-#define MILCH_KUEHLRATE_CEL_PRO_TICK  0.5f
-
-// Motorgeschwindigkeit definieren
-#define MOTOR_MAX_HEIGHT_MM 25
-#define MOTORGESCHWINDIGKEIT_MM_PRO_TICK 0.1
-// Kaffeezufuhur
-#define KAFFEEZUFUHR_G_PRO_TICK 0.1
-// Entleern
-#define BEHAELTER_MAX_FUELLSTAND_G 10000
 
 void Simulation::tick(){
     //Muenzsensor
@@ -175,7 +167,7 @@ void Simulation::tick(){
     // Während des Offeneventils fließt das Wasser in den Kaffee
     if (wasserpumpe->get_Aktiv()) {
         if (wasserzufuhrVentil->get_ist_offen() && tropfstopfVentil->get_ist_offen()) {
-            float wasserMenge = PUMP_WASSER_G_PRO_TICK;
+            float wasserMenge = PUMPEN_PRO_TICK;
             wasserbehaelter_g -= wasserMenge;
             kaffeeTassenInhalt_g += wasserMenge;
             wasserbehaelter->setGewicht(wasserbehaelter_g);
@@ -186,7 +178,7 @@ void Simulation::tick(){
 
     // Milch wird in der Tasse geliefert
     if (milchpumpe->get_Aktiv()) {
-        float milchMenge = PUMP_MILCH_G_PRO_TICK;
+        float milchMenge = PUMPEN_PRO_TICK;
         float schaumMenge = 0;
         milchbehaelter_g -= milchMenge;
         if (schaeumer->getEingeschaltet()) {
@@ -196,6 +188,7 @@ void Simulation::tick(){
         }
         kaffeeTassenInhalt_g += milchMenge;
         milchbehaelter->setGewicht(milchbehaelter_g);
+        qDebug() << "milchbehaelter_g: " << milchbehaelter_g;
         //emit setKaffeeInhalt(kaffeeTassenInhalt_g);
 
         // Funktionsaufruf statt Signal, da das Projekt bei mehr als
@@ -203,6 +196,7 @@ void Simulation::tick(){
         //mw->setKaffee(kaffeeTassenInhalt_g);
     }
 
+    if (kaffeeTassenInhalt_g > KAFFEETASSENINHALT_G_MAX) {qDebug() << "Tasse überlaufen.";}
     emit setKaffeeInhalt((int)kaffeeTassenInhalt_g);
 
     //Zucker

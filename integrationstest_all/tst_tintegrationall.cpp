@@ -165,6 +165,7 @@ bool Schaeumer::getEingeschaltet() {return SchaeumerAktiv;}
 bool hatGenugReturn = true;
 Fuellstandsmessung::Fuellstandsmessung() {}
 bool Fuellstandsmessung::hatGenug(Tankwaage*, int, float) const { return hatGenugReturn; }
+bool Fuellstandsmessung::updateRessourcen() {}
 
 Tankwaage::Tankwaage(float gewicht_g) : gewicht_g(gewicht_g) {}
 float Tankwaage::gewichtPruefen() const { return gewicht_g; }

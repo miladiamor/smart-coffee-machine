@@ -17,6 +17,25 @@
 #include "QThread"
 #include "MuenzEingabeSensor.h"
 
+// Temperatur und Regler
+#define HEIZRATE_WASSER_CEL_PRO_TICK 0.5f  // während der Heizung Temperatur erhöht sich
+#define PUMPEN_PRO_TICK 10;
+// Wasser wird in der Kaffee gemwandelt
+#define MILCH_MAXTEMP_CEL             65.0f
+#define MILCH_STARTTEMP_CEL           25.0f
+#define MILCH_HEIZRATE_CEL_PRO_TICK   0.5f
+#define MILCH_KUEHLRATE_CEL_PRO_TICK  0.5f
+
+// Motorgeschwindigkeit definieren
+#define MOTOR_MAX_HEIGHT_MM 25
+#define MOTORGESCHWINDIGKEIT_MM_PRO_TICK 0.1
+// Kaffeezufuhur
+#define KAFFEEZUFUHR_G_PRO_TICK 0.1
+// Entleern
+#define BEHAELTER_MAX_FUELLSTAND_G 10000
+// max tasse
+#define KAFFEETASSENINHALT_G_MAX 450
+
 class Simulation : public QObject
 {
     Q_OBJECT
@@ -44,6 +63,8 @@ public:
     void setKaffeeVentil(Ventil *v);
     void setZuckerdispenser(Zuckerdispenser *zuckerdispenser);
     //void setMainWindow(MainWindow *mw);
+
+    void setKaffeeTassenInhalt_g(float kaffeeTassenInhalt_g);
 
 signals:
     void setKaffeeInhalt(int kaffee);

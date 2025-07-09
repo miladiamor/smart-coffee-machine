@@ -22,6 +22,4 @@ public:
     int getKaffeemenge_g() const;
     short getZuckermenge_TL() const;
     int getRestkaffee_g() const;
-
-    void reset();
 };

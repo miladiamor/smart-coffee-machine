@@ -40,7 +40,7 @@ void Koordinator::tick() {
     lastTouch = display->getLastTouch(); // mock
     switch (zustand) {
     case KoordinatorZustand::WARTEN:
-        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/selection.png");
+        zeigeBild(":/selection.png");
 
         if (lastTouch != QPointF(0, 0)) {
             qDebug() << lastTouch.x() << ", " << lastTouch.y();
@@ -51,6 +51,7 @@ void Koordinator::tick() {
             kaffeeprogramm = new Kaffeeprogramm(res);
 
             if ((lastTouch.x() < width / 2) && (lastTouch.y() < height / 2)) {
+                qDebug() << "kaffee ausgewählt";
                 kaffeeprogrammEinstellen(15, 150, 50, 90, 65, 7);
             } else if ((lastTouch.x() >= width / 2) && (lastTouch.y() < height / 2)) {
                 kaffeeprogrammEinstellen(18, 0, 150, 92, 0, 6);
@@ -59,6 +60,8 @@ void Koordinator::tick() {
             } else {
                 kaffeeprogrammEinstellen(14, 120, 60, 90, 65, 6);
             }
+
+            fuellstandsmessung->updateRessourcen();
 
             bool genugWasser = fuellstandsmessung->hatGenug(
                 fuellstandsmessung->getWasserTank(),
@@ -75,10 +78,12 @@ void Koordinator::tick() {
                 kaffeeprogramm->getKaffeemenge_g(),
                 1.0f);
 
+            qDebug() << "genug?";
             if (genugWasser && genugMilch && genugKaffee) {
+                qDebug() << "KOOR.: ZUCKERWAHL";
                 zustand = KoordinatorZustand::ZUCKERWAHL;
             } else {
-                zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/not_enough.png");
+                zeigeBild(":/not_enough.png");
                 delete kaffeeprogramm;
                 kaffeeprogramm = nullptr;
                 zustand = KoordinatorZustand::WARTEN;
@@ -88,7 +93,7 @@ void Koordinator::tick() {
 
 
     case KoordinatorZustand::ZUCKERWAHL: {
-        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/sugar.png");
+        zeigeBild(":/sugar.png");
 
         if (lastTouch != QPointF(0, 0)) {
             qDebug() << lastTouch.x() << ", " << lastTouch.y();
@@ -104,7 +109,7 @@ void Koordinator::tick() {
                     );
 
                 if (!genugZucker) {
-                    zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/not_enough.png");
+                    zeigeBild(":/not_enough.png");
                     delete kaffeeprogramm;
                     kaffeeprogramm = nullptr;
                     zustand = KoordinatorZustand::WARTEN;
@@ -112,7 +117,7 @@ void Koordinator::tick() {
                 }
             }
             zahlungseinheit->versucheZahlung(5.0f);
-            qDebug() << "Zahlung betreten";
+            qDebug() << "KOOR.: Zahlung";
             zustand = KoordinatorZustand::BEZAHLEN;
         }
         break;
@@ -121,6 +126,7 @@ void Koordinator::tick() {
     case KoordinatorZustand::BEZAHLEN: {
         if (zahlungseinheit->getZahlungErfolgreich()) { // mock
             zustand = KoordinatorZustand::AUSFUEHREN;
+            qDebug() << "KOOR.: AUSFUEHREN";
         }
         break;
     }
@@ -128,21 +134,25 @@ void Koordinator::tick() {
 
 
     case KoordinatorZustand::AUSFUEHREN:
-        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/brewing.png");
+        zeigeBild(":/brewing.png");
         programmsteuerung->ausfuehren(kaffeeprogramm); // mock
         zustand = KoordinatorZustand::WARTEN_AUF_FERTIG;
+        qDebug() << "KOOR.: WARTEN_AUF_FERTIG";
         break;
 
     case KoordinatorZustand::WARTEN_AUF_FERTIG:
         if (programmsteuerung->istFertig()) { // mock
-             zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/done.png");
+             zeigeBild(":/done.png");
             zustand = KoordinatorZustand::FERTIG;
+            qDebug() << "KOOR.: FERTIG";
         }
         break;
 
     case KoordinatorZustand::FERTIG:
-        zeigeBild("C:/Users/amler/Desktop/se2_kaffeemaschine/app/data/done.png");
         zustand = KoordinatorZustand::WARTEN;
+        delete kaffeeprogramm;
+        kaffeeprogramm = nullptr;
+        qDebug() << "KOOR.: wARTEN";
         break;
     }
 }

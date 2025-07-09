@@ -1,4 +1,6 @@
 #include "Fuellstandsmessung.h"
+#include <QDebug>
+
 Fuellstandsmessung::Fuellstandsmessung() {
     wasser = nullptr;
     milch = nullptr;
@@ -17,13 +19,10 @@ bool Fuellstandsmessung::updateRessourcen() {
     if (!wasser || !milch || !kaffee || !zucker || !ressourcen)
         return false;
 
-    constexpr double MILCH_DICHTE = 1.03;
-    constexpr int ZUCKER_GRAMM_PRO_TL = 5;
-
-    ressourcen->setWassermenge_ml(wasser->gewichtPruefen());
-    ressourcen->setMilchmenge_ml(static_cast<int>(milch->gewichtPruefen() / MILCH_DICHTE));
-    ressourcen->setKaffeemenge_g(kaffee->gewichtPruefen());
-    ressourcen->setZuckermenge_TL(static_cast<short>(zucker->gewichtPruefen() / ZUCKER_GRAMM_PRO_TL));
+    ressourcen->setWassermenge_ml((int)wasser->gewichtPruefen());
+    ressourcen->setMilchmenge_ml((int)milch->gewichtPruefen());
+    ressourcen->setKaffeemenge_g(static_cast<int>(kaffee->gewichtPruefen()));
+    ressourcen->setZuckermenge_TL(static_cast<short>(zucker->gewichtPruefen()));
 
     return true;
 }
@@ -34,8 +33,9 @@ Ressourcen* Fuellstandsmessung::getRessourcen() const {
 
 bool Fuellstandsmessung::hatGenug(Tankwaage* tank, int mengeEinheit, float faktor) const {
     if (!tank) return false;
-
+    qDebug() << "in hatGenug";
     float benoetigt_g = mengeEinheit * faktor;
+    qDebug() << "gewicht: " << (float)tank->gewichtPruefen();
     return tank->gewichtPruefen() >= benoetigt_g;
 }
 

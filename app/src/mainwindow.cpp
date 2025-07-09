@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->touchDisplayLabel->installEventFilter(this);
 
     this->cup = findChild<QProgressBar*>("cup");
-    ui->cup->setRange(0, 350);
+    ui->cup->setRange(0, KAFFEETASSENINHALT_G_MAX);
 }
 
 MainWindow::~MainWindow()
@@ -116,5 +116,12 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::on_pushButton_5_clicked()
 {
     sim->setMuenze_EUR(0.20f);
+}
+
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    ui->cup->setValue(0);
+    sim->setKaffeeTassenInhalt_g(0);
 }
 

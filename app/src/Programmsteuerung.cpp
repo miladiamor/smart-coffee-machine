@@ -101,7 +101,7 @@ Programmsteuerung::~Programmsteuerung(){}
             break;
 
         case CoffeeState::KAFFEE_ZUFUHR:
-            if (tickCounter >= currentProgramm->getKaffeemenge_g()/0.3) {
+            if (tickCounter >= (currentProgramm->getKaffeemenge_g()/0.3)) {
                 bruehgruppe->trigger(ZUFUHRABGESCHLOSSEN);
                 coffeeState = CoffeeState::WARTENAUFBRUEHGRUPPE;
                 qDebug() << "PS: WAB";
@@ -119,7 +119,7 @@ Programmsteuerung::~Programmsteuerung(){}
 
         case CoffeeState::PUMPING_WATER:
             // prüfen ob Wasser fertig gepumpt
-            if (tickCounter >= currentProgramm->getWassermenge_ml()/10){
+            if (tickCounter >= (currentProgramm->getWassermenge_ml()/10)){
                 wasserpumpe->pumpeStoppen();
                 milchpumpe->pumpeStarten();
                 milchschaeumer->aufschaeumenStarten();
@@ -130,7 +130,7 @@ Programmsteuerung::~Programmsteuerung(){}
             break;
         case CoffeeState::PUMPING_MILK:
             // prüfen ob Milch fertig gepumpt
-            if (tickCounter >= currentProgramm->getMilchmenge_ml()/10){
+            if (tickCounter >= (currentProgramm->getMilchmenge_ml()/10)){
                 milchschaeumer->aufschaeumenStoppen();
                 milchpumpe->pumpeStoppen();
                 zucker->zuckerAuswerfen();

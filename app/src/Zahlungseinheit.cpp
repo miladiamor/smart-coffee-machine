@@ -4,7 +4,9 @@
 
 bool Zahlungseinheit::getZahlungErfolgreich()
 {
-    return zahlungErfolgreich;
+    bool ret = false;
+    if (zahlungErfolgreich) {ret = true; zahlungErfolgreich = false;}
+    return ret;
 }
 
 // Initialisiert die Zahlung fuer ein Produkt
