@@ -153,11 +153,11 @@ int main(int argc, char *argv[])
 
 
     //Simulation und MainWIndow
-    /*
+
     QObject::connect(&simulation, &Simulation::setKaffeeInhalt,
-                     &mw, &MainWindow::setKaffee,
+                     &mw, &MainWindow::updateKaffee,
                      Qt::DirectConnection);
-    */
+
 
     //CLOCK
     QObject::connect(&clock, &Clock::update,

@@ -46,7 +46,7 @@ public:
     //void setMainWindow(MainWindow *mw);
 
 signals:
-    void setKaffeeInhalt(float kaffee);
+    void setKaffeeInhalt(int kaffee);
 
 public slots:
     void tick();

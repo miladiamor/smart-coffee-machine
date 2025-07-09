@@ -2,31 +2,6 @@
 #include <cmath>
 #include <QDebug>
 
-// Konstruktor ohne Parameter fuer Unittests
-Zahlungseinheit::Zahlungseinheit() {
-    sensor = nullptr;
-    speicherVerwaltung = nullptr;
-    auswerfer = nullptr;
-    gesamterEinwurf = 0.0f;
-    zahlungAktiv = false;
-    zahlungErfolgreich = false;
-
-}
-
-// Konstruktor mit Abhaengigkeiten
-Zahlungseinheit::Zahlungseinheit(Muenzroehrenspeicher* speicherVerwaltung,
-                                 MuenzEingabeSensor* sensor,
-                                 MuenzAuswerfer* auswerfer)
-    : zahlungAktiv(false),
-    zahlungErfolgreich(false),
-    gesamterEinwurf(0.0f),
-    preis(0.0f),
-    speicherVerwaltung(speicherVerwaltung),
-    sensor(sensor),
-    auswerfer(auswerfer),
-    display(nullptr)
-{}
-
 bool Zahlungseinheit::getZahlungErfolgreich()
 {
     return zahlungErfolgreich;

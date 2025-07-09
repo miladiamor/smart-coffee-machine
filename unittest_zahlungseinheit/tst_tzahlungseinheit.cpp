@@ -85,8 +85,9 @@ void tzahlungseinheit::init() {
     mockSpeicher = new Muenzroehrenspeicher();
     mockAuswerfer = new MuenzAuswerfer();
 
-    sut = new Zahlungseinheit(mockSpeicher, mockSensor, mockAuswerfer);
+    sut = new Zahlungseinheit();
     sut->setDisplay(mockDisplay);
+    sut->setMuenzAuswerfer();
 
 }
 void tzahlungseinheit::cleanup() {

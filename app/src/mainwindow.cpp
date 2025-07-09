@@ -47,6 +47,12 @@ void MainWindow::updateWindowText(QString text){
     ui->touchDisplayLabel->setText(text);
 }
 
+void MainWindow::updateKaffee(int kaffee)
+{
+    qDebug() << "called";
+    ui->cup->setValue(kaffee);
+}
+
 /*
 void MainWindow::on_btnCappucino_clicked()
 {
@@ -95,12 +101,6 @@ void MainWindow::on_pushButton_clicked()
 
 
 
-void MainWindow::on_pushButton_5_clicked()
-{
-    sim->setMuenze_EUR(0.20f);
-}
-
-
 void MainWindow::on_pushButton_3_clicked()
 {
     sim->setMuenze_EUR(0.10f);
@@ -112,4 +112,10 @@ void MainWindow::on_pushButton_4_clicked()
     sim->setMuenze_EUR(0.50f);
 }
 
+
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    sim->setMuenze_EUR(0.20f);
+}
 

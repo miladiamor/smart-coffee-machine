@@ -31,7 +31,7 @@ signals:
 public slots:
     void updateWindow(const QImage &img);
     void updateWindowText(QString text);
-
+    void updateKaffee(int kaffee);
 private slots:
     /*void on_btnCappucino_clicked();
 
@@ -50,6 +50,8 @@ private slots:
     void on_pushButton_3_clicked();
 
     void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;

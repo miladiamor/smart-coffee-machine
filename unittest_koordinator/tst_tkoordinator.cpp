@@ -47,7 +47,6 @@ int Kaffeeprogramm::getWassermenge_ml() const { return 30; }
 
 
 // === MOCK Zahlungseinheit ===
-Zahlungseinheit::Zahlungseinheit() {}
 void Zahlungseinheit::versucheZahlung(float preis) {}
 bool Zahlungseinheit::getZahlungErfolgreich() {return true;}
 

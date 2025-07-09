@@ -22,13 +22,7 @@ private:
 
 public:
 
-    Zahlungseinheit();
-
-
-    Zahlungseinheit(Muenzroehrenspeicher* speicherVerwaltung,
-                    MuenzEingabeSensor* sensor,
-                    MuenzAuswerfer* auswerfer);
-
+    Zahlungseinheit(QObject *parent = nullptr) : QObject{parent} {}
 
     bool getZahlungErfolgreich();
 

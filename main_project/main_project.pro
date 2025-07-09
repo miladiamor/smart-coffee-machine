@@ -4,17 +4,17 @@ TEMPLATE = subdirs
 # Qt recommends putting each unit test class in it's own project
 SUBDIRS += \
     ../app \
-    #../integrationstest_all \
+    ../integrationstest_all \
     #../integrationstest_koordinator \
-    #../integrationstest_programmsteuerung_bruehgruppe \
-    #../unittest_Heizregler \
-    #../unittest_Programmsteuerung_3 \
-    #../unittest_bruehgruppe_2 \
-    #../unittest_display \
+    ../integrationstest_programmsteuerung_bruehgruppe \
+    ../unittest_Heizregler \
+    ../unittest_Programmsteuerung_3 \
+    ../unittest_bruehgruppe_2 \
+    ../unittest_display \
     #../unittest_zahlungseinheit \
     #../unittest_koordinator \
-    #../unittest_fuellstandsmessung \
-    #../unittest_motorsteuerung
+    ../unittest_fuellstandsmessung \
+    ../unittest_motorsteuerung
 
 
 

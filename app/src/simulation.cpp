@@ -205,6 +205,8 @@ void Simulation::tick(){
         //mw->setKaffee(kaffeeTassenInhalt_g);
     }
 
+    emit setKaffeeInhalt((int) kaffeeTassenInhalt_g);
+
     //Zucker
     if (zuckerdispenser->istAktiv()) {
         float zuckermenge = 0.5f;
